@@ -1,0 +1,15 @@
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\obj\Debug\net8.0\Tutorial.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\obj\Debug\net8.0\Tutorial.AssemblyInfoInputs.cache
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\obj\Debug\net8.0\Tutorial.AssemblyInfo.cs
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\obj\Debug\net8.0\Tutorial.csproj.CoreCompileInputs.cache
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\obj\Debug\net8.0\Tutorial.sourcelink.json
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\bin\Debug\net8.0\Tutorial.exe
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\bin\Debug\net8.0\Tutorial.deps.json
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\bin\Debug\net8.0\Tutorial.runtimeconfig.json
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\bin\Debug\net8.0\Tutorial.dll
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\bin\Debug\net8.0\Tutorial.pdb
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\obj\Debug\net8.0\Tutorial.dll
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\obj\Debug\net8.0\refint\Tutorial.dll
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\obj\Debug\net8.0\Tutorial.pdb
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\obj\Debug\net8.0\Tutorial.genruntimeconfig.cache
+C:\Users\AM\Desktop\Csharp\Tutorial\Tutorial\obj\Debug\net8.0\ref\Tutorial.dll
