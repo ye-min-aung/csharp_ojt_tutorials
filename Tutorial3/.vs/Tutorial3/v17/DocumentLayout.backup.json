@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\AM\\source\\repos\\Tutorial3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F5E75622-FD93-4D2D-9255-0D940F3847E8}|Tutorial3\\Tutorial3.csproj|c:\\users\\am\\source\\repos\\tutorial3\\tutorial3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5E75622-FD93-4D2D-9255-0D940F3847E8}|Tutorial3\\Tutorial3.csproj|solutionrelative:tutorial3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5E75622-FD93-4D2D-9255-0D940F3847E8}|Tutorial3\\Tutorial3.csproj|C:\\Users\\AM\\source\\repos\\Tutorial3\\tutorial3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F5E75622-FD93-4D2D-9255-0D940F3847E8}|Tutorial3\\Tutorial3.csproj|solutionrelative:tutorial3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\AM\\source\\repos\\Tutorial3\\Tutorial3\\Form1.cs",
+              "RelativeDocumentMoniker": "Tutorial3\\Form1.cs",
+              "ToolTip": "C:\\Users\\AM\\source\\repos\\Tutorial3\\Tutorial3\\Form1.cs",
+              "RelativeToolTip": "Tutorial3\\Form1.cs",
+              "ViewState": "AgIAANAAAAAAAAAAAAD4v+AAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-24T03:44:40.978Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\AM\\source\\repos\\Tutorial3\\Tutorial3\\Form1.cs",
+              "RelativeDocumentMoniker": "Tutorial3\\Form1.cs",
+              "ToolTip": "C:\\Users\\AM\\source\\repos\\Tutorial3\\Tutorial3\\Form1.cs [Design]",
+              "RelativeToolTip": "Tutorial3\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-24T03:40:02.362Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

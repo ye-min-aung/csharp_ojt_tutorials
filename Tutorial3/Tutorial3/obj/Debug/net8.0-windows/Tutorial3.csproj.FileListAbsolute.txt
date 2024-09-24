@@ -1,0 +1,16 @@
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\bin\Debug\net8.0-windows\Tutorial3.exe
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\bin\Debug\net8.0-windows\Tutorial3.deps.json
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\bin\Debug\net8.0-windows\Tutorial3.runtimeconfig.json
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\bin\Debug\net8.0-windows\Tutorial3.dll
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\bin\Debug\net8.0-windows\Tutorial3.pdb
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\Tutorial3.Form1.resources
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\Tutorial3.csproj.GenerateResource.cache
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\Tutorial3.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\Tutorial3.AssemblyInfoInputs.cache
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\Tutorial3.AssemblyInfo.cs
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\Tutorial3.csproj.CoreCompileInputs.cache
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\Tutorial3.dll
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\refint\Tutorial3.dll
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\Tutorial3.pdb
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\Tutorial3.genruntimeconfig.cache
+C:\Users\AM\source\repos\Tutorial3\Tutorial3\obj\Debug\net8.0-windows\ref\Tutorial3.dll

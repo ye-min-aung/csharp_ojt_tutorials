@@ -18,20 +18,16 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Users\\AM\\Desktop\\Csharp\\Tutorial2_01\\Tutorial2_01\\Form1.cs",
               "RelativeDocumentMoniker": "Tutorial2_01\\Form1.cs",
-              "ToolTip": "C:\\Users\\AM\\Desktop\\Csharp\\Tutorial2_01\\Tutorial2_01\\Form1.cs [Design]",
-              "RelativeToolTip": "Tutorial2_01\\Form1.cs [Design]",
+              "ToolTip": "C:\\Users\\AM\\Desktop\\Csharp\\Tutorial2_01\\Tutorial2_01\\Form1.cs [Design]*",
+              "RelativeToolTip": "Tutorial2_01\\Form1.cs [Design]*",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-23T09:06:29.255Z",
               "EditorCaption": " [Design]"
@@ -42,11 +38,12 @@
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\AM\\Desktop\\Csharp\\Tutorial2_01\\Tutorial2_01\\Form1.cs",
               "RelativeDocumentMoniker": "Tutorial2_01\\Form1.cs",
-              "ToolTip": "C:\\Users\\AM\\Desktop\\Csharp\\Tutorial2_01\\Tutorial2_01\\Form1.cs",
-              "RelativeToolTip": "Tutorial2_01\\Form1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\AM\\Desktop\\Csharp\\Tutorial2_01\\Tutorial2_01\\Form1.cs*",
+              "RelativeToolTip": "Tutorial2_01\\Form1.cs*",
+              "ViewState": "AgIAAAsAAAAAAAAAAIAwwBcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T07:46:52.812Z"
+              "WhenOpened": "2024-09-23T07:46:52.812Z",
+              "EditorCaption": ""
             }
           ]
         }
