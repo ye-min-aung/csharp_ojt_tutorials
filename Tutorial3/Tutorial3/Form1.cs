@@ -215,7 +215,7 @@ namespace Tutorial3
             string phone1 = txtPhone1.Text;
             string phone2 = txtPhone2.Text;
             string address = txtAddress.Text;
-            //ျျimagePath = 
+            //imagePath = 
             string imageFileName = Path.GetFileName(imagePath);
 
             string distination = Path.Combine(Application.StartupPath, "images", imageFileName);
