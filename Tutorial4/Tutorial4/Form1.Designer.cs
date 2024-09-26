@@ -66,6 +66,9 @@
             label17 = new Label();
             btnChooseImage = new Button();
             openFileDialog1 = new OpenFileDialog();
+            btnPrevious = new Button();
+            btnNext = new Button();
+            btnLast = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -411,11 +414,44 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
+            // btnPrevious
+            // 
+            btnPrevious.Location = new Point(12, 696);
+            btnPrevious.Name = "btnPrevious";
+            btnPrevious.Size = new Size(94, 29);
+            btnPrevious.TabIndex = 38;
+            btnPrevious.Text = "Privious";
+            btnPrevious.UseVisualStyleBackColor = true;
+            btnPrevious.Click += btnPrevious_Click;
+            // 
+            // btnNext
+            // 
+            btnNext.Location = new Point(156, 696);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(94, 29);
+            btnNext.TabIndex = 39;
+            btnNext.Text = "Next";
+            btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
+            // 
+            // btnLast
+            // 
+            btnLast.Location = new Point(306, 696);
+            btnLast.Name = "btnLast";
+            btnLast.Size = new Size(94, 29);
+            btnLast.TabIndex = 40;
+            btnLast.Text = "Last";
+            btnLast.UseVisualStyleBackColor = true;
+            btnLast.Click += btnLast_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1607, 772);
+            Controls.Add(btnLast);
+            Controls.Add(btnNext);
+            Controls.Add(btnPrevious);
             Controls.Add(btnChooseImage);
             Controls.Add(label17);
             Controls.Add(label16);
@@ -502,5 +538,8 @@
         private Label label17;
         private Button btnChooseImage;
         private OpenFileDialog openFileDialog1;
+        private Button btnPrevious;
+        private Button btnNext;
+        private Button btnLast;
     }
 }

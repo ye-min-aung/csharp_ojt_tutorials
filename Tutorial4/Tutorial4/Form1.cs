@@ -1,11 +1,6 @@
-using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Tutorial4
 {
@@ -15,7 +10,6 @@ namespace Tutorial4
         {
             InitializeComponent();
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-
         }
 
         public string connectionString = "Server=DESKTOP-4VM5D0P\\SQLEXPRESS;Database=AllDB;User Id=sa;Password=root;Trusted_Connection=True;";
@@ -23,39 +17,54 @@ namespace Tutorial4
         int select;
         string imagePath = "";
         int num = 0;
-        public void LoadData()
+        int pageSize = 3;
+        int currentPageIndex = 1;
+        int totalPage = 0;
+        public void LoadData(int page)
         {
+            string query = "";
+            if (page == 1)
+            {
+                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no-2], [photo], [address] FROM CustomerTable WHERE is_deleted = 0 ORDER BY id";
+            }
+            else
+            {
+                int previousPageOffSet = (page - 1) * pageSize;
+                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no-2], [photo], [address] FROM CustomerTable WHERE id NOT IN (SELECT TOP " + previousPageOffSet + " id FROM CustomerTable ) AND is_deleted = 0 ORDER BY id";
+            }
 
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string query = "SELECT [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no-2], [photo], [address] FROM CustomerTable WHERE is_deleted = 0";
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter(query, connection);
-                    DataTable dataTable = new DataTable();
-                    dataAdapter.Fill(dataTable);
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
 
-                    dataTable.Columns.Add("PhotoImage", typeof(Image));
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(query, connection);
+                DataTable dataTable = new DataTable();
+                dataAdapter.Fill(dataTable);
+
+                dataTable.Columns.Add("PhotoImage", typeof(Image));
 
                 foreach (DataRow row in dataTable.Rows)
+                {
+                    string photoPath = row["photo"].ToString();
+
+                    if (File.Exists(photoPath))
                     {
-                        string photoPath = row["photo"].ToString();
-                        
-                        if (File.Exists(photoPath))
-                        {
-                         Image image = Image.FromFile(photoPath);
-                         row["PhotoImage"] = image;
-                        
-                            
-                        }
-                        else
-                        {
-                            row["PhotoImage"] = null;
-                        }
+                        Image image = Image.FromFile(photoPath);
+                        row["PhotoImage"] = image;
+
+
                     }
+                    else
+                    {
+                        row["PhotoImage"] = null;
+                    }
+                }
 
-                    dataGridView1.DataSource = dataTable;
+                dataGridView1.DataSource = dataTable;
 
-                    dataGridView1.Columns["photo"].Visible = false;
+                dataGridView1.Columns["photo"].Visible = false;
+                ((DataGridViewImageColumn)dataGridView1.Columns["PhotoImage"]).ImageLayout = DataGridViewImageCellLayout.Stretch;
+                dataGridView1.RowTemplate.Height = 300;
             }
 
         }
@@ -89,7 +98,7 @@ namespace Tutorial4
                 }
                 else
                 {
-                    txtId.Text = string.Empty; 
+                    txtId.Text = string.Empty;
                 }
 
                 if (selectRow.Cells["customer_name"].Value != null)
@@ -141,7 +150,7 @@ namespace Tutorial4
                     txtEmail.Text = string.Empty;
                 }
 
-              
+
                 if (selectRow.Cells["dob"].Value == null)
                 {
                     memberDate.CustomFormat = null;
@@ -153,7 +162,8 @@ namespace Tutorial4
                         string dateString = selectRow.Cells["dob"].Value.ToString();
                         DateTime date = DateTime.Parse(dateString);
                         memberDate.Value = date;
-                    }catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         memberDate.CustomFormat = null;
                     }
@@ -165,7 +175,7 @@ namespace Tutorial4
                 txtAge.Text = age.ToString();
 
 
-                
+
                 if (selectRow.Cells["gender"].Value != null)
                 {
                     string gender = selectRow.Cells["gender"].Value.ToString();
@@ -227,12 +237,13 @@ namespace Tutorial4
             string nrc = txtNrc.Text;
             string Mtype = txtMemberCard.Text;
             int type = 0;
-            if(Mtype == "Yes")
+            if (Mtype == "Yes")
             {
                 type = 1;
-            }else
+            }
+            else
             {
-                type= 2;
+                type = 2;
             }
             string email = txtEmail.Text;
             int gender = 0;
@@ -327,8 +338,9 @@ namespace Tutorial4
 
             string imageFileName = Path.GetFileName(imagePath);
 
-            string distination = Path.Combine(Application.StartupPath, "images", name+imageFileName);
-            if(!Directory.Exists(Path.Combine(Application.StartupPath, "images"))){
+            string distination = Path.Combine(Application.StartupPath, "images", name + imageFileName);
+            if (!Directory.Exists(Path.Combine(Application.StartupPath, "images")))
+            {
                 Directory.CreateDirectory(Path.Combine(Application.StartupPath, "images"));
             }
             File.Copy(imagePath, distination);
@@ -338,7 +350,7 @@ namespace Tutorial4
                 string query = "INSERT INTO CustomerTable ( [customer_id],[customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no-2], [photo], [address], [created_user_id], [created_datetime], [updated_user_id], [updated_datetime], [is_deleted], [deleted_user_id], [deleted_datetime]) " +
 "VALUES (@customer_id, @customer_name, @nrc_number, @dob, @member_card, @Email, @gender, @phone_no_1, @phone_no_2, @photo, @address, @created_user_id, @created_datetime, @updated_user_id, @updated_datetime, @is_deleted, @deleted_user_id, @deleted_datetime)";
 
-                using(SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@customer_id", customerId);
                     command.Parameters.AddWithValue("@customer_name", name);
@@ -362,13 +374,13 @@ namespace Tutorial4
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
-                
+
             }
 
-            LoadData();
+            LoadData(totalPage);
             num++;
         }
-       
+
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             DataGridViewRow selectRow = dataGridView1.Rows[select];
@@ -482,7 +494,7 @@ namespace Tutorial4
 
             string imageFileName = Path.GetFileName(imagePath);
 
-             newImage = Path.Combine(Application.StartupPath, "images", name + imageFileName);
+            newImage = Path.Combine(Application.StartupPath, "images", name + imageFileName);
             if (!Directory.Exists(Path.Combine(Application.StartupPath, "images")))
             {
                 Directory.CreateDirectory(Path.Combine(Application.StartupPath, "images"));
@@ -518,8 +530,8 @@ namespace Tutorial4
                 }
             }
 
-            
-            LoadData();
+
+            LoadData(totalPage);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -529,14 +541,14 @@ namespace Tutorial4
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string query = "UPDATE CustomerTable SET is_deleted = 1 WHERE id = @id";
-                using(SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", id);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
             }
-            LoadData();
+            LoadData(totalPage);
         }
 
         bool IsPhone(string phone)
@@ -558,7 +570,8 @@ namespace Tutorial4
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoadData();
+            getTotalPage();
+            LoadData(1);
         }
 
         private void btnChooseImage_Click(object sender, EventArgs e)
@@ -568,6 +581,51 @@ namespace Tutorial4
                 imagePath = openFileDialog1.FileName;
                 pictureBox1.Load(openFileDialog1.FileName);
             }
+        }
+
+        //Pagination 
+
+        public void getTotalPage()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT COUNT(*) FROM CustomerTable WHERE is_deleted = 0";
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    int record = (int)cmd.ExecuteScalar();
+                     totalPage = record / pageSize;
+                    if (record % pageSize > 0)
+                    {
+                        totalPage += 1;
+                    }
+                }
+            }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex > 1)
+            {
+                currentPageIndex--;
+                LoadData(currentPageIndex);
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex < totalPage)
+            {
+                currentPageIndex++;
+                LoadData(currentPageIndex);
+                
+            }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {  
+            LoadData(totalPage);
+            currentPageIndex = 4;
         }
     }
 }
