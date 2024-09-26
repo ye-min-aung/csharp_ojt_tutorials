@@ -10,6 +10,8 @@ namespace Tutorial4
         {
             InitializeComponent();
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            dataGridView1.RowTemplate.Height = 80;
+            getTotalPage();
         }
 
         public string connectionString = "Server=DESKTOP-4VM5D0P\\SQLEXPRESS;Database=AllDB;User Id=sa;Password=root;Trusted_Connection=True;";
@@ -20,17 +22,18 @@ namespace Tutorial4
         int pageSize = 3;
         int currentPageIndex = 1;
         int totalPage = 0;
+
         public void LoadData(int page)
         {
             string query = "";
             if (page == 1)
             {
-                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no-2], [photo], [address] FROM CustomerTable WHERE is_deleted = 0 ORDER BY id";
+                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address] FROM CustomerTable WHERE is_deleted = 0 ORDER BY id";
             }
             else
             {
                 int previousPageOffSet = (page - 1) * pageSize;
-                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no-2], [photo], [address] FROM CustomerTable WHERE id NOT IN (SELECT TOP " + previousPageOffSet + " id FROM CustomerTable ) AND is_deleted = 0 ORDER BY id";
+                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address] FROM CustomerTable WHERE id NOT IN (SELECT TOP " + previousPageOffSet + " [id] FROM CustomerTable WHERE is_deleted = 0 ORDER BY [id]) AND is_deleted = 0 ORDER BY [id]";
             }
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -39,20 +42,62 @@ namespace Tutorial4
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(query, connection);
                 DataTable dataTable = new DataTable();
+                dataTable.Clear();
                 dataAdapter.Fill(dataTable);
+                dataTable.Columns.Add("GenderType", typeof(string));
+                dataTable.Columns.Add("Member", typeof(string));
+
+                //try
+                //{
+                //    dataAdapter.Fill(dataTable);
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message);
+                //}
+                //dataAdapter.Fill(dataTable);
 
                 dataTable.Columns.Add("PhotoImage", typeof(Image));
 
                 foreach (DataRow row in dataTable.Rows)
                 {
+
+                    int genderValue = Convert.ToInt32(row["gender"]);
+                    int member = Convert.ToInt32(row["member_card"]);
+
+                    switch (genderValue)
+                    {
+                        case 0:
+                            row["GenderType"] = "Other";
+                            break;
+                        case 1:
+                            row["GenderType"] = "Male";
+                            break;
+                        case 2:
+                            row["GenderType"] = "Female";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    switch (member)
+                    {
+                        case 1:
+                            row["Member"] = "Yes";
+                            break;
+                        case 2:
+                            row["Member"] = "No";
+                            break;
+                        default :
+                            break;
+                    }
+
                     string photoPath = row["photo"].ToString();
 
                     if (File.Exists(photoPath))
                     {
                         Image image = Image.FromFile(photoPath);
                         row["PhotoImage"] = image;
-
-
                     }
                     else
                     {
@@ -62,11 +107,11 @@ namespace Tutorial4
 
                 dataGridView1.DataSource = dataTable;
 
+                dataGridView1.Columns["gender"].Visible = false;
+                dataGridView1.Columns["member_card"].Visible = false;
                 dataGridView1.Columns["photo"].Visible = false;
                 ((DataGridViewImageColumn)dataGridView1.Columns["PhotoImage"]).ImageLayout = DataGridViewImageCellLayout.Stretch;
-                dataGridView1.RowTemplate.Height = 300;
             }
-
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -208,9 +253,9 @@ namespace Tutorial4
                     txtPhone1.Text = string.Empty;
                 }
 
-                if (selectRow.Cells["phone_no-2"].Value != null)
+                if (selectRow.Cells["phone_no_2"].Value != null)
                 {
-                    txtPhone2.Text = selectRow.Cells["phone_no-2"].Value.ToString();
+                    txtPhone2.Text = selectRow.Cells["phone_no_2"].Value.ToString();
                 }
                 else
                 {
@@ -232,7 +277,7 @@ namespace Tutorial4
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string customerId = "C" + num.ToString("D4");
+            string customerId = generateId();
             string name = txtName.Text;
             string nrc = txtNrc.Text;
             string Mtype = txtMemberCard.Text;
@@ -347,7 +392,7 @@ namespace Tutorial4
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO CustomerTable ( [customer_id],[customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no-2], [photo], [address], [created_user_id], [created_datetime], [updated_user_id], [updated_datetime], [is_deleted], [deleted_user_id], [deleted_datetime]) " +
+                string query = "INSERT INTO CustomerTable ( [customer_id],[customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address], [created_user_id], [created_datetime], [updated_user_id], [updated_datetime], [is_deleted], [deleted_user_id], [deleted_datetime]) " +
 "VALUES (@customer_id, @customer_name, @nrc_number, @dob, @member_card, @Email, @gender, @phone_no_1, @phone_no_2, @photo, @address, @created_user_id, @created_datetime, @updated_user_id, @updated_datetime, @is_deleted, @deleted_user_id, @deleted_datetime)";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -483,31 +528,38 @@ namespace Tutorial4
                 }
             }
 
+            
+            string newImage = "";
             if (imagePath == "")
             {
-                imagePath = selectRow.Cells["id"].Value.ToString();
+                
+                imagePath = selectRow.Cells["photo"].Value.ToString();
+                newImage = imagePath;
             }
-
-
-
-            string newImage = "";
-
-            string imageFileName = Path.GetFileName(imagePath);
-
-            newImage = Path.Combine(Application.StartupPath, "images", name + imageFileName);
-            if (!Directory.Exists(Path.Combine(Application.StartupPath, "images")))
+            else
             {
-                Directory.CreateDirectory(Path.Combine(Application.StartupPath, "images"));
+                
+
+                string imageFileName = Path.GetFileName(imagePath);
+
+                newImage = Path.Combine(Application.StartupPath, "images", name + imageFileName);
+                if (!Directory.Exists(Path.Combine(Application.StartupPath, "images")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Application.StartupPath, "images"));
+                }
+
+                if (!File.Exists(newImage))
+                {
+                    File.Copy(imagePath, newImage);
+                }
+
             }
 
-            if (!File.Exists(newImage))
-            {
-                File.Copy(imagePath, newImage);
-            }
+            
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE CustomerTable SET [customer_name] = @customer_name, [nrc_number] = @nrc_number, [dob] = @dob, [member_card] = @member_card, [email] = @Email, [gender] = @gender, [phone_no_1] = @phone_no_1, [phone_no-2] = @phone_no_2, [photo] = @photo, [address] = @address, [updated_user_id] = @updated_user_id, [updated_datetime] = @updated_datetime WHERE [id] = @id";
+                string query = "UPDATE CustomerTable SET [customer_name] = @customer_name, [nrc_number] = @nrc_number, [dob] = @dob, [member_card] = @member_card, [email] = @Email, [gender] = @gender, [phone_no_1] = @phone_no_1, [phone_no_2] = @phone_no_2, [photo] = @photo, [address] = @address, [updated_user_id] = @updated_user_id, [updated_datetime] = @updated_datetime WHERE [id] = @id";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -570,7 +622,7 @@ namespace Tutorial4
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            getTotalPage();
+            
             LoadData(1);
         }
 
@@ -594,7 +646,7 @@ namespace Tutorial4
                 {
                     connection.Open();
                     int record = (int)cmd.ExecuteScalar();
-                     totalPage = record / pageSize;
+                    totalPage = record / pageSize;
                     if (record % pageSize > 0)
                     {
                         totalPage += 1;
@@ -618,14 +670,38 @@ namespace Tutorial4
             {
                 currentPageIndex++;
                 LoadData(currentPageIndex);
-                
+
             }
         }
 
         private void btnLast_Click(object sender, EventArgs e)
-        {  
+        {
             LoadData(totalPage);
             currentPageIndex = 4;
+        }
+
+        private void txtPhone2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private string generateId()
+        {
+            string cid;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT MAX(id) FROM CustomerTable";
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    object result = cmd.ExecuteScalar();
+
+                    int id = result != DBNull.Value ? Convert.ToInt32(result) : 0;
+                    cid = "C-" + id.ToString("D4");
+                    MessageBox.Show(cid.ToString());
+                }
+            }
+            return cid;
         }
     }
 }
