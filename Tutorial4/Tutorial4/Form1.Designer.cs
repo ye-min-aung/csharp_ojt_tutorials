@@ -69,6 +69,10 @@
             btnPrevious = new Button();
             btnNext = new Button();
             btnLast = new Button();
+            txtPassword = new TextBox();
+            label18 = new Label();
+            label19 = new Label();
+            txtConfirmPassword = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -445,11 +449,47 @@
             btnLast.UseVisualStyleBackColor = true;
             btnLast.Click += btnLast_Click;
             // 
+            // txtPassword
+            // 
+            txtPassword.Location = new Point(1145, 15);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(215, 27);
+            txtPassword.TabIndex = 41;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(1001, 18);
+            label18.Name = "label18";
+            label18.Size = new Size(70, 20);
+            label18.TabIndex = 42;
+            label18.Text = "Password";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(1001, 78);
+            label19.Name = "label19";
+            label19.Size = new Size(127, 20);
+            label19.TabIndex = 43;
+            label19.Text = "Confirm Password";
+            // 
+            // txtConfirmPassword
+            // 
+            txtConfirmPassword.Location = new Point(1145, 75);
+            txtConfirmPassword.Name = "txtConfirmPassword";
+            txtConfirmPassword.Size = new Size(215, 27);
+            txtConfirmPassword.TabIndex = 44;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1607, 790);
+            Controls.Add(txtConfirmPassword);
+            Controls.Add(label19);
+            Controls.Add(label18);
+            Controls.Add(txtPassword);
             Controls.Add(btnLast);
             Controls.Add(btnNext);
             Controls.Add(btnPrevious);
@@ -542,5 +582,9 @@
         private Button btnPrevious;
         private Button btnNext;
         private Button btnLast;
+        private TextBox txtPassword;
+        private Label label18;
+        private Label label19;
+        private TextBox txtConfirmPassword;
     }
 }

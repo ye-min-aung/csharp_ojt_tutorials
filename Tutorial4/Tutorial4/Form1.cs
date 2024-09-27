@@ -1,6 +1,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Tutorial4
 {
@@ -23,17 +25,20 @@ namespace Tutorial4
         int currentPageIndex = 1;
         int totalPage = 0;
 
+        private byte[] key = Convert.FromBase64String("k1rZt6cU5fD9G2dIbZRZksQ2pZJfw6PzfvA1wfg3Zb8=");
+        private byte[] iv  = Convert.FromBase64String("9vHdlrZ7QwJwU4r1cqls2g==");
+
         public void LoadData(int page)
         {
             string query = "";
             if (page == 1)
             {
-                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address] FROM CustomerTable WHERE is_deleted = 0 ORDER BY id";
+                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address], [password] FROM CustomerTable WHERE is_deleted = 0 ORDER BY id";
             }
             else
             {
                 int previousPageOffSet = (page - 1) * pageSize;
-                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address] FROM CustomerTable WHERE id NOT IN (SELECT TOP " + previousPageOffSet + " [id] FROM CustomerTable WHERE is_deleted = 0 ORDER BY [id]) AND is_deleted = 0 ORDER BY [id]";
+                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address], [password] FROM CustomerTable WHERE id NOT IN (SELECT TOP " + previousPageOffSet + " [id] FROM CustomerTable WHERE is_deleted = 0 ORDER BY [id]) AND is_deleted = 0 ORDER BY [id]";
             }
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -46,6 +51,7 @@ namespace Tutorial4
                 dataAdapter.Fill(dataTable);
                 dataTable.Columns.Add("GenderType", typeof(string));
                 dataTable.Columns.Add("Member", typeof(string));
+                dataTable.Columns.Add("Password", typeof(string));
 
                 //try
                 //{
@@ -64,6 +70,9 @@ namespace Tutorial4
 
                     int genderValue = Convert.ToInt32(row["gender"]);
                     int member = Convert.ToInt32(row["member_card"]);
+                    string encryptedPassword = row["password"].ToString();
+                    string decryptedPassword = decryptPassword(encryptedPassword, key, iv);
+                    row["password"] = decryptedPassword;
 
                     switch (genderValue)
                     {
@@ -110,6 +119,7 @@ namespace Tutorial4
                 dataGridView1.Columns["gender"].Visible = false;
                 dataGridView1.Columns["member_card"].Visible = false;
                 dataGridView1.Columns["photo"].Visible = false;
+                dataGridView1.Columns["id"].Visible = false;
                 ((DataGridViewImageColumn)dataGridView1.Columns["PhotoImage"]).ImageLayout = DataGridViewImageCellLayout.Stretch;
             }
         }
@@ -149,6 +159,10 @@ namespace Tutorial4
                 if (selectRow.Cells["customer_name"].Value != null)
                 {
                     txtName.Text = selectRow.Cells["customer_name"].Value.ToString();
+                    txtAge.Text = string.Empty;
+                    txtId.Text = string.Empty;
+                    memberDate.CustomFormat = null;
+                    txtMemberCard.Text = null;
                 }
                 else
                 {
@@ -196,9 +210,11 @@ namespace Tutorial4
                 }
 
 
-                if (selectRow.Cells["dob"].Value == null)
+                if (selectRow.Cells["dob"].Value == null || selectRow.Cells["dob"].Value == DBNull.Value)
                 {
-                    memberDate.CustomFormat = null;
+                    memberDate.CustomFormat = "";
+                    //memberDate.Format = DateTimePickerFormat.Custom;
+                    
                 }
                 else
                 {
@@ -207,6 +223,8 @@ namespace Tutorial4
                         string dateString = selectRow.Cells["dob"].Value.ToString();
                         DateTime date = DateTime.Parse(dateString);
                         memberDate.Value = date;
+                        int age = DateTime.Today.Year - memberDate.Value.Year;
+                        txtAge.Text = age.ToString();
                     }
                     catch (Exception ex)
                     {
@@ -214,15 +232,15 @@ namespace Tutorial4
                     }
                 }
 
-
-
-                int age = DateTime.Today.Year - memberDate.Value.Year;
-                txtAge.Text = age.ToString();
-
-
-
-                if (selectRow.Cells["gender"].Value != null)
+                if (selectRow.Cells["gender"].Value == null || selectRow.Cells["gender"].Value == DBNull.Value)
                 {
+                    rdoMale.Checked = false;
+                    rdoFemale.Checked = false;
+                    rdoOther.Checked = false;
+                }
+                else
+                {
+                    
                     string gender = selectRow.Cells["gender"].Value.ToString();
                     if (gender == "1")
                     {
@@ -232,16 +250,10 @@ namespace Tutorial4
                     {
                         rdoFemale.Checked = true;
                     }
-                    else
+                    else if (gender == "0")
                     {
                         rdoOther.Checked = true;
                     }
-                }
-                else
-                {
-                    rdoMale.Checked = false;
-                    rdoFemale.Checked = false;
-                    rdoOther.Checked = false;
                 }
 
                 if (selectRow.Cells["phone_no_1"].Value != null)
@@ -271,6 +283,23 @@ namespace Tutorial4
                 {
                     pictureBox1.Image = null;
                 }
+
+                if (selectRow.Cells["password"].Value != null)
+                {
+                    txtPassword.Text = selectRow.Cells["password"].Value.ToString();
+                }
+                else
+                {
+                    txtPassword.Text = string.Empty;
+                }
+                if (selectRow.Cells["password"].Value != null)
+                {
+                    txtConfirmPassword.Text = selectRow.Cells["password"].Value.ToString();
+                }
+                else
+                {
+                    txtConfirmPassword.Text = string.Empty;
+                }
             }
 
         }
@@ -281,6 +310,8 @@ namespace Tutorial4
             string name = txtName.Text;
             string nrc = txtNrc.Text;
             string Mtype = txtMemberCard.Text;
+            string password = txtPassword.Text;
+            string confirmPassowrd = txtConfirmPassword.Text;
             int type = 0;
             if (Mtype == "Yes")
             {
@@ -381,6 +412,27 @@ namespace Tutorial4
                 return;
             }
 
+            if(password == "")
+            {
+                MessageBox.Show("Enter Password");
+                return;
+            }
+            
+            validatePassword(password);
+
+            if (confirmPassowrd == "")
+            {
+                MessageBox.Show("Confirm Password");
+                return;
+            }
+            if(password != confirmPassowrd)
+            {
+                MessageBox.Show("Password don't match");
+                return;
+            }
+
+            string passwordE = encryptPassword(password, key, iv);
+
             string imageFileName = Path.GetFileName(imagePath);
 
             string distination = Path.Combine(Application.StartupPath, "images", name + imageFileName);
@@ -392,8 +444,8 @@ namespace Tutorial4
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO CustomerTable ( [customer_id],[customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address], [created_user_id], [created_datetime], [updated_user_id], [updated_datetime], [is_deleted], [deleted_user_id], [deleted_datetime]) " +
-"VALUES (@customer_id, @customer_name, @nrc_number, @dob, @member_card, @Email, @gender, @phone_no_1, @phone_no_2, @photo, @address, @created_user_id, @created_datetime, @updated_user_id, @updated_datetime, @is_deleted, @deleted_user_id, @deleted_datetime)";
+                string query = "INSERT INTO CustomerTable ( [customer_id],[customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address], [created_user_id], [created_datetime], [updated_user_id], [updated_datetime], [is_deleted], [deleted_user_id], [deleted_datetime], [password]) " +
+"VALUES (@customer_id, @customer_name, @nrc_number, @dob, @member_card, @Email, @gender, @phone_no_1, @phone_no_2, @photo, @address, @created_user_id, @created_datetime, @updated_user_id, @updated_datetime, @is_deleted, @deleted_user_id, @deleted_datetime, @password)";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -415,6 +467,7 @@ namespace Tutorial4
                     command.Parameters.AddWithValue("@is_deleted", 0);
                     command.Parameters.AddWithValue("@deleted_user_id", 1);
                     command.Parameters.AddWithValue("@deleted_datetime", DateTime.Now);
+                    command.Parameters.AddWithValue("@password", passwordE);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -433,6 +486,8 @@ namespace Tutorial4
             string name = txtName.Text;
             string nrc = txtNrc.Text;
             string Mtype = txtMemberCard.Text;
+            string password = txtPassword.Text;
+            string confirmPassowrd = txtConfirmPassword.Text;
             int type = 0;
             if (Mtype == "Yes")
             {
@@ -528,7 +583,28 @@ namespace Tutorial4
                 }
             }
 
-            
+            if (password == "")
+            {
+                MessageBox.Show("Enter Password");
+                return;
+            }
+
+            validatePassword(password);
+
+            if (confirmPassowrd == "")
+            {
+                MessageBox.Show("Confirm Password");
+                return;
+            }
+            if (password != confirmPassowrd)
+            {
+                MessageBox.Show("Password don't match");
+                return;
+            }
+
+            string passwordE = encryptPassword(password, key, iv);
+
+
             string newImage = "";
             if (imagePath == "")
             {
@@ -559,7 +635,7 @@ namespace Tutorial4
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE CustomerTable SET [customer_name] = @customer_name, [nrc_number] = @nrc_number, [dob] = @dob, [member_card] = @member_card, [email] = @Email, [gender] = @gender, [phone_no_1] = @phone_no_1, [phone_no_2] = @phone_no_2, [photo] = @photo, [address] = @address, [updated_user_id] = @updated_user_id, [updated_datetime] = @updated_datetime WHERE [id] = @id";
+                string query = "UPDATE CustomerTable SET [customer_name] = @customer_name, [nrc_number] = @nrc_number, [dob] = @dob, [member_card] = @member_card, [email] = @Email, [gender] = @gender, [phone_no_1] = @phone_no_1, [phone_no_2] = @phone_no_2, [photo] = @photo, [address] = @address, [updated_user_id] = @updated_user_id, [updated_datetime] = @updated_datetime, [password] = @password WHERE [id] = @id";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -576,6 +652,7 @@ namespace Tutorial4
                     command.Parameters.AddWithValue("@address", address);
                     command.Parameters.AddWithValue("@updated_user_id", 1); // Replace with actual user ID if available
                     command.Parameters.AddWithValue("@updated_datetime", DateTime.Now);
+                    command.Parameters.AddWithValue("@password", passwordE);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -677,7 +754,7 @@ namespace Tutorial4
         private void btnLast_Click(object sender, EventArgs e)
         {
             LoadData(totalPage);
-            currentPageIndex = 4;
+            currentPageIndex = totalPage;
         }
 
         private void txtPhone2_TextChanged(object sender, EventArgs e)
@@ -697,11 +774,90 @@ namespace Tutorial4
                     object result = cmd.ExecuteScalar();
 
                     int id = result != DBNull.Value ? Convert.ToInt32(result) : 0;
+
+                    id++;
                     cid = "C-" + id.ToString("D4");
                     MessageBox.Show(cid.ToString());
                 }
             }
             return cid;
+        }
+
+        private void validatePassword(string passowrd)
+        {
+            if(passowrd.Length < 5)
+            {
+                MessageBox.Show("Password must be greate than 5");
+                return;
+            }
+            if (!Regex.IsMatch(passowrd, @"\d"))
+            {
+                MessageBox.Show("Password must contain number");
+                return;
+            }
+            if (!Regex.IsMatch(passowrd, @"[a-zA-Z]"))
+            {
+                MessageBox.Show("Password must contain character");
+                return;
+            }
+        }
+
+        //private void generateKey()
+        //{
+        //    using(Aes aes = Aes.Create())
+        //    {
+        //        aes.GenerateKey();
+        //        aes.GenerateIV();
+        //        key = aes.Key;
+        //        iv = aes.IV;
+        //    }
+        //}
+
+        private string encryptPassword(string password, byte[] key , byte[] iv)
+        {
+            using(Aes aes = Aes.Create())
+            {
+                aes.Key = key;
+                aes.IV = iv;
+
+                ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+
+                using(MemoryStream memoryStream = new MemoryStream())
+                {
+                    using(CryptoStream cryptoStream =  new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                    {
+                        using(StreamWriter writer = new StreamWriter(cryptoStream))
+                        {
+                            writer.Write(password);
+                        }
+                    }
+
+                    byte[] encrypted = memoryStream.ToArray();
+                    return Convert.ToBase64String(encrypted);
+                }
+            }
+        }
+
+        private string decryptPassword(string password, byte[] key, byte[] iv)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = key;
+                aes.IV = iv;
+
+                ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+
+                using (MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(password)))
+                {
+                    using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader reader = new StreamReader(cryptoStream))
+                        {
+                            return reader.ReadToEnd();
+                        }
+                    }
+                }
+            }
         }
     }
 }
