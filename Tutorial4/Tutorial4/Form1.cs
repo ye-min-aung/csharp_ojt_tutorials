@@ -53,16 +53,6 @@ namespace Tutorial4
                 dataTable.Columns.Add("Member", typeof(string));
                 dataTable.Columns.Add("Password", typeof(string));
 
-                //try
-                //{
-                //    dataAdapter.Fill(dataTable);
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show(ex.Message);
-                //}
-                //dataAdapter.Fill(dataTable);
-
                 dataTable.Columns.Add("PhotoImage", typeof(Image));
 
                 foreach (DataRow row in dataTable.Rows)
@@ -147,15 +137,6 @@ namespace Tutorial4
             {
                 DataGridViewRow selectRow = dataGridView1.Rows[select];
 
-                if (selectRow.Cells["customer_id"].Value != null)
-                {
-                    txtId.Text = selectRow.Cells["customer_id"].Value.ToString();
-                }
-                else
-                {
-                    txtId.Text = string.Empty;
-                }
-
                 if (selectRow.Cells["customer_name"].Value != null)
                 {
                     txtName.Text = selectRow.Cells["customer_name"].Value.ToString();
@@ -165,6 +146,14 @@ namespace Tutorial4
                     txtMemberCard.Text = null;
                 }
                 else
+                {
+                    txtName.Text = string.Empty;
+                }
+
+                if (selectRow.Cells["customer_id"].Value != null)
+                {
+                    txtId.Text = selectRow.Cells["customer_id"].Value.ToString();
+                }else
                 {
                     txtName.Text = string.Empty;
                 }
@@ -734,6 +723,7 @@ namespace Tutorial4
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
+            getTotalPage();
             if (currentPageIndex > 1)
             {
                 currentPageIndex--;
@@ -743,6 +733,7 @@ namespace Tutorial4
 
         private void btnNext_Click(object sender, EventArgs e)
         {
+            getTotalPage();
             if (currentPageIndex < totalPage)
             {
                 currentPageIndex++;
@@ -753,6 +744,7 @@ namespace Tutorial4
 
         private void btnLast_Click(object sender, EventArgs e)
         {
+            getTotalPage();
             LoadData(totalPage);
             currentPageIndex = totalPage;
         }

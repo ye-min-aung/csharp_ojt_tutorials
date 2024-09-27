@@ -175,28 +175,47 @@ namespace Tutorial4
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string id = txtId.Text;
-            string password = txtPassword.Text;
-            string Epassword = encryptPassword(password, key, iv);
-            //MessageBox.Show(Epassowrd);
-
-            using(SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                string query = "select * from CustomerTable where customer_id = '"+id+"' and password = '"+Epassword+"'";
-                SqlDataAdapter adaptar = new SqlDataAdapter(query, connection);
-                DataTable dt = new DataTable();
-                adaptar.Fill(dt);
-                if(dt.Rows.Count > 0)
+                string id = txtId.Text;
+                string password = txtPassword.Text;
+                string Epassword = encryptPassword(password, key, iv);
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    this.Hide();
-                    Form1 form1 = new Form1();
-                    form1.Show();
+                    connection.Open();
+
+                    string qu = "select count(*) from customertable where customer_id=@id";
+                    using (SqlCommand command = new SqlCommand(qu, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", id);
+                        int user = (int)command.ExecuteScalar();
+                        if (user == 0)
+                        {
+                            MessageBox.Show("User is not found");
+                            return;
+                        }
+                    }
+
+                    string query = "select * from CustomerTable where customer_id = '" + id + "' and password = '" + Epassword + "'";
+                    SqlDataAdapter adaptar = new SqlDataAdapter(query, connection);
+                    DataTable dt = new DataTable();
+                    adaptar.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        MessageBox.Show("successful login");
+                        this.Hide();
+                        Form1 form1 = new Form1();
+                        form1.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("password incorrect");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("invalid password or username");
-                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
             }
         }
     }
