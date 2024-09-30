@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Tutorial4
 {
@@ -23,6 +15,19 @@ namespace Tutorial4
 
         public string connectionString = "Server=DESKTOP-4VM5D0P\\SQLEXPRESS;Database=AllDB;User Id=sa;Password=root;Trusted_Connection=True;";
 
+            public static string  Lid;
+            public static string name;
+            public static string nrc;
+            public static string date;
+            public static string age;
+            public static string memberCard;
+            public static string email;
+            public static string gender;
+            public static string phone1;
+            public static string phone2;
+            public static string image;
+            public static string address;
+            public static string Lpassword;
         private void InitializeComponent()
         {
             label1 = new Label();
@@ -203,9 +208,26 @@ namespace Tutorial4
                     adaptar.Fill(dt);
                     if (dt.Rows.Count > 0)
                     {
-                        MessageBox.Show("successful login");
+                        foreach(DataRow row in dt.Rows)
+                        {
+                            Lid = row["customer_id"].ToString();
+                            name = row["customer_name"].ToString();
+                            nrc = row["nrc_number"].ToString();
+                            date = row["dob"].ToString();
+                            memberCard = row["member_card"].ToString();
+                            email = row["email"].ToString();
+                            gender = row["gender"].ToString();
+                            phone1 = row["phone_no_1"].ToString();
+                            phone2 = row["phone_no_2"].ToString();
+                            image = row["photo"].ToString();
+                            address = row["address"].ToString();
+                            Lpassword = decryptPassword(row["password"].ToString(), key, iv);
+                        }
                         this.Hide();
-                        Form1 form1 = new Form1();
+                        Form1 form1 = new Form1
+                        {
+                            sourcePage = "login"
+                        };
                         form1.Show();
                     }
                     else
@@ -216,6 +238,27 @@ namespace Tutorial4
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
+            }
+        }
+        private string decryptPassword(string password, byte[] key, byte[] iv)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = key;
+                aes.IV = iv;
+
+                ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+
+                using (MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(password)))
+                {
+                    using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader reader = new StreamReader(cryptoStream))
+                        {
+                            return reader.ReadToEnd();
+                        }
+                    }
+                }
             }
         }
     }

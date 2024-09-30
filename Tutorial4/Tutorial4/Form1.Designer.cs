@@ -66,21 +66,25 @@
             label17 = new Label();
             btnChooseImage = new Button();
             openFileDialog1 = new OpenFileDialog();
-            btnPrevious = new Button();
-            btnNext = new Button();
-            btnLast = new Button();
             txtPassword = new TextBox();
             label18 = new Label();
             label19 = new Label();
             txtConfirmPassword = new TextBox();
+            menuStrip1 = new MenuStrip();
+            customerToolStripMenuItem = new ToolStripMenuItem();
+            entryToolStripMenuItem = new ToolStripMenuItem();
+            listingToolStripMenuItem = new ToolStripMenuItem();
+            logoutToolStripMenuItem = new ToolStripMenuItem();
+            btnBack = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(61, 18);
+            label1.Location = new Point(99, 67);
             label1.Name = "label1";
             label1.Size = new Size(89, 20);
             label1.TabIndex = 0;
@@ -89,7 +93,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(605, 78);
+            label2.Location = new Point(643, 127);
             label2.Name = "label2";
             label2.Size = new Size(74, 20);
             label2.TabIndex = 1;
@@ -98,7 +102,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(605, 18);
+            label3.Location = new Point(643, 67);
             label3.Name = "label3";
             label3.Size = new Size(57, 20);
             label3.TabIndex = 2;
@@ -107,7 +111,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(61, 78);
+            label4.Location = new Point(99, 127);
             label4.Name = "label4";
             label4.Size = new Size(116, 20);
             label4.TabIndex = 3;
@@ -116,7 +120,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(61, 138);
+            label5.Location = new Point(99, 187);
             label5.Name = "label5";
             label5.Size = new Size(62, 20);
             label5.TabIndex = 4;
@@ -126,7 +130,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(61, 198);
+            label6.Location = new Point(99, 247);
             label6.Name = "label6";
             label6.Size = new Size(94, 20);
             label6.TabIndex = 5;
@@ -135,7 +139,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(61, 258);
+            label7.Location = new Point(99, 307);
             label7.Name = "label7";
             label7.Size = new Size(36, 20);
             label7.TabIndex = 6;
@@ -144,7 +148,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(61, 318);
+            label8.Location = new Point(99, 367);
             label8.Name = "label8";
             label8.Size = new Size(100, 20);
             label8.TabIndex = 7;
@@ -153,7 +157,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(61, 378);
+            label9.Location = new Point(99, 427);
             label9.Name = "label9";
             label9.Size = new Size(46, 20);
             label9.TabIndex = 8;
@@ -162,7 +166,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(605, 138);
+            label10.Location = new Point(643, 187);
             label10.Name = "label10";
             label10.Size = new Size(74, 20);
             label10.TabIndex = 9;
@@ -171,7 +175,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(605, 318);
+            label11.Location = new Point(643, 367);
             label11.Name = "label11";
             label11.Size = new Size(62, 20);
             label11.TabIndex = 10;
@@ -180,7 +184,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(605, 198);
+            label12.Location = new Point(643, 247);
             label12.Name = "label12";
             label12.Size = new Size(51, 20);
             label12.TabIndex = 11;
@@ -189,21 +193,21 @@
             // txtId
             // 
             txtId.Enabled = false;
-            txtId.Location = new Point(194, 15);
+            txtId.Location = new Point(232, 64);
             txtId.Name = "txtId";
             txtId.Size = new Size(215, 27);
             txtId.TabIndex = 12;
             // 
             // txtName
             // 
-            txtName.Location = new Point(194, 75);
+            txtName.Location = new Point(232, 124);
             txtName.Name = "txtName";
             txtName.Size = new Size(215, 27);
             txtName.TabIndex = 13;
             // 
             // txtNrc
             // 
-            txtNrc.Location = new Point(194, 135);
+            txtNrc.Location = new Point(232, 184);
             txtNrc.Name = "txtNrc";
             txtNrc.Size = new Size(215, 27);
             txtNrc.TabIndex = 14;
@@ -212,14 +216,14 @@
             // txtAge
             // 
             txtAge.Enabled = false;
-            txtAge.Location = new Point(194, 255);
+            txtAge.Location = new Point(232, 304);
             txtAge.Name = "txtAge";
             txtAge.Size = new Size(215, 27);
             txtAge.TabIndex = 15;
             // 
             // memberDate
             // 
-            memberDate.Location = new Point(194, 193);
+            memberDate.Location = new Point(232, 242);
             memberDate.Name = "memberDate";
             memberDate.Size = new Size(215, 27);
             memberDate.TabIndex = 16;
@@ -228,28 +232,28 @@
             // 
             txtMemberCard.FormattingEnabled = true;
             txtMemberCard.Items.AddRange(new object[] { "Yes", "No" });
-            txtMemberCard.Location = new Point(194, 315);
+            txtMemberCard.Location = new Point(232, 364);
             txtMemberCard.Name = "txtMemberCard";
             txtMemberCard.Size = new Size(215, 28);
             txtMemberCard.TabIndex = 17;
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(194, 375);
+            txtEmail.Location = new Point(232, 424);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(215, 27);
             txtEmail.TabIndex = 18;
             // 
             // txtPhone1
             // 
-            txtPhone1.Location = new Point(702, 75);
+            txtPhone1.Location = new Point(740, 124);
             txtPhone1.Name = "txtPhone1";
             txtPhone1.Size = new Size(215, 27);
             txtPhone1.TabIndex = 19;
             // 
             // txtPhone2
             // 
-            txtPhone2.Location = new Point(702, 135);
+            txtPhone2.Location = new Point(740, 184);
             txtPhone2.Name = "txtPhone2";
             txtPhone2.Size = new Size(215, 27);
             txtPhone2.TabIndex = 20;
@@ -258,7 +262,7 @@
             // rdoOther
             // 
             rdoOther.AutoSize = true;
-            rdoOther.Location = new Point(702, 16);
+            rdoOther.Location = new Point(740, 65);
             rdoOther.Name = "rdoOther";
             rdoOther.Size = new Size(67, 24);
             rdoOther.TabIndex = 22;
@@ -269,7 +273,7 @@
             // rdoMale
             // 
             rdoMale.AutoSize = true;
-            rdoMale.Location = new Point(782, 16);
+            rdoMale.Location = new Point(820, 65);
             rdoMale.Name = "rdoMale";
             rdoMale.Size = new Size(63, 24);
             rdoMale.TabIndex = 23;
@@ -280,7 +284,7 @@
             // rdoFemale
             // 
             rdoFemale.AutoSize = true;
-            rdoFemale.Location = new Point(852, 16);
+            rdoFemale.Location = new Point(890, 65);
             rdoFemale.Name = "rdoFemale";
             rdoFemale.Size = new Size(78, 24);
             rdoFemale.TabIndex = 24;
@@ -291,7 +295,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(702, 193);
+            pictureBox1.Location = new Point(740, 242);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(215, 89);
             pictureBox1.TabIndex = 25;
@@ -299,7 +303,7 @@
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(702, 318);
+            txtAddress.Location = new Point(740, 367);
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(215, 84);
             txtAddress.TabIndex = 26;
@@ -308,16 +312,17 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 465);
+            dataGridView1.Location = new Point(50, 514);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(1582, 251);
             dataGridView1.TabIndex = 27;
             dataGridView1.CellClick += dataGridView1_CellClick;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(194, 420);
+            btnSave.Location = new Point(232, 469);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(94, 29);
             btnSave.TabIndex = 28;
@@ -327,7 +332,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(398, 420);
+            btnUpdate.Location = new Point(436, 469);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(94, 29);
             btnUpdate.TabIndex = 29;
@@ -337,7 +342,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(612, 420);
+            btnDelete.Location = new Point(650, 469);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(94, 29);
             btnDelete.TabIndex = 30;
@@ -347,7 +352,7 @@
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(823, 420);
+            btnClear.Location = new Point(861, 469);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(94, 29);
             btnClear.TabIndex = 31;
@@ -359,7 +364,7 @@
             // 
             label13.AutoSize = true;
             label13.ForeColor = Color.Red;
-            label13.Location = new Point(415, 78);
+            label13.Location = new Point(453, 127);
             label13.Name = "label13";
             label13.Size = new Size(15, 20);
             label13.TabIndex = 32;
@@ -369,7 +374,7 @@
             // 
             label14.AutoSize = true;
             label14.ForeColor = Color.Red;
-            label14.Location = new Point(415, 138);
+            label14.Location = new Point(453, 187);
             label14.Name = "label14";
             label14.Size = new Size(15, 20);
             label14.TabIndex = 33;
@@ -379,7 +384,7 @@
             // 
             label15.AutoSize = true;
             label15.ForeColor = Color.Red;
-            label15.Location = new Point(415, 318);
+            label15.Location = new Point(453, 367);
             label15.Name = "label15";
             label15.Size = new Size(15, 20);
             label15.TabIndex = 34;
@@ -389,7 +394,7 @@
             // 
             label16.AutoSize = true;
             label16.ForeColor = Color.Red;
-            label16.Location = new Point(415, 378);
+            label16.Location = new Point(453, 427);
             label16.Name = "label16";
             label16.Size = new Size(15, 20);
             label16.TabIndex = 35;
@@ -399,7 +404,7 @@
             // 
             label17.AutoSize = true;
             label17.ForeColor = Color.Red;
-            label17.Location = new Point(933, 78);
+            label17.Location = new Point(971, 127);
             label17.Name = "label17";
             label17.Size = new Size(15, 20);
             label17.TabIndex = 36;
@@ -407,7 +412,7 @@
             // 
             // btnChooseImage
             // 
-            btnChooseImage.Location = new Point(933, 193);
+            btnChooseImage.Location = new Point(971, 242);
             btnChooseImage.Name = "btnChooseImage";
             btnChooseImage.Size = new Size(94, 29);
             btnChooseImage.TabIndex = 37;
@@ -419,39 +424,9 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
-            // btnPrevious
-            // 
-            btnPrevious.Location = new Point(22, 731);
-            btnPrevious.Name = "btnPrevious";
-            btnPrevious.Size = new Size(94, 29);
-            btnPrevious.TabIndex = 38;
-            btnPrevious.Text = "<<Previous";
-            btnPrevious.UseVisualStyleBackColor = true;
-            btnPrevious.Click += btnPrevious_Click;
-            // 
-            // btnNext
-            // 
-            btnNext.Location = new Point(166, 731);
-            btnNext.Name = "btnNext";
-            btnNext.Size = new Size(94, 29);
-            btnNext.TabIndex = 39;
-            btnNext.Text = "Next>>";
-            btnNext.UseVisualStyleBackColor = true;
-            btnNext.Click += btnNext_Click;
-            // 
-            // btnLast
-            // 
-            btnLast.Location = new Point(316, 731);
-            btnLast.Name = "btnLast";
-            btnLast.Size = new Size(94, 29);
-            btnLast.TabIndex = 40;
-            btnLast.Text = "Last!";
-            btnLast.UseVisualStyleBackColor = true;
-            btnLast.Click += btnLast_Click;
-            // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(1145, 15);
+            txtPassword.Location = new Point(1183, 64);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(215, 27);
             txtPassword.TabIndex = 41;
@@ -459,7 +434,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new Point(1001, 18);
+            label18.Location = new Point(1039, 67);
             label18.Name = "label18";
             label18.Size = new Size(70, 20);
             label18.TabIndex = 42;
@@ -468,7 +443,7 @@
             // label19
             // 
             label19.AutoSize = true;
-            label19.Location = new Point(1001, 78);
+            label19.Location = new Point(1039, 127);
             label19.Name = "label19";
             label19.Size = new Size(127, 20);
             label19.TabIndex = 43;
@@ -476,23 +451,68 @@
             // 
             // txtConfirmPassword
             // 
-            txtConfirmPassword.Location = new Point(1145, 75);
+            txtConfirmPassword.Location = new Point(1183, 124);
             txtConfirmPassword.Name = "txtConfirmPassword";
             txtConfirmPassword.Size = new Size(215, 27);
             txtConfirmPassword.TabIndex = 44;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { customerToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(1833, 28);
+            menuStrip1.TabIndex = 45;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // customerToolStripMenuItem
+            // 
+            customerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { entryToolStripMenuItem, listingToolStripMenuItem, logoutToolStripMenuItem });
+            customerToolStripMenuItem.Name = "customerToolStripMenuItem";
+            customerToolStripMenuItem.Size = new Size(86, 24);
+            customerToolStripMenuItem.Text = "Customer";
+            // 
+            // entryToolStripMenuItem
+            // 
+            entryToolStripMenuItem.Name = "entryToolStripMenuItem";
+            entryToolStripMenuItem.Size = new Size(139, 26);
+            entryToolStripMenuItem.Text = "Entry";
+            // 
+            // listingToolStripMenuItem
+            // 
+            listingToolStripMenuItem.Name = "listingToolStripMenuItem";
+            listingToolStripMenuItem.Size = new Size(139, 26);
+            listingToolStripMenuItem.Text = "Listing";
+            listingToolStripMenuItem.Click += listingToolStripMenuItem_Click;
+            // 
+            // logoutToolStripMenuItem
+            // 
+            logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
+            logoutToolStripMenuItem.Size = new Size(139, 26);
+            logoutToolStripMenuItem.Text = "Logout";
+            logoutToolStripMenuItem.Click += logoutToolStripMenuItem_Click;
+            // 
+            // btnBack
+            // 
+            btnBack.Location = new Point(1059, 469);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(94, 29);
+            btnBack.TabIndex = 46;
+            btnBack.Text = "Back";
+            btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1607, 790);
+            ClientSize = new Size(1833, 846);
+            Controls.Add(btnBack);
             Controls.Add(txtConfirmPassword);
             Controls.Add(label19);
             Controls.Add(label18);
             Controls.Add(txtPassword);
-            Controls.Add(btnLast);
-            Controls.Add(btnNext);
-            Controls.Add(btnPrevious);
             Controls.Add(btnChooseImage);
             Controls.Add(label17);
             Controls.Add(label16);
@@ -530,11 +550,15 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -579,12 +603,15 @@
         private Label label17;
         private Button btnChooseImage;
         private OpenFileDialog openFileDialog1;
-        private Button btnPrevious;
-        private Button btnNext;
-        private Button btnLast;
         private TextBox txtPassword;
         private Label label18;
         private Label label19;
         private TextBox txtConfirmPassword;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem customerToolStripMenuItem;
+        private ToolStripMenuItem entryToolStripMenuItem;
+        private ToolStripMenuItem listingToolStripMenuItem;
+        private ToolStripMenuItem logoutToolStripMenuItem;
+        private Button btnBack;
     }
 }

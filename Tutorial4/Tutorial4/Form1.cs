@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Security.Cryptography;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace Tutorial4
 {
@@ -16,6 +17,7 @@ namespace Tutorial4
             getTotalPage();
         }
 
+        public string sourcePage { get; set; }
         public string connectionString = "Server=DESKTOP-4VM5D0P\\SQLEXPRESS;Database=AllDB;User Id=sa;Password=root;Trusted_Connection=True;";
 
         int select;
@@ -26,7 +28,7 @@ namespace Tutorial4
         int totalPage = 0;
 
         private byte[] key = Convert.FromBase64String("k1rZt6cU5fD9G2dIbZRZksQ2pZJfw6PzfvA1wfg3Zb8=");
-        private byte[] iv  = Convert.FromBase64String("9vHdlrZ7QwJwU4r1cqls2g==");
+        private byte[] iv = Convert.FromBase64String("9vHdlrZ7QwJwU4r1cqls2g==");
 
         public void LoadData(int page)
         {
@@ -87,7 +89,7 @@ namespace Tutorial4
                         case 2:
                             row["Member"] = "No";
                             break;
-                        default :
+                        default:
                             break;
                     }
 
@@ -153,7 +155,8 @@ namespace Tutorial4
                 if (selectRow.Cells["customer_id"].Value != null)
                 {
                     txtId.Text = selectRow.Cells["customer_id"].Value.ToString();
-                }else
+                }
+                else
                 {
                     txtName.Text = string.Empty;
                 }
@@ -203,7 +206,7 @@ namespace Tutorial4
                 {
                     memberDate.CustomFormat = "";
                     //memberDate.Format = DateTimePickerFormat.Custom;
-                    
+
                 }
                 else
                 {
@@ -229,7 +232,7 @@ namespace Tutorial4
                 }
                 else
                 {
-                    
+
                     string gender = selectRow.Cells["gender"].Value.ToString();
                     if (gender == "1")
                     {
@@ -401,12 +404,12 @@ namespace Tutorial4
                 return;
             }
 
-            if(password == "")
+            if (password == "")
             {
                 MessageBox.Show("Enter Password");
                 return;
             }
-            
+
             validatePassword(password);
 
             if (confirmPassowrd == "")
@@ -414,7 +417,7 @@ namespace Tutorial4
                 MessageBox.Show("Confirm Password");
                 return;
             }
-            if(password != confirmPassowrd)
+            if (password != confirmPassowrd)
             {
                 MessageBox.Show("Password don't match");
                 return;
@@ -471,7 +474,8 @@ namespace Tutorial4
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             DataGridViewRow selectRow = dataGridView1.Rows[select];
-            int id = Convert.ToInt32(selectRow.Cells["id"].Value);
+            //int id = Convert.ToInt32(selectRow.Cells["id"].Value);
+            string customer_id = txtId.Text;
             string name = txtName.Text;
             string nrc = txtNrc.Text;
             string Mtype = txtMemberCard.Text;
@@ -597,13 +601,13 @@ namespace Tutorial4
             string newImage = "";
             if (imagePath == "")
             {
-                
+
                 imagePath = selectRow.Cells["photo"].Value.ToString();
                 newImage = imagePath;
             }
             else
             {
-                
+
 
                 string imageFileName = Path.GetFileName(imagePath);
 
@@ -620,15 +624,15 @@ namespace Tutorial4
 
             }
 
-            
+
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE CustomerTable SET [customer_name] = @customer_name, [nrc_number] = @nrc_number, [dob] = @dob, [member_card] = @member_card, [email] = @Email, [gender] = @gender, [phone_no_1] = @phone_no_1, [phone_no_2] = @phone_no_2, [photo] = @photo, [address] = @address, [updated_user_id] = @updated_user_id, [updated_datetime] = @updated_datetime, [password] = @password WHERE [id] = @id";
+                string query = "UPDATE CustomerTable SET [customer_name] = @customer_name, [nrc_number] = @nrc_number, [dob] = @dob, [member_card] = @member_card, [email] = @Email, [gender] = @gender, [phone_no_1] = @phone_no_1, [phone_no_2] = @phone_no_2, [photo] = @photo, [address] = @address, [updated_user_id] = @updated_user_id, [updated_datetime] = @updated_datetime, [password] = @password WHERE [customer_id] = @customer_id";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@customer_id", customer_id);
                     command.Parameters.AddWithValue("@customer_name", name);
                     command.Parameters.AddWithValue("@nrc_number", nrc);
                     command.Parameters.AddWithValue("@dob", date);
@@ -639,12 +643,13 @@ namespace Tutorial4
                     command.Parameters.AddWithValue("@phone_no_2", phone2);
                     command.Parameters.AddWithValue("@photo", newImage);
                     command.Parameters.AddWithValue("@address", address);
-                    command.Parameters.AddWithValue("@updated_user_id", 1); // Replace with actual user ID if available
+                    command.Parameters.AddWithValue("@updated_user_id", 1);
                     command.Parameters.AddWithValue("@updated_datetime", DateTime.Now);
                     command.Parameters.AddWithValue("@password", passwordE);
 
                     connection.Open();
                     command.ExecuteNonQuery();
+                    MessageBox.Show("update successful !");
                 }
             }
 
@@ -655,18 +660,36 @@ namespace Tutorial4
         private void btnDelete_Click(object sender, EventArgs e)
         {
             DataGridViewRow selectRow = dataGridView1.Rows[select];
-            int id = Convert.ToInt32(selectRow.Cells["id"].Value);
+            //int id = Convert.ToInt32(selectRow.Cells["id"].Value);
+            string customer_id = txtId.Text;
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE CustomerTable SET is_deleted = 1 WHERE id = @id";
+                string query = "UPDATE CustomerTable SET is_deleted = 1 WHERE customer_id = @customer_id";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@customer_id", customer_id);
                     connection.Open();
                     command.ExecuteNonQuery();
+                    MessageBox.Show("deleted !");
                 }
             }
-            LoadData(totalPage);
+            txtId.Text = null;
+            txtName.Text = null;
+            txtNrc.Text = null;
+            txtEmail.Text = null;
+            txtPhone1.Text = null;
+            txtPhone2.Text = null;
+            txtAddress.Text = null;
+            txtPassword.Text = null;
+            txtConfirmPassword.Text = null;
+            rdoFemale.Checked = false;
+            rdoMale.Checked = false;
+            rdoOther.Checked = false;
+            txtAge.Text = null;
+            pictureBox1.Image = null;
+            memberDate.Text = null;
+            txtMemberCard .Text = null;
         }
 
         bool IsPhone(string phone)
@@ -683,13 +706,193 @@ namespace Tutorial4
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-
+            txtId.Text = null;
+            txtName.Text = null;
+            txtNrc.Text = null;
+            txtEmail.Text = null;
+            txtPhone1.Text = null;
+            txtPhone2.Text = null;
+            txtAddress.Text = null;
+            txtPassword.Text = null;
+            txtConfirmPassword.Text = null;
+            rdoFemale.Checked = false;
+            rdoMale.Checked = false;
+            rdoOther.Checked = false;
+            txtAge.Text = null;
+            pictureBox1.Image = null;
+            memberDate.Text = null;
+            txtMemberCard.Text = null;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            dataGridView1.Visible = false;
             LoadData(1);
+            if (sourcePage == "listing")
+            {
+                DataTable dataTable = Listing.table;
+                if (dataTable.Rows.Count > 0)
+                {
+                    txtId.Text = dataTable.Rows[0]["customer_id"].ToString();
+                    txtName.Text = dataTable.Rows[0]["customer_name"].ToString();
+                    txtNrc.Text = dataTable.Rows[0]["nrc_number"].ToString();
+                    txtEmail.Text = dataTable.Rows[0]["email"].ToString();
+                    txtPhone1.Text = dataTable.Rows[0]["phone_no_1"].ToString();
+                    txtPhone2.Text = dataTable.Rows[0]["phone_no_2"].ToString();
+                    txtAddress.Text = dataTable.Rows[0]["address"].ToString();
+                    txtPassword.Text = dataTable.Rows[0]["password"].ToString();
+                    txtConfirmPassword.Text = dataTable.Rows[0]["password"].ToString();
+
+                    if (dataTable.Rows[0]["gender"] == null)
+                    {
+                        rdoMale.Checked = false;
+                        rdoFemale.Checked = false;
+                        rdoOther.Checked = false;
+                    }
+                    else
+                    {
+
+                        string gender = dataTable.Rows[0]["gender"].ToString();
+                        if (gender == "1")
+                        {
+                            rdoMale.Checked = true;
+                        }
+                        else if (gender == "2")
+                        {
+                            rdoFemale.Checked = true;
+                        }
+                        else if (gender == "0")
+                        {
+                            rdoOther.Checked = true;
+                        }
+                    }
+                    if (dataTable.Rows[0]["member_card"] != null)
+                    {
+                        string type = dataTable.Rows[0]["member_card"].ToString();
+                        if (type == "1")
+                        {
+                            txtMemberCard.Text = "Yes";
+                        }
+                        else if (type == "2")
+                        {
+                            txtMemberCard.Text = "No";
+                        }
+                    }
+
+                    string photo = dataTable.Rows[0]["photo"].ToString();
+                    if (File.Exists(photo))
+                    {
+                        pictureBox1.Image = Image.FromFile(photo);
+                    }
+                    else
+                    {
+                        pictureBox1.Image = null;
+                    }
+
+                    if (dataTable.Rows[0]["dob"].ToString() == null)
+                    {
+                        memberDate.CustomFormat = "";
+
+                    }
+                    else
+                    {
+                        try
+                        {
+                            string dateString = dataTable.Rows[0]["dob"].ToString();
+                            DateTime date = DateTime.Parse(dateString);
+                            memberDate.Value = date;
+                            int age = DateTime.Today.Year - memberDate.Value.Year;
+                            txtAge.Text = age.ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            memberDate.CustomFormat = null;
+                        }
+                    }
+                }
+            }
+            else if (sourcePage == "login")
+            {
+                txtId.Text = Login.Lid;
+                txtName.Text = Login.name;
+                txtNrc.Text = Login.nrc;
+                txtEmail.Text = Login.email;
+                txtPhone1.Text = Login.phone1;
+                txtPhone2.Text = Login.phone2;
+                txtAddress.Text = Login.address;
+                txtPassword.Text = Login.Lpassword;
+                txtConfirmPassword.Text = Login.Lpassword;
+
+                if (Login.gender == null)
+                {
+                    rdoMale.Checked = false;
+                    rdoFemale.Checked = false;
+                    rdoOther.Checked = false;
+                }
+                else
+                {
+
+                    string gender = Login.gender;
+                    if (gender == "1")
+                    {
+                        rdoMale.Checked = true;
+                    }
+                    else if (gender == "2")
+                    {
+                        rdoFemale.Checked = true;
+                    }
+                    else if (gender == "0")
+                    {
+                        rdoOther.Checked = true;
+                    }
+                }
+                if (Login.memberCard != null)
+                {
+                    string type = Login.memberCard;
+                    if (type == "1")
+                    {
+                        txtMemberCard.Text = "Yes";
+                    }
+                    else if (type == "2")
+                    {
+                        txtMemberCard.Text = "No";
+                    }
+                }
+
+                string photo = Login.image;
+                if (File.Exists(photo))
+                {
+                    pictureBox1.Image = Image.FromFile(photo);
+                }
+                else
+                {
+                    pictureBox1.Image = null;
+                }
+
+                if (Login.date == null)
+                {
+                    memberDate.CustomFormat = "";
+
+                }
+                else
+                {
+                    try
+                    {
+                        string dateString = Login.date;
+                        DateTime date = DateTime.Parse(dateString);
+                        memberDate.Value = date;
+                        int age = DateTime.Today.Year - memberDate.Value.Year;
+                        txtAge.Text = age.ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        memberDate.CustomFormat = null;
+                    }
+                }
+            }
+
+
+
         }
 
         private void btnChooseImage_Click(object sender, EventArgs e)
@@ -777,7 +980,7 @@ namespace Tutorial4
 
         private void validatePassword(string passowrd)
         {
-            if(passowrd.Length < 5)
+            if (passowrd.Length < 5)
             {
                 MessageBox.Show("Password must be greate than 5");
                 return;
@@ -805,20 +1008,20 @@ namespace Tutorial4
         //    }
         //}
 
-        private string encryptPassword(string password, byte[] key , byte[] iv)
+        private string encryptPassword(string password, byte[] key, byte[] iv)
         {
-            using(Aes aes = Aes.Create())
+            using (Aes aes = Aes.Create())
             {
                 aes.Key = key;
                 aes.IV = iv;
 
                 ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
-                using(MemoryStream memoryStream = new MemoryStream())
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    using(CryptoStream cryptoStream =  new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                    using (CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
                     {
-                        using(StreamWriter writer = new StreamWriter(cryptoStream))
+                        using (StreamWriter writer = new StreamWriter(cryptoStream))
                         {
                             writer.Write(password);
                         }
@@ -850,6 +1053,32 @@ namespace Tutorial4
                     }
                 }
             }
+        }
+
+        private void listingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Listing list = new Listing();
+            list.Show();
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Login login = new Login();
+            login.Show();
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Listing list = new Listing();
+            list.Show();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
