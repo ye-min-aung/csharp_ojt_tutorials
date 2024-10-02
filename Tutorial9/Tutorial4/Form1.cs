@@ -5,7 +5,7 @@ using System.IO;
 using System.Security.Cryptography;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
-namespace Tutorial4
+namespace Tutorial9
 {
     public partial class Form1 : Form
     {
@@ -30,6 +30,91 @@ namespace Tutorial4
         private byte[] key = Convert.FromBase64String("k1rZt6cU5fD9G2dIbZRZksQ2pZJfw6PzfvA1wfg3Zb8=");
         private byte[] iv = Convert.FromBase64String("9vHdlrZ7QwJwU4r1cqls2g==");
 
+        public void LoadData(int page)
+        {
+            string query = "";
+            if (page == 1)
+            {
+                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address], [password] FROM CustomerTable WHERE is_deleted = 0 ORDER BY id";
+            }
+            else
+            {
+                int previousPageOffSet = (page - 1) * pageSize;
+                query = "SELECT TOP " + pageSize + " [id], [customer_id], [customer_name], [nrc_number], [dob], [member_card], [email], [gender], [phone_no_1], [phone_no_2], [photo], [address], [password] FROM CustomerTable WHERE id NOT IN (SELECT TOP " + previousPageOffSet + " [id] FROM CustomerTable WHERE is_deleted = 0 ORDER BY [id]) AND is_deleted = 0 ORDER BY [id]";
+            }
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(query, connection);
+                DataTable dataTable = new DataTable();
+                dataTable.Clear();
+                dataAdapter.Fill(dataTable);
+                dataTable.Columns.Add("GenderType", typeof(string));
+                dataTable.Columns.Add("Member", typeof(string));
+                dataTable.Columns.Add("Password", typeof(string));
+
+                dataTable.Columns.Add("PhotoImage", typeof(Image));
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+
+                    int genderValue = Convert.ToInt32(row["gender"]);
+                    int member = Convert.ToInt32(row["member_card"]);
+                    string encryptedPassword = row["password"].ToString();
+                    string decryptedPassword = decryptPassword(encryptedPassword, key, iv);
+                    row["password"] = decryptedPassword;
+
+                    switch (genderValue)
+                    {
+                        case 0:
+                            row["GenderType"] = "Other";
+                            break;
+                        case 1:
+                            row["GenderType"] = "Male";
+                            break;
+                        case 2:
+                            row["GenderType"] = "Female";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    switch (member)
+                    {
+                        case 1:
+                            row["Member"] = "Yes";
+                            break;
+                        case 2:
+                            row["Member"] = "No";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    string photoPath = row["photo"].ToString();
+
+                    if (File.Exists(photoPath))
+                    {
+                        Image image = Image.FromFile(photoPath);
+                        row["PhotoImage"] = image;
+                    }
+                    else
+                    {
+                        row["PhotoImage"] = null;
+                    }
+                }
+
+                dataGridView1.DataSource = dataTable;
+
+                dataGridView1.Columns["gender"].Visible = false;
+                dataGridView1.Columns["member_card"].Visible = false;
+                dataGridView1.Columns["photo"].Visible = false;
+                dataGridView1.Columns["id"].Visible = false;
+                ((DataGridViewImageColumn)dataGridView1.Columns["PhotoImage"]).ImageLayout = DataGridViewImageCellLayout.Stretch;
+            }
+        }
 
         private void label5_Click(object sender, EventArgs e)
         {
@@ -381,6 +466,8 @@ namespace Tutorial4
                 }
 
             }
+
+            LoadData(totalPage);
             num++;
         }
 
@@ -565,6 +652,9 @@ namespace Tutorial4
                     MessageBox.Show("update successful !");
                 }
             }
+
+
+            LoadData(totalPage);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -604,14 +694,8 @@ namespace Tutorial4
 
         bool IsPhone(string phone)
         {
-            foreach (char c in phone)
-            {
-                if (!char.IsDigit(c))
-                {
-                    return false;
-                }
-            }
-            return true;
+            return phone.All(char.IsDigit);
+            //Linq
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -637,6 +721,7 @@ namespace Tutorial4
         private void Form1_Load(object sender, EventArgs e)
         {
             dataGridView1.Visible = false;
+            LoadData(1);
             if (sourcePage == "listing")
             {
                 DataTable dataTable = Listing.table;
@@ -799,9 +884,6 @@ namespace Tutorial4
                     }
                 }
             }
-
-
-
         }
 
         private void btnChooseImage_Click(object sender, EventArgs e)
@@ -831,6 +913,34 @@ namespace Tutorial4
                     }
                 }
             }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            getTotalPage();
+            if (currentPageIndex > 1)
+            {
+                currentPageIndex--;
+                LoadData(currentPageIndex);
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            getTotalPage();
+            if (currentPageIndex < totalPage)
+            {
+                currentPageIndex++;
+                LoadData(currentPageIndex);
+
+            }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            getTotalPage();
+            LoadData(totalPage);
+            currentPageIndex = totalPage;
         }
 
         private void txtPhone2_TextChanged(object sender, EventArgs e)

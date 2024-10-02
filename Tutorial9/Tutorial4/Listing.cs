@@ -1,11 +1,9 @@
-﻿using Microsoft.Reporting.WinForms;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
-using System.Windows.Forms;
 
-namespace Tutorial4
+namespace Tutorial9
 {
     public partial class Listing : Form
     {
@@ -295,60 +293,38 @@ namespace Tutorial4
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //download();
-
-            ReportViewer rpt = new ReportViewer();
-            rpt.LocalReport.ReportPath = "CustomerReport.rdlc";
-            DataTable table = (DataTable)dataGridView1.DataSource;
-            rpt.LocalReport.DataSources.Add(
-                new Microsoft.Reporting.WinForms.ReportDataSource("CustomerDataSet", table));
-            byte[] reportData = rpt.LocalReport.Render("Excel");
-            string filePath = "";
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                 filePath = saveFileDialog1.FileName;
-                using (Stream stream = new FileStream(filePath, FileMode.Create))
-                {
-                    stream.Write(reportData, 0, reportData.Length);
-                }
-
-                if (File.Exists(filePath))
-                {
-                    System.Diagnostics.Process.Start(filePath);
-                }
-            }
+            download();
         }
 
-        //private void download()
-        //{
-        //    string filePath = "";
-        //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        //    using (var package = new ExcelPackage())
-        //    {
-        //        var worksheet = package.Workbook.Worksheets.Add("Customer Data");
+        private void download()
+        {
+            string filePath = "";
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Customer Data");
 
-        //        for (int i = 0; i < dataGridView1.Columns.Count; i++)
-        //        {
-        //            worksheet.Cells[1, i + 1].Value = dataGridView1.Columns[i].HeaderText;
-        //        }
+                for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = dataGridView1.Columns[i].HeaderText;
+                }
 
-        //        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-        //        {
-        //            for (int j = 0; j < dataGridView1.Columns.Count; j++)
-        //            {
-        //                worksheet.Cells[i + 2, j + 1].Value = dataGridView1.Rows[i].Cells[j].Value;
-        //            }
-        //        }
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                    {
+                        worksheet.Cells[i + 2, j + 1].Value = dataGridView1.Rows[i].Cells[j].Value;
+                    }
+                }
 
-        //        if (saveFileDialog1.ShowDialog() == DialogResult.OK) { 
-        //            filePath = saveFileDialog1.FileName;
-        //            package.SaveAs(new FileInfo(filePath));
-        //        }
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK) { 
+                    filePath = saveFileDialog1.FileName;
+                    package.SaveAs(new FileInfo(filePath));
+                }
 
-        //    }
+            }
 
-        //    MessageBox.Show("File saved "+ filePath, "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
+            MessageBox.Show("File saved "+ filePath, "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

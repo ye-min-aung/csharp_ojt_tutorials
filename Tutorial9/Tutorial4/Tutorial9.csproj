@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	<AssemblyName>Tutorial9</AssemblyName>
+	  <RootNamespace>Tutorial9</RootNamespace>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
@@ -10,7 +12,6 @@
 
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.3.2" />
-    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms" Version="150.1652.0" />
     <PackageReference Include="Microsoft.ReportViewer.Common" Version="10.0.40219.1" />
     <PackageReference Include="Microsoft.ReportViewer.WinForms" Version="10.0.40219.1" />
     <PackageReference Include="OfficeOpenXml.Core.ExcelPackage" Version="1.0.0" />
@@ -29,9 +30,6 @@
     <None Update="CustomerDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>CustomerDataSet.Designer.cs</LastGenOutput>
-    </None>
-    <None Update="CustomerReport.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

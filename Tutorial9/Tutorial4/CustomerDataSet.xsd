@@ -4,7 +4,7 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection ConnectionStringObject="Data Source=DESKTOP-4VM5D0P\SQLEXPRESS;Initial Catalog=AllDB;Persist Security Info=True;User ID=sa;Password=root;Encrypt=True;TrustServerCertificate=True" IsAppSettingsProperty="false" Modifier="Assembly" Name="AllDBConnectionString" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+          <Connection ConnectionStringObject="Data Source=DESKTOP-4VM5D0P\SQLEXPRESS;Initial Catalog=AllDB;User ID=sa;Password=root;TrustServerCertificate=True" IsAppSettingsProperty="false" Modifier="Assembly" Name="AllDBConnectionString" ParameterPrefix="@" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables />
         <Sources />
