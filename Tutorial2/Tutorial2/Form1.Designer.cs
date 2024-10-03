@@ -69,27 +69,30 @@
             // txtName
             // 
             txtName.Location = new Point(324, 65);
+            txtName.MaxLength = 100;
             txtName.Name = "txtName";
-            txtName.Size = new Size(125, 27);
+            txtName.Size = new Size(191, 27);
             txtName.TabIndex = 3;
             // 
             // txtEmail
             // 
             txtEmail.Location = new Point(324, 114);
+            txtEmail.MaxLength = 100;
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(125, 27);
+            txtEmail.Size = new Size(191, 27);
             txtEmail.TabIndex = 4;
             // 
             // txtPhone
             // 
             txtPhone.Location = new Point(324, 161);
+            txtPhone.MaxLength = 100;
             txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(125, 27);
+            txtPhone.Size = new Size(191, 27);
             txtPhone.TabIndex = 5;
             // 
             // button1
             // 
-            button1.Location = new Point(355, 224);
+            button1.Location = new Point(421, 215);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 6;
@@ -100,9 +103,9 @@
             // listBox1
             // 
             listBox1.FormattingEnabled = true;
-            listBox1.Location = new Point(133, 278);
+            listBox1.Location = new Point(165, 279);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(316, 104);
+            listBox1.Size = new Size(350, 104);
             listBox1.TabIndex = 7;
             // 
             // Form1

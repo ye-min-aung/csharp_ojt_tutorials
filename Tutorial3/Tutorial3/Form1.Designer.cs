@@ -76,7 +76,7 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(450, 368);
+            btnSave.Location = new Point(450, 379);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(94, 29);
             btnSave.TabIndex = 1;
@@ -88,7 +88,7 @@
             // 
             txtId.Location = new Point(143, 30);
             txtId.Name = "txtId";
-            txtId.Size = new Size(125, 27);
+            txtId.Size = new Size(220, 27);
             txtId.TabIndex = 2;
             // 
             // comboBox1
@@ -96,8 +96,9 @@
             comboBox1.FormattingEnabled = true;
             comboBox1.Items.AddRange(new object[] { "Yes", "No" });
             comboBox1.Location = new Point(143, 319);
+            comboBox1.MaxLength = 10;
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(151, 28);
+            comboBox1.Size = new Size(220, 28);
             comboBox1.TabIndex = 3;
             // 
             // label2
@@ -158,36 +159,40 @@
             // txtName
             // 
             txtName.Location = new Point(143, 85);
+            txtName.MaxLength = 100;
             txtName.Name = "txtName";
-            txtName.Size = new Size(125, 27);
+            txtName.Size = new Size(220, 27);
             txtName.TabIndex = 10;
             // 
             // txtNrc
             // 
             txtNrc.Location = new Point(143, 145);
+            txtNrc.MaxLength = 20;
             txtNrc.Name = "txtNrc";
-            txtNrc.Size = new Size(125, 27);
+            txtNrc.Size = new Size(220, 27);
             txtNrc.TabIndex = 11;
             // 
             // txtAge
             // 
             txtAge.Location = new Point(143, 263);
+            txtAge.MaxLength = 100;
             txtAge.Name = "txtAge";
-            txtAge.Size = new Size(125, 27);
+            txtAge.Size = new Size(220, 27);
             txtAge.TabIndex = 12;
             // 
             // dateTimePicker1
             // 
             dateTimePicker1.Location = new Point(143, 201);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(154, 27);
+            dateTimePicker1.Size = new Size(220, 27);
             dateTimePicker1.TabIndex = 13;
             // 
             // txtEmail
             // 
             txtEmail.Location = new Point(143, 374);
+            txtEmail.MaxLength = 100;
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(125, 27);
+            txtEmail.Size = new Size(220, 27);
             txtEmail.TabIndex = 14;
             // 
             // label8
@@ -237,7 +242,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(592, 368);
+            btnUpdate.Location = new Point(592, 379);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(94, 29);
             btnUpdate.TabIndex = 20;
@@ -247,7 +252,7 @@
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(733, 368);
+            btnClear.Location = new Point(733, 379);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(94, 29);
             btnClear.TabIndex = 21;
@@ -257,7 +262,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(859, 368);
+            btnDelete.Location = new Point(859, 379);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(94, 29);
             btnDelete.TabIndex = 22;
@@ -302,32 +307,35 @@
             // txtPhone1
             // 
             txtPhone1.Location = new Point(582, 85);
+            txtPhone1.MaxLength = 20;
             txtPhone1.Name = "txtPhone1";
-            txtPhone1.Size = new Size(125, 27);
+            txtPhone1.Size = new Size(225, 27);
             txtPhone1.TabIndex = 26;
             // 
             // txtPhone2
             // 
             txtPhone2.Location = new Point(582, 145);
+            txtPhone2.MaxLength = 20;
             txtPhone2.Name = "txtPhone2";
-            txtPhone2.Size = new Size(125, 27);
+            txtPhone2.Size = new Size(225, 27);
             txtPhone2.TabIndex = 27;
             // 
             // txtAddress
             // 
             txtAddress.Location = new Point(582, 307);
+            txtAddress.MaxLength = 500;
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(125, 55);
+            txtAddress.Size = new Size(225, 55);
             txtAddress.TabIndex = 28;
             txtAddress.Text = "";
             // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(36, 419);
+            dataGridView1.Location = new Point(36, 460);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(1342, 324);
+            dataGridView1.Size = new Size(1342, 283);
             dataGridView1.TabIndex = 29;
             dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;

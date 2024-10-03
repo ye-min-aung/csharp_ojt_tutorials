@@ -48,22 +48,25 @@
             // txtName
             // 
             txtName.Location = new Point(280, 46);
+            txtName.MaxLength = 100;
             txtName.Name = "txtName";
-            txtName.Size = new Size(125, 27);
+            txtName.Size = new Size(212, 27);
             txtName.TabIndex = 0;
             // 
             // txtEmail
             // 
             txtEmail.Location = new Point(280, 98);
+            txtEmail.MaxLength = 100;
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(125, 27);
+            txtEmail.Size = new Size(212, 27);
             txtEmail.TabIndex = 1;
             // 
             // txtPhone
             // 
             txtPhone.Location = new Point(280, 151);
+            txtPhone.MaxLength = 15;
             txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(125, 27);
+            txtPhone.Size = new Size(212, 27);
             txtPhone.TabIndex = 2;
             // 
             // label1
@@ -95,7 +98,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(464, 151);
+            button1.Location = new Point(552, 154);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 6;

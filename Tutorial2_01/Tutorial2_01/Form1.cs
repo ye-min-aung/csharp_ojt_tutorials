@@ -67,7 +67,7 @@ namespace Tutorial2_01
         {
             foreach (char c in phone)
             {
-                if (!char.IsDigit(c))
+                if (!(char.IsDigit(c) || c=='+' || c=='-'))
                 {
                     return false;
                 }

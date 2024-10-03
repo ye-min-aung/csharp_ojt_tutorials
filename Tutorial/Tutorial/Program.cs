@@ -10,11 +10,23 @@ while (!Continue) {
 Console.WriteLine("Enter Member Name");
 string name = Console.ReadLine();
 
+    while (name.Length > 50) 
+    {
+        Console.WriteLine("Name too long. Enter name less than 50 character");
+        name = Console.ReadLine();
+    }
+
 bool isEmail = false;
 while (!isEmail)
 {
     Console.WriteLine("Enter Member Email");
     email = Console.ReadLine();
+
+     if (email.Length > 50)
+     {
+         Console.WriteLine("Email is too long.Enter email less than 100 characters");
+         continue;
+     }
 
     if (email.Contains("@") && email.Contains("."))
     {
@@ -32,9 +44,15 @@ while (!isPhone)
     Console.WriteLine("Enter Member Phone");
     phone = Console.ReadLine();
 
+    if(phone.Length > 15)
+        {
+            Console.WriteLine("Phone to long. No more than 15 character");
+            continue;
+        }
+
     foreach (char c in phone)
     {
-        if (!char.IsDigit(c))
+        if (!(char.IsDigit(c) || c =='+' || c== '-'))
         {
             Console.WriteLine("Invalid Phone ");
             isPhone = false;

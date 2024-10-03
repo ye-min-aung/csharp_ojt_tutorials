@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\AM\\Desktop\\Csharp\\Tutorial2_01\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A8F864AE-7C0F-4418-9173-DE45E838B678}|Tutorial2_01\\Tutorial2_01.csproj|c:\\users\\am\\desktop\\csharp\\tutorial2_01\\tutorial2_01\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A8F864AE-7C0F-4418-9173-DE45E838B678}|Tutorial2_01\\Tutorial2_01.csproj|solutionrelative:tutorial2_01\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A8F864AE-7C0F-4418-9173-DE45E838B678}|Tutorial2_01\\Tutorial2_01.csproj|c:\\users\\am\\desktop\\csharp\\tutorial2_01\\tutorial2_01\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A8F864AE-7C0F-4418-9173-DE45E838B678}|Tutorial2_01\\Tutorial2_01.csproj|solutionrelative:tutorial2_01\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8F864AE-7C0F-4418-9173-DE45E838B678}|Tutorial2_01\\Tutorial2_01.csproj|c:\\users\\am\\desktop\\csharp\\tutorial2_01\\tutorial2_01\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A8F864AE-7C0F-4418-9173-DE45E838B678}|Tutorial2_01\\Tutorial2_01.csproj|solutionrelative:tutorial2_01\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,15 +18,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Users\\AM\\Desktop\\Csharp\\Tutorial2_01\\Tutorial2_01\\Form1.cs",
               "RelativeDocumentMoniker": "Tutorial2_01\\Form1.cs",
@@ -38,15 +38,64 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\AM\\Desktop\\Csharp\\Tutorial2_01\\Tutorial2_01\\Form1.cs",
               "RelativeDocumentMoniker": "Tutorial2_01\\Form1.cs",
               "ToolTip": "C:\\Users\\AM\\Desktop\\Csharp\\Tutorial2_01\\Tutorial2_01\\Form1.cs",
               "RelativeToolTip": "Tutorial2_01\\Form1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAADsAAAAAAAAAAAAAwEUAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T07:46:52.812Z"
+              "WhenOpened": "2024-09-23T07:46:52.812Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 214,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 71,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 125,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{b1ce3aef-c78d-49ee-b72b-ec1fbc908313}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 94,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             }
           ]
         }
