@@ -1,9 +1,7 @@
 using System.Data;
 using System.Data.SqlClient;
-using System.Text.RegularExpressions;
-using System.IO;
 using System.Security.Cryptography;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
+using System.Text.RegularExpressions;
 
 namespace Tutorial4
 {
@@ -427,12 +425,15 @@ namespace Tutorial4
 
             string imageFileName = Path.GetFileName(imagePath);
 
-            string distination = Path.Combine(Application.StartupPath, "images", name + imageFileName);
+            string distination = Path.Combine(Application.StartupPath, "images", DateTime.Today.Ticks + imageFileName);
             if (!Directory.Exists(Path.Combine(Application.StartupPath, "images")))
             {
                 Directory.CreateDirectory(Path.Combine(Application.StartupPath, "images"));
             }
-            File.Copy(imagePath, distination);
+            if (!File.Exists(distination))
+            {
+                File.Copy(imagePath, distination);
+            }
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -463,12 +464,32 @@ namespace Tutorial4
 
                     connection.Open();
                     command.ExecuteNonQuery();
+                    MessageBox.Show("Save !");
                 }
 
             }
 
             LoadData(totalPage);
             num++;
+
+            txtId.Text = null;
+            txtName.Text = null;
+            txtNrc.Text = null;
+            txtEmail.Text = null;
+            txtPhone1.Text = null;
+            txtPhone2.Text = null;
+            txtAddress.Text = null;
+            txtPassword.Text = null;
+            txtConfirmPassword.Text = null;
+            rdoFemale.Checked = false;
+            rdoMale.Checked = false;
+            rdoOther.Checked = false;
+            txtAge.Text = null;
+            pictureBox1.Image = null;
+            memberDate.Text = null;
+            txtMemberCard.Text = null;
+
+
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -624,8 +645,6 @@ namespace Tutorial4
 
             }
 
-
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string query = "UPDATE CustomerTable SET [customer_name] = @customer_name, [nrc_number] = @nrc_number, [dob] = @dob, [member_card] = @member_card, [email] = @Email, [gender] = @gender, [phone_no_1] = @phone_no_1, [phone_no_2] = @phone_no_2, [photo] = @photo, [address] = @address, [updated_user_id] = @updated_user_id, [updated_datetime] = @updated_datetime, [password] = @password WHERE [customer_id] = @customer_id";
@@ -652,9 +671,9 @@ namespace Tutorial4
                     MessageBox.Show("update successful !");
                 }
             }
-
-
-            LoadData(totalPage);
+            this.Hide();
+            Listing list = new Listing();
+            list.Show();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -689,7 +708,7 @@ namespace Tutorial4
             txtAge.Text = null;
             pictureBox1.Image = null;
             memberDate.Text = null;
-            txtMemberCard .Text = null;
+            txtMemberCard.Text = null;
         }
 
         bool IsPhone(string phone)
@@ -730,20 +749,21 @@ namespace Tutorial4
             LoadData(1);
             if (sourcePage == "listing")
             {
+                btnSave.Enabled = false;
                 DataTable dataTable = Listing.table;
                 if (dataTable.Rows.Count > 0)
                 {
-                    txtId.Text = dataTable.Rows[0]["customer_id"].ToString();
-                    txtName.Text = dataTable.Rows[0]["customer_name"].ToString();
-                    txtNrc.Text = dataTable.Rows[0]["nrc_number"].ToString();
-                    txtEmail.Text = dataTable.Rows[0]["email"].ToString();
-                    txtPhone1.Text = dataTable.Rows[0]["phone_no_1"].ToString();
-                    txtPhone2.Text = dataTable.Rows[0]["phone_no_2"].ToString();
-                    txtAddress.Text = dataTable.Rows[0]["address"].ToString();
-                    txtPassword.Text = dataTable.Rows[0]["password"].ToString();
-                    txtConfirmPassword.Text = dataTable.Rows[0]["password"].ToString();
+                    txtId.Text = dataTable.Rows[0]["Customer Id"].ToString();
+                    txtName.Text = dataTable.Rows[0]["Name"].ToString();
+                    txtNrc.Text = dataTable.Rows[0]["Nrc number"].ToString();
+                    txtEmail.Text = dataTable.Rows[0]["Email"].ToString();
+                    txtPhone1.Text = dataTable.Rows[0]["Phone 1"].ToString();
+                    txtPhone2.Text = dataTable.Rows[0]["Phone 2"].ToString();
+                    txtAddress.Text = dataTable.Rows[0]["Address"].ToString();
+                    txtPassword.Text = decryptPassword(dataTable.Rows[0]["Password"].ToString(), key, iv);
+                    txtConfirmPassword.Text = decryptPassword(dataTable.Rows[0]["Password"].ToString(), key, iv);
 
-                    if (dataTable.Rows[0]["gender"] == null)
+                    if (dataTable.Rows[0]["Gender"] == null)
                     {
                         rdoMale.Checked = false;
                         rdoFemale.Checked = false;
@@ -752,23 +772,23 @@ namespace Tutorial4
                     else
                     {
 
-                        string gender = dataTable.Rows[0]["gender"].ToString();
-                        if (gender == "1")
+                        string gender = dataTable.Rows[0]["Gender"].ToString();
+                        if (gender == "0")
                         {
                             rdoMale.Checked = true;
                         }
-                        else if (gender == "2")
+                        else if (gender == "1")
                         {
                             rdoFemale.Checked = true;
                         }
-                        else if (gender == "0")
+                        else if (gender == "2")
                         {
                             rdoOther.Checked = true;
                         }
                     }
-                    if (dataTable.Rows[0]["member_card"] != null)
+                    if (dataTable.Rows[0]["Member"] != null)
                     {
-                        string type = dataTable.Rows[0]["member_card"].ToString();
+                        string type = dataTable.Rows[0]["Member"].ToString();
                         if (type == "1")
                         {
                             txtMemberCard.Text = "Yes";
@@ -779,7 +799,7 @@ namespace Tutorial4
                         }
                     }
 
-                    string photo = dataTable.Rows[0]["photo"].ToString();
+                    string photo = dataTable.Rows[0]["PhotoImage"].ToString();
                     if (File.Exists(photo))
                     {
                         pictureBox1.Image = Image.FromFile(photo);
@@ -789,7 +809,7 @@ namespace Tutorial4
                         pictureBox1.Image = null;
                     }
 
-                    if (dataTable.Rows[0]["dob"].ToString() == null)
+                    if (dataTable.Rows[0]["Date Of Birth"].ToString() == null)
                     {
                         memberDate.CustomFormat = "";
 
@@ -798,7 +818,7 @@ namespace Tutorial4
                     {
                         try
                         {
-                            string dateString = dataTable.Rows[0]["dob"].ToString();
+                            string dateString = dataTable.Rows[0]["Date Of Birth"].ToString();
                             DateTime date = DateTime.Parse(dateString);
                             memberDate.Value = date;
                             int age = DateTime.Today.Year - memberDate.Value.Year;
@@ -813,6 +833,7 @@ namespace Tutorial4
             }
             else if (sourcePage == "login")
             {
+                btnSave.Enabled = false;
                 txtId.Text = Login.Lid;
                 txtName.Text = Login.name;
                 txtNrc.Text = Login.nrc;
@@ -889,6 +910,10 @@ namespace Tutorial4
                         memberDate.CustomFormat = null;
                     }
                 }
+            }
+            else if (sourcePage == "new")
+            {
+                btnUpdate.Enabled = false;
             }
 
 
@@ -972,7 +997,6 @@ namespace Tutorial4
 
                     id++;
                     cid = "C-" + id.ToString("D4");
-                    MessageBox.Show(cid.ToString());
                 }
             }
             return cid;
@@ -1079,6 +1103,22 @@ namespace Tutorial4
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void memberDate_ValueChanged(object sender, EventArgs e)
+        {
+            int age = DateTime.Today.Year - memberDate.Value.Year;
+            txtAge.Text = age.ToString();
+        }
+
+        private void entryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form1 f = new Form1
+            {
+                sourcePage = "new"
+            };
+            f.Show();
         }
     }
 }

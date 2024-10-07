@@ -194,6 +194,7 @@
             // 
             txtId.Enabled = false;
             txtId.Location = new Point(232, 64);
+            txtId.MaxLength = 100;
             txtId.Name = "txtId";
             txtId.Size = new Size(215, 27);
             txtId.TabIndex = 12;
@@ -201,6 +202,7 @@
             // txtName
             // 
             txtName.Location = new Point(232, 124);
+            txtName.MaxLength = 100;
             txtName.Name = "txtName";
             txtName.Size = new Size(215, 27);
             txtName.TabIndex = 13;
@@ -208,6 +210,7 @@
             // txtNrc
             // 
             txtNrc.Location = new Point(232, 184);
+            txtNrc.MaxLength = 30;
             txtNrc.Name = "txtNrc";
             txtNrc.Size = new Size(215, 27);
             txtNrc.TabIndex = 14;
@@ -217,6 +220,7 @@
             // 
             txtAge.Enabled = false;
             txtAge.Location = new Point(232, 304);
+            txtAge.MaxLength = 4;
             txtAge.Name = "txtAge";
             txtAge.Size = new Size(215, 27);
             txtAge.TabIndex = 15;
@@ -227,12 +231,14 @@
             memberDate.Name = "memberDate";
             memberDate.Size = new Size(215, 27);
             memberDate.TabIndex = 16;
+            memberDate.ValueChanged += memberDate_ValueChanged;
             // 
             // txtMemberCard
             // 
             txtMemberCard.FormattingEnabled = true;
             txtMemberCard.Items.AddRange(new object[] { "Yes", "No" });
             txtMemberCard.Location = new Point(232, 364);
+            txtMemberCard.MaxLength = 10;
             txtMemberCard.Name = "txtMemberCard";
             txtMemberCard.Size = new Size(215, 28);
             txtMemberCard.TabIndex = 17;
@@ -240,6 +246,7 @@
             // txtEmail
             // 
             txtEmail.Location = new Point(232, 424);
+            txtEmail.MaxLength = 100;
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(215, 27);
             txtEmail.TabIndex = 18;
@@ -247,6 +254,7 @@
             // txtPhone1
             // 
             txtPhone1.Location = new Point(740, 124);
+            txtPhone1.MaxLength = 15;
             txtPhone1.Name = "txtPhone1";
             txtPhone1.Size = new Size(215, 27);
             txtPhone1.TabIndex = 19;
@@ -254,6 +262,7 @@
             // txtPhone2
             // 
             txtPhone2.Location = new Point(740, 184);
+            txtPhone2.MaxLength = 15;
             txtPhone2.Name = "txtPhone2";
             txtPhone2.Size = new Size(215, 27);
             txtPhone2.TabIndex = 20;
@@ -262,6 +271,7 @@
             // rdoOther
             // 
             rdoOther.AutoSize = true;
+            rdoOther.Checked = true;
             rdoOther.Location = new Point(740, 65);
             rdoOther.Name = "rdoOther";
             rdoOther.Size = new Size(67, 24);
@@ -277,7 +287,6 @@
             rdoMale.Name = "rdoMale";
             rdoMale.Size = new Size(63, 24);
             rdoMale.TabIndex = 23;
-            rdoMale.TabStop = true;
             rdoMale.Text = "Male";
             rdoMale.UseVisualStyleBackColor = true;
             // 
@@ -288,7 +297,6 @@
             rdoFemale.Name = "rdoFemale";
             rdoFemale.Size = new Size(78, 24);
             rdoFemale.TabIndex = 24;
-            rdoFemale.TabStop = true;
             rdoFemale.Text = "Female";
             rdoFemale.UseVisualStyleBackColor = true;
             rdoFemale.CheckedChanged += radioButton3_CheckedChanged;
@@ -304,6 +312,7 @@
             // txtAddress
             // 
             txtAddress.Location = new Point(740, 367);
+            txtAddress.MaxLength = 1000;
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(215, 84);
             txtAddress.TabIndex = 26;
@@ -427,6 +436,7 @@
             // txtPassword
             // 
             txtPassword.Location = new Point(1183, 64);
+            txtPassword.MaxLength = 100;
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(215, 27);
             txtPassword.TabIndex = 41;
@@ -452,6 +462,7 @@
             // txtConfirmPassword
             // 
             txtConfirmPassword.Location = new Point(1183, 124);
+            txtConfirmPassword.MaxLength = 100;
             txtConfirmPassword.Name = "txtConfirmPassword";
             txtConfirmPassword.Size = new Size(215, 27);
             txtConfirmPassword.TabIndex = 44;
@@ -478,6 +489,7 @@
             entryToolStripMenuItem.Name = "entryToolStripMenuItem";
             entryToolStripMenuItem.Size = new Size(139, 26);
             entryToolStripMenuItem.Text = "Entry";
+            entryToolStripMenuItem.Click += entryToolStripMenuItem_Click;
             // 
             // listingToolStripMenuItem
             // 

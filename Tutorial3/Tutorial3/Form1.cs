@@ -352,7 +352,6 @@ namespace Tutorial3
         {
             int age = DateTime.Today.Year - dateTimePicker1.Value.Year;
             txtAge.Text = age.ToString();
-
         }
     }
 }

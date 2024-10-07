@@ -167,19 +167,21 @@ namespace Tutorial4
             }
         }
 
-        //private void generateKey()
-        //{
-        //    using (Aes aes = Aes.Create())
-        //    {
-        //        aes.GenerateKey();
-        //        aes.GenerateIV();
-        //        key = aes.Key;
-        //        iv = aes.IV;
-        //    }
-        //}
-
         private void btnLogin_Click(object sender, EventArgs e)
         {
+
+            if(string.IsNullOrEmpty(txtId.Text))
+            {
+                MessageBox.Show("Enter Id");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(txtPassword.Text))
+            {
+                MessageBox.Show("Enter Password");
+                return;
+            }
+
             try
             {
                 string id = txtId.Text;
