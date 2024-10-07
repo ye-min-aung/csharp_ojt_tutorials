@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using System.Text.RegularExpressions;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace Tutorial3
 {
@@ -10,11 +9,11 @@ namespace Tutorial3
         {
             InitializeComponent();
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-
+            dataGridView1.RowTemplate.Height = 90;
 
             table.Columns.Add("Customer Id", typeof(string));
             table.Columns.Add("Staff Name", typeof(string));
-            table.Columns.Add("PhotoFileName", typeof(Image));
+            table.Columns.Add("Photo", typeof(Image));
             table.Columns.Add("NRC NO", typeof(string));
             table.Columns.Add("Staff Type", typeof(string));
             table.Columns.Add("Email", typeof(string));
@@ -28,7 +27,8 @@ namespace Tutorial3
         }
         DataTable table = new DataTable();
         int select;
-        string imagePath;
+        string imagePath = "";
+        int cid = 0;
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
@@ -39,15 +39,16 @@ namespace Tutorial3
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                imagePath = openFileDialog1.FileName;   
+                imagePath = openFileDialog1.FileName;
                 pictureBox1.Load(openFileDialog1.FileName);
             }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            cid++;
+            string id = "C-" + cid.ToString("D4");
 
-            string id = txtId.Text;
             string name = txtName.Text;
             string nrc = txtNrc.Text;
             string type = comboBox1.Text;
@@ -135,22 +136,51 @@ namespace Tutorial3
                 }
             }
 
-            
-                string imageFileName = Path.GetFileName(imagePath);
+            Image image = null;
+            string hideData = "";
 
-                string distination = Path.Combine(Application.StartupPath, "images", imageFileName);
-                if(!Directory.Exists(Path.Combine(Application.StartupPath, "images")))
+
+            if (!string.IsNullOrEmpty(imagePath))
+            {
+                try
                 {
-                    Directory.CreateDirectory(Path.Combine(Application.StartupPath, "images"));
+                    string imageFileName = Path.GetFileName(imagePath);
+                    string destinationFolder = Path.Combine(Application.StartupPath, "images");
+                    string destinationPath = Path.Combine(destinationFolder, imageFileName);
+
+                    if (!Directory.Exists(destinationFolder))
+                    {
+                        Directory.CreateDirectory(destinationFolder);
+                    }
+
+                    if (File.Exists(destinationPath))
+                    {
+                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(imageFileName);
+                        string fileExtension = Path.GetExtension(imageFileName);
+                        string uniqueFileName = fileNameWithoutExtension + "_" + DateTime.Now.Ticks + fileExtension;
+
+                        destinationPath = Path.Combine(destinationFolder, uniqueFileName);
+                        imageFileName = uniqueFileName;
+                    }
+
+                    File.Copy(imagePath, destinationPath);
+
+                    image = Image.FromFile(destinationPath);
+                    hideData = imageFileName;
                 }
-                File.Copy(imagePath, distination);
-            Image image = Image.FromFile(imagePath);
-            string hidedata = imageFileName;
-            
-            table.Rows.Add(id, name, image, nrc, type, email, gender, age, phone1, phone2, address, hidedata);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error handling image: " + ex.Message);
+                    return;
+                }
+            }
+
+            table.Rows.Add(id, name, image, nrc, type, email, gender, age, phone1, phone2, address, hideData);
+
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = table;
             dataGridView1.Columns["hidden"].Visible = false;
+            ((DataGridViewImageColumn)dataGridView1.Columns["Photo"]).ImageLayout = DataGridViewImageCellLayout.Stretch;
 
         }
 
@@ -192,63 +222,59 @@ namespace Tutorial3
         private void btnUpdate_Click(object sender, EventArgs e)
         {
 
-
-            string id = txtId.Text;
-            string name = txtName.Text;
-            string nrc = txtNrc.Text;
-            string type = comboBox1.Text;
-            string email = txtEmail.Text;
-            string gender = "";
-            if (rdoOther.Checked)
+            if (select > 0)
             {
-                gender = "Other";
+                string id = txtId.Text;
+                string name = txtName.Text;
+                string nrc = txtNrc.Text;
+                string type = comboBox1.Text;
+                string email = txtEmail.Text;
+                string gender = rdoOther.Checked ? "Other" : rdoMale.Checked ? "Male" : "Female";
+                string age = txtAge.Text;
+                string phone1 = txtPhone1.Text;
+                string phone2 = txtPhone2.Text;
+                string address = txtAddress.Text;
+
+                string imageFileName = Path.GetFileName(imagePath);
+                string destinationPath = Path.Combine(Application.StartupPath, "images", imageFileName);
+
+                if (!Directory.Exists(Path.Combine(Application.StartupPath, "images")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Application.StartupPath, "images"));
+                }
+
+
+                if (File.Exists(destinationPath))
+                {
+                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(imageFileName);
+                    string fileExtension = Path.GetExtension(imageFileName);
+                    imageFileName = fileNameWithoutExtension + "_" + DateTime.Now.Ticks + fileExtension;
+
+                    destinationPath = Path.Combine(Application.StartupPath, "images", imageFileName);
+                }
+
+                File.Copy(imagePath, destinationPath, true);
+
+                Image image = Image.FromFile(destinationPath);
+                string hideData = imageFileName;
+
+                table.Rows[select]["Customer Id"] = id;
+                table.Rows[select]["Staff Name"] = name;
+                table.Rows[select]["NRC NO"] = nrc;
+                table.Rows[select]["Staff Type"] = type;
+                table.Rows[select]["Email"] = email;
+                table.Rows[select]["Gender"] = gender;
+                table.Rows[select]["Age"] = age;
+                table.Rows[select]["Phone No1"] = phone1;
+                table.Rows[select]["Phone No2"] = phone2;
+                table.Rows[select]["Address  "] = address;
+                table.Rows[select]["Photo"] = image;
+                table.Rows[select]["hidden"] = hideData;
+
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = table;
+                ((DataGridViewImageColumn)dataGridView1.Columns["Photo"]).ImageLayout = DataGridViewImageCellLayout.Stretch;
             }
-            else if (rdoMale.Checked)
-            {
-                gender = "Male";
-            }
-            else if (rdoFemale.Checked)
-            {
-                gender = "Female";
-            }
-            string age = txtAge.Text;
-            string phone1 = txtPhone1.Text;
-            string phone2 = txtPhone2.Text;
-            string address = txtAddress.Text;
-            //imagePath = 
-            string imageFileName = Path.GetFileName(imagePath);
-
-            string distination = Path.Combine(Application.StartupPath, "images", imageFileName);
-
-            if(!File.Exists(distination))
-            {
-                File.Copy(imagePath, distination);
-            }
-            if (!Directory.Exists(Path.Combine(Application.StartupPath, "images")))
-            {
-                Directory.CreateDirectory(Path.Combine(Application.StartupPath, "images"));
-            }
-            
-            Image image = Image.FromFile(imagePath);
-            string hidedata = imageFileName;
-
-
-
-            table.Rows[select]["Customer Id"] = id;
-            table.Rows[select]["Staff Name"] = name;
-            table.Rows[select]["NRC NO"] = nrc;
-            table.Rows[select]["Staff Type"] = type;
-            table.Rows[select]["Email"] = email;
-            table.Rows[select]["Gender"] = gender;
-            table.Rows[select]["Age"] = age;
-            table.Rows[select]["Phone No1"] = phone1;
-            table.Rows[select]["Phone No2"] = phone2;
-            table.Rows[select]["Address  "] = address;
-            table.Rows[select]["PhotoFileName"] = image;
-            table.Rows[select]["hidden"] = hidedata;
-
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = table;
 
         }
 
@@ -268,19 +294,26 @@ namespace Tutorial3
                 txtNrc.Text = selectRow.Cells["NRC NO"].Value.ToString();
                 comboBox1.Text = selectRow.Cells["Staff Type"].Value.ToString();
                 txtEmail.Text = selectRow.Cells["Email"].Value.ToString();
+
                 string gender = selectRow.Cells["Gender"].Value.ToString();
                 string img = selectRow.Cells["hidden"].Value.ToString();
+                string destination = Path.Combine(Application.StartupPath, "images", img);
 
-                string distination = Path.Combine(Application.StartupPath, "images", img);
-                MessageBox.Show(distination);
-
-                pictureBox1.Load(distination); 
+                if (File.Exists(destination))
+                {
+                    pictureBox1.Load(destination);
+                }
+                else
+                {
+                    pictureBox1.Image = null;
+                    MessageBox.Show("Image not found");
+                }
 
                 if (gender == "Male")
                     rdoMale.Checked = true;
                 else if (gender == "Female")
                     rdoFemale.Checked = true;
-                else if (gender == "Other")
+                else
                     rdoOther.Checked = true;
 
                 txtAge.Text = selectRow.Cells["Age"].Value.ToString();
@@ -292,24 +325,34 @@ namespace Tutorial3
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            table.Rows[select].Delete();
-            txtId.Text = null;
-            txtName.Text = null;
-            txtNrc.Text = null;
-            comboBox1.Text = null;
-            txtEmail.Text = null;
-            rdoOther.Checked = false;
-            rdoMale.Checked = false;
-            rdoFemale.Checked = false;
-            txtAge.Text = null;
-            txtPhone1.Text = null;
-            txtPhone2.Text = null;
-            txtAddress.Text = null;
-            pictureBox1.Image = null;
-            string imageFileName = Path.GetFileName(imagePath);
+            if (select > 0)
+            {
+                table.Rows[select].Delete();
+                txtId.Text = null;
+                txtName.Text = null;
+                txtNrc.Text = null;
+                comboBox1.Text = null;
+                txtEmail.Text = null;
+                rdoOther.Checked = false;
+                rdoMale.Checked = false;
+                rdoFemale.Checked = false;
+                txtAge.Text = null;
+                txtPhone1.Text = null;
+                txtPhone2.Text = null;
+                txtAddress.Text = null;
+                pictureBox1.Image = null;
+                string imageFileName = Path.GetFileName(imagePath);
 
-            string distination = Path.Combine(Application.StartupPath, "images", imageFileName);
-            File.Delete(distination);
+                string distination = Path.Combine(Application.StartupPath, "images", imageFileName);
+                File.Delete(distination);
+            }
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            int age = DateTime.Today.Year - dateTimePicker1.Value.Year;
+            txtAge.Text = age.ToString();
+
         }
     }
 }

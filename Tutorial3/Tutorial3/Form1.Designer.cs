@@ -61,6 +61,11 @@
             openFileDialog1 = new OpenFileDialog();
             pictureBox1 = new PictureBox();
             btnChooseImage = new Button();
+            label13 = new Label();
+            label14 = new Label();
+            label15 = new Label();
+            label16 = new Label();
+            label17 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -76,7 +81,7 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(450, 379);
+            btnSave.Location = new Point(537, 379);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(94, 29);
             btnSave.TabIndex = 1;
@@ -86,9 +91,10 @@
             // 
             // txtId
             // 
+            txtId.Enabled = false;
             txtId.Location = new Point(143, 30);
             txtId.Name = "txtId";
-            txtId.Size = new Size(220, 27);
+            txtId.Size = new Size(244, 27);
             txtId.TabIndex = 2;
             // 
             // comboBox1
@@ -98,7 +104,7 @@
             comboBox1.Location = new Point(143, 319);
             comboBox1.MaxLength = 10;
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(220, 28);
+            comboBox1.Size = new Size(244, 28);
             comboBox1.TabIndex = 3;
             // 
             // label2
@@ -161,7 +167,7 @@
             txtName.Location = new Point(143, 85);
             txtName.MaxLength = 100;
             txtName.Name = "txtName";
-            txtName.Size = new Size(220, 27);
+            txtName.Size = new Size(244, 27);
             txtName.TabIndex = 10;
             // 
             // txtNrc
@@ -169,36 +175,38 @@
             txtNrc.Location = new Point(143, 145);
             txtNrc.MaxLength = 20;
             txtNrc.Name = "txtNrc";
-            txtNrc.Size = new Size(220, 27);
+            txtNrc.Size = new Size(244, 27);
             txtNrc.TabIndex = 11;
             // 
             // txtAge
             // 
+            txtAge.Enabled = false;
             txtAge.Location = new Point(143, 263);
             txtAge.MaxLength = 100;
             txtAge.Name = "txtAge";
-            txtAge.Size = new Size(220, 27);
+            txtAge.Size = new Size(244, 27);
             txtAge.TabIndex = 12;
             // 
             // dateTimePicker1
             // 
             dateTimePicker1.Location = new Point(143, 201);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(220, 27);
+            dateTimePicker1.Size = new Size(244, 27);
             dateTimePicker1.TabIndex = 13;
+            dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             // 
             // txtEmail
             // 
             txtEmail.Location = new Point(143, 374);
             txtEmail.MaxLength = 100;
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(220, 27);
+            txtEmail.Size = new Size(244, 27);
             txtEmail.TabIndex = 14;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(450, 33);
+            label8.Location = new Point(537, 33);
             label8.Name = "label8";
             label8.Size = new Size(57, 20);
             label8.TabIndex = 15;
@@ -207,7 +215,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(450, 88);
+            label9.Location = new Point(537, 88);
             label9.Name = "label9";
             label9.Size = new Size(71, 20);
             label9.TabIndex = 16;
@@ -216,7 +224,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(450, 148);
+            label10.Location = new Point(537, 148);
             label10.Name = "label10";
             label10.Size = new Size(71, 20);
             label10.TabIndex = 17;
@@ -225,7 +233,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(450, 206);
+            label11.Location = new Point(537, 206);
             label11.Name = "label11";
             label11.Size = new Size(51, 20);
             label11.TabIndex = 18;
@@ -234,7 +242,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(450, 310);
+            label12.Location = new Point(537, 310);
             label12.Name = "label12";
             label12.Size = new Size(62, 20);
             label12.TabIndex = 19;
@@ -242,7 +250,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(592, 379);
+            btnUpdate.Location = new Point(679, 379);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(94, 29);
             btnUpdate.TabIndex = 20;
@@ -252,7 +260,7 @@
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(733, 379);
+            btnClear.Location = new Point(820, 379);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(94, 29);
             btnClear.TabIndex = 21;
@@ -262,7 +270,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(859, 379);
+            btnDelete.Location = new Point(946, 379);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(94, 29);
             btnDelete.TabIndex = 22;
@@ -273,7 +281,8 @@
             // rdoOther
             // 
             rdoOther.AutoSize = true;
-            rdoOther.Location = new Point(582, 31);
+            rdoOther.Checked = true;
+            rdoOther.Location = new Point(669, 31);
             rdoOther.Name = "rdoOther";
             rdoOther.Size = new Size(67, 24);
             rdoOther.TabIndex = 23;
@@ -285,47 +294,45 @@
             // rdoMale
             // 
             rdoMale.AutoSize = true;
-            rdoMale.Location = new Point(669, 31);
+            rdoMale.Location = new Point(756, 31);
             rdoMale.Name = "rdoMale";
             rdoMale.Size = new Size(63, 24);
             rdoMale.TabIndex = 24;
-            rdoMale.TabStop = true;
             rdoMale.Text = "Male";
             rdoMale.UseVisualStyleBackColor = true;
             // 
             // rdoFemale
             // 
             rdoFemale.AutoSize = true;
-            rdoFemale.Location = new Point(749, 31);
+            rdoFemale.Location = new Point(836, 31);
             rdoFemale.Name = "rdoFemale";
             rdoFemale.Size = new Size(78, 24);
             rdoFemale.TabIndex = 25;
-            rdoFemale.TabStop = true;
             rdoFemale.Text = "Female";
             rdoFemale.UseVisualStyleBackColor = true;
             // 
             // txtPhone1
             // 
-            txtPhone1.Location = new Point(582, 85);
+            txtPhone1.Location = new Point(669, 85);
             txtPhone1.MaxLength = 20;
             txtPhone1.Name = "txtPhone1";
-            txtPhone1.Size = new Size(225, 27);
+            txtPhone1.Size = new Size(245, 27);
             txtPhone1.TabIndex = 26;
             // 
             // txtPhone2
             // 
-            txtPhone2.Location = new Point(582, 145);
+            txtPhone2.Location = new Point(669, 145);
             txtPhone2.MaxLength = 20;
             txtPhone2.Name = "txtPhone2";
-            txtPhone2.Size = new Size(225, 27);
+            txtPhone2.Size = new Size(245, 27);
             txtPhone2.TabIndex = 27;
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(582, 307);
+            txtAddress.Location = new Point(669, 307);
             txtAddress.MaxLength = 500;
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(225, 55);
+            txtAddress.Size = new Size(244, 55);
             txtAddress.TabIndex = 28;
             txtAddress.Text = "";
             // 
@@ -335,7 +342,7 @@
             dataGridView1.Location = new Point(36, 460);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(1342, 283);
+            dataGridView1.Size = new Size(1392, 283);
             dataGridView1.TabIndex = 29;
             dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
@@ -346,7 +353,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(557, 182);
+            pictureBox1.Location = new Point(672, 182);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(150, 108);
             pictureBox1.TabIndex = 30;
@@ -354,19 +361,74 @@
             // 
             // btnChooseImage
             // 
-            btnChooseImage.Location = new Point(713, 178);
+            btnChooseImage.Location = new Point(839, 178);
             btnChooseImage.Name = "btnChooseImage";
-            btnChooseImage.Size = new Size(94, 29);
+            btnChooseImage.Size = new Size(74, 29);
             btnChooseImage.TabIndex = 31;
             btnChooseImage.Text = "choose File";
             btnChooseImage.UseVisualStyleBackColor = true;
             btnChooseImage.Click += btnChooseImage_Click;
             // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.ForeColor = Color.Red;
+            label13.Location = new Point(393, 88);
+            label13.Name = "label13";
+            label13.Size = new Size(15, 20);
+            label13.TabIndex = 32;
+            label13.Text = "*";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.ForeColor = Color.Red;
+            label14.Location = new Point(393, 322);
+            label14.Name = "label14";
+            label14.Size = new Size(15, 20);
+            label14.TabIndex = 33;
+            label14.Text = "*";
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.ForeColor = Color.Red;
+            label15.Location = new Point(393, 148);
+            label15.Name = "label15";
+            label15.Size = new Size(15, 20);
+            label15.TabIndex = 34;
+            label15.Text = "*";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.ForeColor = Color.Red;
+            label16.Location = new Point(918, 88);
+            label16.Name = "label16";
+            label16.Size = new Size(15, 20);
+            label16.TabIndex = 35;
+            label16.Text = "*";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.ForeColor = Color.Red;
+            label17.Location = new Point(393, 377);
+            label17.Name = "label17";
+            label17.Size = new Size(15, 20);
+            label17.TabIndex = 36;
+            label17.Text = "*";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1390, 658);
+            ClientSize = new Size(1440, 758);
+            Controls.Add(label17);
+            Controls.Add(label16);
+            Controls.Add(label15);
+            Controls.Add(label14);
+            Controls.Add(label13);
             Controls.Add(btnChooseImage);
             Controls.Add(pictureBox1);
             Controls.Add(dataGridView1);
@@ -442,5 +504,10 @@
         private OpenFileDialog openFileDialog1;
         private PictureBox pictureBox1;
         private Button btnChooseImage;
+        private Label label13;
+        private Label label14;
+        private Label label15;
+        private Label label16;
+        private Label label17;
     }
 }
