@@ -763,7 +763,7 @@ namespace Tutorial4
                     txtPassword.Text = decryptPassword(dataTable.Rows[0]["Password"].ToString(), key, iv);
                     txtConfirmPassword.Text = decryptPassword(dataTable.Rows[0]["Password"].ToString(), key, iv);
 
-                    if (dataTable.Rows[0]["Gender"] == null)
+                    if (dataTable.Rows[0]["gender"] == null)
                     {
                         rdoMale.Checked = false;
                         rdoFemale.Checked = false;
@@ -772,7 +772,7 @@ namespace Tutorial4
                     else
                     {
 
-                        string gender = dataTable.Rows[0]["Gender"].ToString();
+                        string gender = dataTable.Rows[0]["gender"].ToString();
                         if (gender == "0")
                         {
                             rdoMale.Checked = true;

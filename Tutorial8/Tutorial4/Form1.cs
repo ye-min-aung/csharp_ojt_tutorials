@@ -1,9 +1,7 @@
 using System.Data;
 using System.Data.SqlClient;
-using System.Text.RegularExpressions;
-using System.IO;
 using System.Security.Cryptography;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
+using System.Text.RegularExpressions;
 
 namespace Tutorial4
 {
@@ -382,11 +380,27 @@ namespace Tutorial4
 
             }
             num++;
+            txtId.Text = null;
+            txtName.Text = null;
+            txtNrc.Text = null;
+            txtEmail.Text = null;
+            txtPhone1.Text = null;
+            txtPhone2.Text = null;
+            txtAddress.Text = null;
+            txtPassword.Text = null;
+            txtConfirmPassword.Text = null;
+            rdoFemale.Checked = false;
+            rdoMale.Checked = false;
+            rdoOther.Checked = false;
+            txtAge.Text = null;
+            pictureBox1.Image = null;
+            memberDate.Text = null;
+            txtMemberCard.Text = null;
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            DataGridViewRow selectRow = dataGridView1.Rows[select];
+            //DataGridViewRow selectRow = dataGridView1.Rows[select];
             //int id = Convert.ToInt32(selectRow.Cells["id"].Value);
             string customer_id = txtId.Text;
             string name = txtName.Text;
@@ -511,30 +525,17 @@ namespace Tutorial4
             string passwordE = encryptPassword(password, key, iv);
 
 
-            string newImage = "";
-            if (imagePath == "")
-            {
+            string imageFileName = Path.GetFileName(imagePath);
 
-                imagePath = selectRow.Cells["photo"].Value.ToString();
-                newImage = imagePath;
+            string newImage = Path.Combine(Application.StartupPath, "images", name + imageFileName);
+            if (!Directory.Exists(Path.Combine(Application.StartupPath, "images")))
+            {
+                Directory.CreateDirectory(Path.Combine(Application.StartupPath, "images"));
             }
-            else
+
+            if (!File.Exists(newImage))
             {
-
-
-                string imageFileName = Path.GetFileName(imagePath);
-
-                newImage = Path.Combine(Application.StartupPath, "images", name + imageFileName);
-                if (!Directory.Exists(Path.Combine(Application.StartupPath, "images")))
-                {
-                    Directory.CreateDirectory(Path.Combine(Application.StartupPath, "images"));
-                }
-
-                if (!File.Exists(newImage))
-                {
-                    File.Copy(imagePath, newImage);
-                }
-
+                File.Copy(imagePath, newImage);
             }
 
 
@@ -565,6 +566,9 @@ namespace Tutorial4
                     MessageBox.Show("update successful !");
                 }
             }
+            this.Hide();
+            Listing list = new Listing();
+            list.Show();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -599,7 +603,7 @@ namespace Tutorial4
             txtAge.Text = null;
             pictureBox1.Image = null;
             memberDate.Text = null;
-            txtMemberCard .Text = null;
+            txtMemberCard.Text = null;
         }
 
         bool IsPhone(string phone)
@@ -639,18 +643,19 @@ namespace Tutorial4
             dataGridView1.Visible = false;
             if (sourcePage == "listing")
             {
+                btnSave.Enabled = false;
                 DataTable dataTable = Listing.table;
                 if (dataTable.Rows.Count > 0)
                 {
-                    txtId.Text = dataTable.Rows[0]["Customer ID"].ToString();
-                    txtName.Text = dataTable.Rows[0]["Customer Name"].ToString();
-                    txtNrc.Text = dataTable.Rows[0]["NRC Number"].ToString();
+                    txtId.Text = dataTable.Rows[0]["Customer Id"].ToString();
+                    txtName.Text = dataTable.Rows[0]["Name"].ToString();
+                    txtNrc.Text = dataTable.Rows[0]["Nrc"].ToString();
                     txtEmail.Text = dataTable.Rows[0]["Email"].ToString();
-                    txtPhone1.Text = dataTable.Rows[0]["Phone Number 1"].ToString();
-                    txtPhone2.Text = dataTable.Rows[0]["Phone Number 2"].ToString();
+                    txtPhone1.Text = dataTable.Rows[0]["Phone 1"].ToString();
+                    txtPhone2.Text = dataTable.Rows[0]["Phone 2"].ToString();
                     txtAddress.Text = dataTable.Rows[0]["Address"].ToString();
-                    txtPassword.Text = dataTable.Rows[0]["password"].ToString();
-                    txtConfirmPassword.Text = dataTable.Rows[0]["password"].ToString();
+                    txtPassword.Text = decryptPassword(dataTable.Rows[0]["Password"].ToString(), key, iv);
+                    txtConfirmPassword.Text = decryptPassword(dataTable.Rows[0]["Password"].ToString(), key, iv);
 
                     if (dataTable.Rows[0]["gender"] == null)
                     {
@@ -675,9 +680,9 @@ namespace Tutorial4
                             rdoOther.Checked = true;
                         }
                     }
-                    if (dataTable.Rows[0]["member_card"] != null)
+                    if (dataTable.Rows[0]["Member"] != null)
                     {
-                        string type = dataTable.Rows[0]["member_card"].ToString();
+                        string type = dataTable.Rows[0]["Member"].ToString();
                         if (type == "1")
                         {
                             txtMemberCard.Text = "Yes";
@@ -689,6 +694,7 @@ namespace Tutorial4
                     }
 
                     string photo = dataTable.Rows[0]["photo"].ToString();
+                    imagePath = photo;
                     if (File.Exists(photo))
                     {
                         pictureBox1.Image = Image.FromFile(photo);
@@ -698,7 +704,7 @@ namespace Tutorial4
                         pictureBox1.Image = null;
                     }
 
-                    if (dataTable.Rows[0]["Date of Birth"].ToString() == null)
+                    if (dataTable.Rows[0]["Date Of Birth"].ToString() == null)
                     {
                         memberDate.CustomFormat = "";
 
@@ -707,7 +713,7 @@ namespace Tutorial4
                     {
                         try
                         {
-                            string dateString = dataTable.Rows[0]["Date of Birth"].ToString();
+                            string dateString = dataTable.Rows[0]["Date Of Birth"].ToString();
                             DateTime date = DateTime.Parse(dateString);
                             memberDate.Value = date;
                             int age = DateTime.Today.Year - memberDate.Value.Year;
@@ -722,6 +728,7 @@ namespace Tutorial4
             }
             else if (sourcePage == "login")
             {
+                btnSave.Enabled = false;
                 txtId.Text = Login.Lid;
                 txtName.Text = Login.name;
                 txtNrc.Text = Login.nrc;
@@ -798,6 +805,10 @@ namespace Tutorial4
                         memberDate.CustomFormat = null;
                     }
                 }
+            }
+            else if (sourcePage == "new")
+            {
+                btnUpdate.Enabled = false;
             }
 
 
@@ -960,6 +971,22 @@ namespace Tutorial4
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void entryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form1 f = new Form1
+            {
+                sourcePage = "new"
+            };
+            f.Show();
+        }
+
+        private void memberDate_ValueChanged(object sender, EventArgs e)
+        {
+            int age = DateTime.Today.Year - memberDate.Value.Year;
+            txtAge.Text = age.ToString();
         }
     }
 }

@@ -239,7 +239,7 @@
             // 
             // btnFirst
             // 
-            btnFirst.Location = new Point(35, 673);
+            btnFirst.Location = new Point(35, 663);
             btnFirst.Name = "btnFirst";
             btnFirst.Size = new Size(94, 29);
             btnFirst.TabIndex = 8;
@@ -267,21 +267,21 @@
             // entryToolStripMenuItem
             // 
             entryToolStripMenuItem.Name = "entryToolStripMenuItem";
-            entryToolStripMenuItem.Size = new Size(224, 26);
+            entryToolStripMenuItem.Size = new Size(139, 26);
             entryToolStripMenuItem.Text = "Entry";
             entryToolStripMenuItem.Click += entryToolStripMenuItem_Click;
             // 
             // listingToolStripMenuItem
             // 
             listingToolStripMenuItem.Name = "listingToolStripMenuItem";
-            listingToolStripMenuItem.Size = new Size(224, 26);
+            listingToolStripMenuItem.Size = new Size(139, 26);
             listingToolStripMenuItem.Text = "Listing";
             listingToolStripMenuItem.Click += listingToolStripMenuItem_Click;
             // 
             // logoutToolStripMenuItem
             // 
             logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            logoutToolStripMenuItem.Size = new Size(224, 26);
+            logoutToolStripMenuItem.Size = new Size(139, 26);
             logoutToolStripMenuItem.Text = "Logout";
             logoutToolStripMenuItem.Click += logoutToolStripMenuItem_Click;
             // 

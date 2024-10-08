@@ -1,9 +1,7 @@
-﻿using Microsoft.Reporting.WinForms;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
-using System.Windows.Forms;
 
 namespace Tutorial4
 {
@@ -13,6 +11,7 @@ namespace Tutorial4
         {
             InitializeComponent();
             dataGridView1.RowTemplate.Height = 80;
+            dataGridView1.AutoGenerateColumns = false;
             getTotalPage();
         }
 
@@ -22,7 +21,7 @@ namespace Tutorial4
         int select;
         string imagePath = "";
         int num = 0;
-        int pageSize = 3;
+        int pageSize = 5;
         int currentPageIndex = 1;
         int totalPage = 0;
         string searchKeyword = "";
@@ -82,77 +81,7 @@ namespace Tutorial4
                 dataTable.Clear();
                 dataAdapter.Fill(dataTable);
 
-                dataTable.Columns.Add("Gender Type", typeof(string));
-                dataTable.Columns.Add("Member", typeof(string));
-                dataTable.Columns.Add("Password", typeof(string));
-                dataTable.Columns.Add("PhotoImage", typeof(Image));
-
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    int genderValue = Convert.ToInt32(row["gender"]);
-                    int member = Convert.ToInt32(row["member_card"]);
-                    string encryptedPassword = row["password"].ToString();
-                    string decryptedPassword = decryptPassword(encryptedPassword, key, iv);
-                    row["password"] = decryptedPassword;
-
-                    switch (genderValue)
-                    {
-                        case 0:
-                            row["Gender Type"] = "Other";
-                            break;
-                        case 1:
-                            row["Gender Type"] = "Male";
-                            break;
-                        case 2:
-                            row["Gender Type"] = "Female";
-                            break;
-                        default:
-                            break;
-                    }
-
-                    switch (member)
-                    {
-                        case 1:
-                            row["Member"] = "Yes";
-                            break;
-                        case 2:
-                            row["Member"] = "No";
-                            break;
-                        default:
-                            break;
-                    }
-
-                    string photoPath = row["photo"].ToString();
-
-                    if (File.Exists(photoPath))
-                    {
-                        Image image = Image.FromFile(photoPath);
-                        row["PhotoImage"] = image;
-                    }
-                    else
-                    {
-                        row["PhotoImage"] = null;
-                    }
-                }
-
                 dataGridView1.DataSource = dataTable;
-
-                dataGridView1.Columns["gender"].Visible = false;
-                dataGridView1.Columns["member_card"].Visible = false;
-                dataGridView1.Columns["photo"].Visible = false;
-                dataGridView1.Columns["id"].Visible = false;
-                dataGridView1.Columns["password"].Visible = false;
-                dataGridView1.Columns["customer_id"].HeaderText = "Customer ID";
-                dataGridView1.Columns["customer_name"].HeaderText = "Customer Name";
-                dataGridView1.Columns["nrc_number"].HeaderText = "NRC Number";
-                dataGridView1.Columns["dob"].HeaderText = "Date of Birth";
-                dataGridView1.Columns["email"].HeaderText = "Email";
-                dataGridView1.Columns["phone_no_1"].HeaderText = "Phone Number 1";
-                dataGridView1.Columns["phone_no_2"].HeaderText = "Phone Number 2";
-                dataGridView1.Columns["address"].HeaderText = "Address";
-                dataGridView1.Columns["PhotoImage"].DisplayIndex = 3;
-                dataGridView1.Columns["Gender"].DisplayIndex = 4;
-                ((DataGridViewImageColumn)dataGridView1.Columns["PhotoImage"]).ImageLayout = DataGridViewImageCellLayout.Stretch;
             }
         }
 
@@ -232,7 +161,10 @@ namespace Tutorial4
         private void btnNew_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form1 f = new Form1();
+            Form1 f = new Form1
+            {
+                sourcePage = "new"
+            };
             f.Show();
         }
 
@@ -245,45 +177,42 @@ namespace Tutorial4
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            if (e.ColumnIndex == 1)
             {
-                table = new DataTable();
 
-                foreach (DataGridViewColumn column in dataGridView1.Columns)
+                if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count - 1)
                 {
-                    table.Columns.Add(column.HeaderText, column.ValueType);
-                }
+                    table = new DataTable();
 
-                DataRow newRow = table.NewRow();
-
-                for (int i = 0; i < dataGridView1.Columns.Count; i++)
-                {
-
-                    if (dataGridView1.Columns[i].ValueType == typeof(Image))
+                    foreach (DataGridViewColumn column in dataGridView1.Columns)
                     {
-                        newRow[i] = dataGridView1.Rows[e.RowIndex].Cells[i].Value as Image;
+                        table.Columns.Add(column.HeaderText, column.ValueType);
                     }
-                    else
+
+                    DataRow newRow = table.NewRow();
+
+                    for (int i = 0; i < dataGridView1.Columns.Count; i++)
                     {
-                        if (!string.IsNullOrEmpty(dataGridView1.Rows[e.RowIndex].Cells[i].Value?.ToString()))
+
+                        if (dataGridView1.Columns[i].ValueType == typeof(Image))
                         {
-                            newRow[i] = dataGridView1.Rows[e.RowIndex].Cells[i].Value;
+                            newRow[i] = dataGridView1.Rows[e.RowIndex].Cells[i].Value as Image;
                         }
                         else
                         {
-                            newRow[i] = DBNull.Value; 
+                            newRow[i] = dataGridView1.Rows[e.RowIndex].Cells[i].Value?.ToString() ?? null;
                         }
                     }
+
+                    table.Rows.Add(newRow);
+
+                    Form1 f = new Form1
+                    {
+                        sourcePage = "listing"
+                    };
+                    this.Hide();
+                    f.Show();
                 }
-
-                table.Rows.Add(newRow);
-
-                Form1 f = new Form1
-                {
-                    sourcePage = "listing"
-                };
-                this.Hide();
-                f.Show();
             }
 
         }
@@ -295,60 +224,172 @@ namespace Tutorial4
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //download();
+            download();
 
-            ReportViewer rpt = new ReportViewer();
-            rpt.LocalReport.ReportPath = "CustomerReport.rdlc";
-            DataTable table = (DataTable)dataGridView1.DataSource;
-            rpt.LocalReport.DataSources.Add(
-                new Microsoft.Reporting.WinForms.ReportDataSource("CustomerDataSet", table));
-            byte[] reportData = rpt.LocalReport.Render("Excel");
+            //ReportViewer rpt = new ReportViewer();
+            //rpt.LocalReport.ReportPath = "CustomerReport.rdlc";
+            //DataTable table = (DataTable)dataGridView1.DataSource;
+            //rpt.LocalReport.DataSources.Add(
+            //    new Microsoft.Reporting.WinForms.ReportDataSource("CustomerDataSet", table));
+            //byte[] reportData = rpt.LocalReport.Render("Excel");
+            //string filePath = "";
+
+            //if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            //{
+            //     filePath = saveFileDialog1.FileName;
+            //    using (Stream stream = new FileStream(filePath, FileMode.Create))
+            //    {
+            //        stream.Write(reportData, 0, reportData.Length);
+            //    }
+
+            //    if (File.Exists(filePath))
+            //    {
+            //        System.Diagnostics.Process.Start(filePath);
+            //    }
+            //}
+        }
+
+        private void download()
+        {
             string filePath = "";
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
             {
-                 filePath = saveFileDialog1.FileName;
-                using (Stream stream = new FileStream(filePath, FileMode.Create))
+                var worksheet = package.Workbook.Worksheets.Add("Customer Data");
+
+                for (int i = 0; i < dataGridView1.Columns.Count; i++)
                 {
-                    stream.Write(reportData, 0, reportData.Length);
+                    worksheet.Cells[1, i + 1].Value = dataGridView1.Columns[i].HeaderText;
                 }
 
-                if (File.Exists(filePath))
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    System.Diagnostics.Process.Start(filePath);
+                    for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                    {
+                        worksheet.Cells[i + 2, j + 1].Value = dataGridView1.Rows[i].Cells[j].Value;
+                    }
+                }
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = saveFileDialog1.FileName;
+                    package.SaveAs(new FileInfo(filePath));
+                }
+
+            }
+
+            MessageBox.Show("File saved " + filePath, "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "gender")
+            {
+                if (e.Value != null)
+                {
+                    switch (e.Value.ToString())
+                    {
+                        case "0":
+                            e.Value = "Other";
+                            e.FormattingApplied = true;
+                            break;
+
+                        case "1":
+                            e.Value = "Male";
+                            e.FormattingApplied = true;
+                            break;
+
+                        case "2":
+                            e.Value = "Female";
+                            e.FormattingApplied = true;
+                            break;
+                    }
+                }
+            }
+
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "member_card")
+            {
+                if (e.Value != null)
+                {
+                    switch (e.Value.ToString())
+                    {
+                        case "1":
+                            e.Value = "Yes";
+                            e.FormattingApplied = true;
+                            break;
+
+                        case "2":
+                            e.Value = "No";
+                            e.FormattingApplied = true;
+                            break;
+                    }
+                }
+            }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "password")
+            {
+                if (e.Value != null)
+                {
+                    e.Value = decryptPassword(e.Value.ToString(), key, iv);
+                    e.FormattingApplied = true;
+                }
+            }
+
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "photo" && e.Value != null)
+            {
+                string photoPath = e.Value.ToString();
+
+                if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewImageColumn)
+                {
+                    if (File.Exists(photoPath))
+                    {
+                        using (Image image = Image.FromFile(photoPath))
+                        {
+                            e.Value = new Bitmap(image);
+                        }
+                        e.FormattingApplied = true;
+                    }
+                    else
+                    {
+                        e.Value = null;
+                        e.FormattingApplied = true;
+                    }
                 }
             }
         }
 
-        //private void download()
-        //{
-        //    string filePath = "";
-        //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        //    using (var package = new ExcelPackage())
-        //    {
-        //        var worksheet = package.Workbook.Worksheets.Add("Customer Data");
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            LoadData(1, searchKeyword);
+            currentPageIndex = 1;
+        }
 
-        //        for (int i = 0; i < dataGridView1.Columns.Count; i++)
-        //        {
-        //            worksheet.Cells[1, i + 1].Value = dataGridView1.Columns[i].HeaderText;
-        //        }
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+        }
 
-        //        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-        //        {
-        //            for (int j = 0; j < dataGridView1.Columns.Count; j++)
-        //            {
-        //                worksheet.Cells[i + 2, j + 1].Value = dataGridView1.Rows[i].Cells[j].Value;
-        //            }
-        //        }
+        private void listingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form1 f = new Form1
+            {
+                sourcePage = "new"
+            };
+            f.Show();
+        }
 
-        //        if (saveFileDialog1.ShowDialog() == DialogResult.OK) { 
-        //            filePath = saveFileDialog1.FileName;
-        //            package.SaveAs(new FileInfo(filePath));
-        //        }
+        private void listingToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Listing list = new Listing();
+            list.Show();
+        }
 
-        //    }
-
-        //    MessageBox.Show("File saved "+ filePath, "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Login login = new Login();
+            login.Show();
+        }
     }
 }

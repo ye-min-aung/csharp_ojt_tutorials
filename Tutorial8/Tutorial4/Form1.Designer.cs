@@ -101,20 +101,21 @@
             // entryToolStripMenuItem
             // 
             entryToolStripMenuItem.Name = "entryToolStripMenuItem";
-            entryToolStripMenuItem.Size = new Size(224, 26);
+            entryToolStripMenuItem.Size = new Size(139, 26);
             entryToolStripMenuItem.Text = "Entry";
+            entryToolStripMenuItem.Click += entryToolStripMenuItem_Click;
             // 
             // listingToolStripMenuItem
             // 
             listingToolStripMenuItem.Name = "listingToolStripMenuItem";
-            listingToolStripMenuItem.Size = new Size(224, 26);
+            listingToolStripMenuItem.Size = new Size(139, 26);
             listingToolStripMenuItem.Text = "Listing";
             listingToolStripMenuItem.Click += listingToolStripMenuItem_Click;
             // 
             // logoutToolStripMenuItem
             // 
             logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            logoutToolStripMenuItem.Size = new Size(224, 26);
+            logoutToolStripMenuItem.Size = new Size(139, 26);
             logoutToolStripMenuItem.Text = "Logout";
             logoutToolStripMenuItem.Click += logoutToolStripMenuItem_Click;
             // 
@@ -131,9 +132,11 @@
             // txtConfirmPassword
             // 
             txtConfirmPassword.Location = new Point(1183, 124);
+            txtConfirmPassword.MaxLength = 100;
             txtConfirmPassword.Name = "txtConfirmPassword";
             txtConfirmPassword.Size = new Size(215, 27);
             txtConfirmPassword.TabIndex = 44;
+            txtConfirmPassword.UseSystemPasswordChar = true;
             // 
             // label19
             // 
@@ -156,9 +159,11 @@
             // txtPassword
             // 
             txtPassword.Location = new Point(1183, 64);
+            txtPassword.MaxLength = 100;
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(215, 27);
             txtPassword.TabIndex = 41;
+            txtPassword.UseSystemPasswordChar = true;
             // 
             // openFileDialog1
             // 
@@ -278,6 +283,7 @@
             // txtAddress
             // 
             txtAddress.Location = new Point(740, 367);
+            txtAddress.MaxLength = 3000;
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(215, 84);
             txtAddress.TabIndex = 26;
@@ -298,7 +304,6 @@
             rdoFemale.Name = "rdoFemale";
             rdoFemale.Size = new Size(78, 24);
             rdoFemale.TabIndex = 24;
-            rdoFemale.TabStop = true;
             rdoFemale.Text = "Female";
             rdoFemale.UseVisualStyleBackColor = true;
             rdoFemale.CheckedChanged += radioButton3_CheckedChanged;
@@ -310,13 +315,13 @@
             rdoMale.Name = "rdoMale";
             rdoMale.Size = new Size(63, 24);
             rdoMale.TabIndex = 23;
-            rdoMale.TabStop = true;
             rdoMale.Text = "Male";
             rdoMale.UseVisualStyleBackColor = true;
             // 
             // rdoOther
             // 
             rdoOther.AutoSize = true;
+            rdoOther.Checked = true;
             rdoOther.Location = new Point(740, 65);
             rdoOther.Name = "rdoOther";
             rdoOther.Size = new Size(67, 24);
@@ -328,6 +333,7 @@
             // txtPhone2
             // 
             txtPhone2.Location = new Point(740, 184);
+            txtPhone2.MaxLength = 20;
             txtPhone2.Name = "txtPhone2";
             txtPhone2.Size = new Size(215, 27);
             txtPhone2.TabIndex = 20;
@@ -336,6 +342,7 @@
             // txtPhone1
             // 
             txtPhone1.Location = new Point(740, 124);
+            txtPhone1.MaxLength = 20;
             txtPhone1.Name = "txtPhone1";
             txtPhone1.Size = new Size(215, 27);
             txtPhone1.TabIndex = 19;
@@ -343,6 +350,7 @@
             // txtEmail
             // 
             txtEmail.Location = new Point(232, 424);
+            txtEmail.MaxLength = 100;
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(215, 27);
             txtEmail.TabIndex = 18;
@@ -362,11 +370,13 @@
             memberDate.Name = "memberDate";
             memberDate.Size = new Size(215, 27);
             memberDate.TabIndex = 16;
+            memberDate.ValueChanged += memberDate_ValueChanged;
             // 
             // txtAge
             // 
             txtAge.Enabled = false;
             txtAge.Location = new Point(232, 304);
+            txtAge.MaxLength = 4;
             txtAge.Name = "txtAge";
             txtAge.Size = new Size(215, 27);
             txtAge.TabIndex = 15;
@@ -374,6 +384,7 @@
             // txtNrc
             // 
             txtNrc.Location = new Point(232, 184);
+            txtNrc.MaxLength = 20;
             txtNrc.Name = "txtNrc";
             txtNrc.Size = new Size(215, 27);
             txtNrc.TabIndex = 14;
@@ -382,6 +393,7 @@
             // txtName
             // 
             txtName.Location = new Point(232, 124);
+            txtName.MaxLength = 100;
             txtName.Name = "txtName";
             txtName.Size = new Size(215, 27);
             txtName.TabIndex = 13;
@@ -390,6 +402,7 @@
             // 
             txtId.Enabled = false;
             txtId.Location = new Point(232, 64);
+            txtId.MaxLength = 100;
             txtId.Name = "txtId";
             txtId.Size = new Size(215, 27);
             txtId.TabIndex = 12;
