@@ -1,15 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CustomerApp\CustomerApp.csproj" />
-    <ProjectReference Include="..\CustomerDAO\CustomerDAO.csproj" />
     <ProjectReference Include="..\CustomerEntity\CustomerEntity.csproj" />
+    <ProjectReference Include="..\CustomerService\CustomerService.csproj" />
   </ItemGroup>
 
 </Project>
