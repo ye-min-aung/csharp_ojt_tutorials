@@ -1,9 +1,5 @@
-﻿using OJT.App.Views.Menu;
+﻿using OJT.App.Views.Product;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using OJT.App.Views.Product;
 using System.Windows.Forms;
 
 namespace OJT.App
@@ -18,7 +14,7 @@ namespace OJT.App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ProductCreate());
+            Application.Run(new ProductList());
         }
     }
 }

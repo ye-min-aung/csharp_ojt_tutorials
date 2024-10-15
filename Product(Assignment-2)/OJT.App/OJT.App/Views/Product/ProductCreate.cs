@@ -1,12 +1,16 @@
-﻿using System;
-using System.Windows.Forms;
-using OJT.Entities.Product;
+﻿using OJT.Entities.Product;
 using OJT.Services.Product;
+using System;
+using System.Windows.Forms;
 
 namespace OJT.App.Views.Product
 {
     public partial class ProductCreate : Form
     {
+
+        public ProductEntity Product { get; set; }
+        public UnitEntity Unit { get; set; }
+        
         public ProductCreate()
         {
             InitializeComponent();
@@ -16,35 +20,63 @@ namespace OJT.App.Views.Product
 
         private void ProductCreate_Load(object sender, EventArgs e)
         {
+            if(Product != null)
+            {
+                txtProductId.Text = Product.Product_Id.ToString();
+                txtName.Text = Product.Product_Name.ToString();
+                txtPrice.Text = Product.Product_Price.ToString();
+            }
 
+            if (Unit != null)
+            {
+                txtUnit.Text = Unit.unitName.ToString();
+            }
+
+            if (!string.IsNullOrEmpty(txtProductId.Text))
+            {
+                btnSave.Text = "Update";
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            bool inserted = AddorUpdate();
-
-            if (inserted)
-            {
-                    MessageBox.Show("Save Success.", "Success", MessageBoxButtons.OK);
-            }
+            AddorUpdate();
+            
         }
 
-        private bool AddorUpdate()
+        private void AddorUpdate()
         {
             ProductEntity product = CreateProduct();
             UnitEntity unit = CreateUnit();
 
             if(product == null || unit == null)
             {
-                return false;
+                return;
             }
             bool success = false;
             
             if(string.IsNullOrEmpty(txtProductId.Text))
             {
                 success = service.Insert(product, unit);
+                if (success)
+                {
+                    MessageBox.Show("Save Success.", "Success", MessageBoxButtons.OK);
+                    ProductList p = new ProductList();
+                    this.Hide();
+                    p.Show();
+                }
             }
-            return success;
+            else
+            {
+                success = service.Update(product, unit);
+                if (success)
+                {
+                    MessageBox.Show("Update Success.", "Success", MessageBoxButtons.OK);
+                    ProductList p = new ProductList();
+                    this.Hide();
+                    p.Show();
+                }
+            }
         }
 
         private ProductEntity CreateProduct()
@@ -60,6 +92,10 @@ namespace OJT.App.Views.Product
             {
                 MessageBox.Show("Enter Price.", "Fail", MessageBoxButtons.OK);
                 return null;
+            }
+            if (!String.IsNullOrEmpty(txtProductId.Text))
+            {
+                productEntity.Product_Id = txtProductId.Text;
             }
             productEntity.Product_Name = txtName.Text;
             productEntity.Product_Price = txtPrice.Text;
@@ -78,6 +114,29 @@ namespace OJT.App.Views.Product
             unitEntity.unitName = txtUnit.Text;
 
             return unitEntity;
+        }
+
+        private void btnList_Click(object sender, EventArgs e)
+        {
+            ProductList list = new ProductList();
+            this.Hide();
+            list.Show();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            bool success = false;
+            if (!String.IsNullOrEmpty(txtProductId.Text))
+            {
+                success = service.Delete(txtProductId.Text.ToString());
+                if(success)
+                {
+                    MessageBox.Show("Delete Success.", "Success", MessageBoxButtons.OK);
+                    ProductList p = new ProductList();
+                    this.Hide();
+                    p.Show();
+                }
+            }
         }
     }
 }

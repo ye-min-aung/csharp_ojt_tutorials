@@ -1,5 +1,4 @@
 ﻿using DAO.Common;
-using Entities.Employee;
 using OJT.Entities.Product;
 using System;
 using System.Data;
@@ -35,8 +34,9 @@ namespace OJT.DAO.Product
         /// </summary>
         public DataTable GetAll()
         {
-            strSql = "SELECT * FROM Employees ";
-
+            string strSql = "SELECT P.product_id, P.product_name, P.product_price, U.unit_name " +
+                "FROM ProductTable P JOIN ProductUnit PU ON P.product_id = PU.product_id " +
+                "JOIN Unit U ON PU.unit_id = U.unit_id";
             return connection.ExecuteDataTable(CommandType.Text, strSql);
         }
 
@@ -64,34 +64,32 @@ namespace OJT.DAO.Product
                                        "VALUES (@ProductId, @ProductName, @ProductPrice);";
 
             string insertUnitSql = "INSERT INTO Unit (unit_name) " +
-                                    "OUTPUT INSERTED.unit_id " + // Get the inserted UnitID
+                                    "OUTPUT INSERTED.unit_id " +
                                     "VALUES (@UnitName);";
 
             string insertProductUnitSql = "INSERT INTO ProductUnit (product_id, unit_id) " +
                                            "VALUES (@ProductId, @UnitID);";
 
             SqlParameter[] productParams = {
-                    new SqlParameter("@ProductId", id),
-                    new SqlParameter("@ProductName", product.Product_Name),
-                    new SqlParameter("@ProductPrice", product.Product_Price)
-                };
-                bool productSuccess = connection.ExecuteNonQuery(CommandType.Text, insertProductSql, productParams);
+                new SqlParameter("@ProductId", id),
+                new SqlParameter("@ProductName", product.Product_Name),
+                new SqlParameter("@ProductPrice", product.Product_Price)
+            };
+             bool productSuccess = connection.ExecuteNonQuery(CommandType.Text, insertProductSql, productParams);
 
-                // Insert the unit and get the generated UnitID
-                int unitId;
-                SqlParameter[] unitParams = {
-                    new SqlParameter("@UnitName", unit.unitName)
-                };
-                unitId = (int)connection.ExecuteScalar(CommandType.Text, insertUnitSql, unitParams); // Get the inserted UnitID
+            int unitId;
+            SqlParameter[] unitParams = {
+                new SqlParameter("@UnitName", unit.unitName)
+            };
+            unitId = (int)connection.ExecuteScalar(CommandType.Text, insertUnitSql, unitParams); // Get the inserted UnitID
 
-            // Insert the relationship into the ProductUnit table
             SqlParameter[] productUnitParams = {
-                    new SqlParameter("@ProductId", id),
-                    new SqlParameter("@UnitID", unitId)
-                };
-                bool productUnitSuccess = connection.ExecuteNonQuery(CommandType.Text, insertProductUnitSql, productUnitParams);
+                new SqlParameter("@ProductId", id),
+                new SqlParameter("@UnitID", unitId)
+            };
+            bool productUnitSuccess = connection.ExecuteNonQuery(CommandType.Text, insertProductUnitSql, productUnitParams);
 
-                return productSuccess && productUnitSuccess;
+            return productSuccess && productUnitSuccess;
         }
 
 
@@ -100,35 +98,52 @@ namespace OJT.DAO.Product
         /// Create Employee
         /// </summary>
         /// <param name="employeeEntity">.</param>
-        public bool Update(EmployeeEntity employeeEntity)
+        public bool Update(ProductEntity product, UnitEntity unit)
         {
-            strSql = "UPDATE Employees SET Name=@Name,Address=@Address,Designation=@Designation,Salary=@Salary,JoiningDate=@JoiningDate WHERE EmployeeId = @EmployeeId";
+            string updateProductSql = "UPDATE ProductTable " +
+                                        "SET product_name = @ProductName, product_price = @ProductPrice " +
+                                        "WHERE product_id = @ProductId;";
 
-            SqlParameter[] sqlParam = {
-                                        new SqlParameter("@EmployeeId", employeeEntity.employeeId),
-                                        new SqlParameter("@Name", employeeEntity.name),
-                                        new SqlParameter("@Address", employeeEntity.address),
-                                        new SqlParameter("@Designation", employeeEntity.designation),
-                                        new SqlParameter("@Salary", employeeEntity.salary),
-                                        new SqlParameter("@JoiningDate", employeeEntity.joiningDate)
-                                      };
-            bool success = connection.ExecuteNonQuery(CommandType.Text, strSql, sqlParam);
+            string updateUnitSql = "UPDATE Unit " +
+                                    "SET unit_name = @UnitName " +
+                                    "WHERE unit_id = (SELECT unit_id FROM ProductUnit WHERE product_id = @ProductId);";
 
-            return success;
+            SqlParameter[] productParams = {
+            new SqlParameter("@ProductId", product.Product_Id), 
+            new SqlParameter("@ProductName", product.Product_Name),
+            new SqlParameter("@ProductPrice", product.Product_Price)
+            };
+
+            bool productSuccess = connection.ExecuteNonQuery(CommandType.Text, updateProductSql, productParams);
+
+            SqlParameter[] unitParams = {
+            new SqlParameter("@UnitName", unit.unitName), 
+            new SqlParameter("@ProductId", product.Product_Id)
+            };
+
+            bool unitSuccess = connection.ExecuteNonQuery(CommandType.Text, updateUnitSql, unitParams);
+
+            return productSuccess && unitSuccess; 
         }
 
         /// <summary>
         /// Delete.
         /// </summary>
         /// <param name="id">.</param>
-        public bool Delete(int id)
+        public bool Delete(string id)
         {
-            strSql = "DELETE FROM Employees  WHERE EmployeeId =@EmployeeId";
-            SqlParameter[] sqlParam = {
-                                        new SqlParameter("@EmployeeId", id)
+            string productSql = "DELETE FROM ProductTable  WHERE product_id = @ProductId;";
+            string unitSql = "DELETE FROM Unit  WHERE unit_id = (select unit_id from ProductUnit where product_id = @ProductId);";
+            string productunitSql = "DELETE FROM ProductUnit  WHERE product_id = @ProductId;";
+
+            SqlParameter[] productIdParam = {
+                                        new SqlParameter("@ProductId", id)
                                       };
-            bool success = connection.ExecuteNonQuery(CommandType.Text, strSql, sqlParam);
-            return success;
+
+            bool productSuccess = connection.ExecuteNonQuery(CommandType.Text, productSql, productIdParam);
+            bool unitSuccess = connection.ExecuteNonQuery(CommandType.Text, unitSql, productIdParam);
+            bool productUnitSuccess = connection.ExecuteNonQuery(CommandType.Text, productunitSql, productIdParam);
+            return productSuccess && unitSuccess && productUnitSuccess;
         }
 
         private string generateId()
