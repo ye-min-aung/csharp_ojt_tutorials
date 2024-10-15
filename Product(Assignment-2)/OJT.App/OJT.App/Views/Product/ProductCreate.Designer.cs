@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductCreate));
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
@@ -46,7 +47,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(515, 59);
+            this.label1.Location = new System.Drawing.Point(576, 59);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(124, 21);
             this.label1.TabIndex = 0;
@@ -54,7 +55,7 @@
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(528, 236);
+            this.txtName.Location = new System.Drawing.Point(589, 236);
             this.txtName.MaxLength = 60;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(291, 22);
@@ -63,7 +64,7 @@
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(409, 461);
+            this.btnSave.Location = new System.Drawing.Point(470, 461);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(110, 35);
             this.btnSave.TabIndex = 2;
@@ -75,7 +76,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(319, 236);
+            this.label2.Location = new System.Drawing.Point(380, 236);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(116, 20);
             this.label2.TabIndex = 3;
@@ -85,7 +86,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(319, 302);
+            this.label3.Location = new System.Drawing.Point(380, 302);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(111, 20);
             this.label3.TabIndex = 4;
@@ -95,7 +96,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(319, 368);
+            this.label4.Location = new System.Drawing.Point(380, 368);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(102, 20);
             this.label4.TabIndex = 5;
@@ -103,14 +104,14 @@
             // 
             // txtUnit
             // 
-            this.txtUnit.Location = new System.Drawing.Point(528, 368);
+            this.txtUnit.Location = new System.Drawing.Point(589, 368);
             this.txtUnit.Name = "txtUnit";
             this.txtUnit.Size = new System.Drawing.Size(291, 22);
             this.txtUnit.TabIndex = 6;
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(528, 302);
+            this.txtPrice.Location = new System.Drawing.Point(589, 302);
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(291, 22);
             this.txtPrice.TabIndex = 7;
@@ -119,7 +120,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(319, 172);
+            this.label5.Location = new System.Drawing.Point(380, 172);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 20);
             this.label5.TabIndex = 8;
@@ -127,7 +128,7 @@
             // 
             // txtProductId
             // 
-            this.txtProductId.Location = new System.Drawing.Point(528, 172);
+            this.txtProductId.Location = new System.Drawing.Point(589, 172);
             this.txtProductId.MaxLength = 30;
             this.txtProductId.Name = "txtProductId";
             this.txtProductId.ReadOnly = true;
@@ -137,7 +138,7 @@
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(559, 461);
+            this.btnDelete.Location = new System.Drawing.Point(620, 461);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(110, 35);
             this.btnDelete.TabIndex = 10;
@@ -148,7 +149,7 @@
             // btnList
             // 
             this.btnList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnList.Location = new System.Drawing.Point(709, 461);
+            this.btnList.Location = new System.Drawing.Point(770, 461);
             this.btnList.Name = "btnList";
             this.btnList.Size = new System.Drawing.Size(110, 35);
             this.btnList.TabIndex = 11;
@@ -161,7 +162,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.ClientSize = new System.Drawing.Size(1200, 627);
+            this.ClientSize = new System.Drawing.Size(1248, 653);
             this.Controls.Add(this.btnList);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.txtProductId);
@@ -174,6 +175,7 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ProductCreate";
             this.Text = "ProductCreate";
             this.Load += new System.EventHandler(this.ProductCreate_Load);

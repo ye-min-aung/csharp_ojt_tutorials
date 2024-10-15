@@ -136,6 +136,9 @@ namespace OJT.App.Views.Product
                     this.Hide();
                     p.Show();
                 }
+            }else
+            {
+                MessageBox.Show("No Data Selected.", "Warning", MessageBoxButtons.OK);
             }
         }
     }
