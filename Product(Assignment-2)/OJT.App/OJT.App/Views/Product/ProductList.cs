@@ -2,6 +2,8 @@
 using OJT.Services.Product;
 using System;
 using System.Data;
+using System.Drawing.Drawing2D;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace OJT.App.Views.Product
@@ -24,7 +26,7 @@ namespace OJT.App.Views.Product
         {
             DataTable dt = service.getAllData();
 
-            dataGridView1.DataSource = dt;
+            guna2DataGridView1.DataSource = dt;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -39,13 +41,15 @@ namespace OJT.App.Views.Product
             this.Hide();
         }
 
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+      
+
+        private void guna2DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex == 0 )
+            if (e.ColumnIndex == 0)
             {
-                if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count-1)
+                if (e.RowIndex >= 0 && e.RowIndex < guna2DataGridView1.Rows.Count - 1)
                 {
-                    var selectedRow = dataGridView1.Rows[e.RowIndex];
+                    var selectedRow = guna2DataGridView1.Rows[e.RowIndex];
                     var product = new ProductEntity
                     {
                         Product_Id = selectedRow.Cells["product_id"].Value.ToString(),
@@ -66,6 +70,15 @@ namespace OJT.App.Views.Product
                     this.Hide();
                     p.Show();
                 }
+            }
+
+        }
+
+        private void ProductList_Paint(object sender, PaintEventArgs e)
+        {
+            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle, ColorTranslator.FromHtml("#93A5CF "), ColorTranslator.FromHtml("#E4EfE9"), 45F))
+            {
+                e.Graphics.FillRectangle(brush, this.ClientRectangle);
             }
         }
     }

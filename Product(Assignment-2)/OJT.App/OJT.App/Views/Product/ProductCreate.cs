@@ -1,6 +1,8 @@
 ﻿using OJT.Entities.Product;
 using OJT.Services.Product;
 using System;
+using System.Drawing.Drawing2D;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace OJT.App.Views.Product
@@ -139,6 +141,22 @@ namespace OJT.App.Views.Product
             }else
             {
                 MessageBox.Show("No Data Selected.", "Warning", MessageBoxButtons.OK);
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            txtProductId.Text = string.Empty;
+            txtName.Text = string.Empty;
+            txtPrice.Text = string.Empty;
+            txtUnit.Text = string.Empty;
+        }
+
+        private void ProductCreate_Paint(object sender, PaintEventArgs e)
+        {
+            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle,ColorTranslator.FromHtml("#93A5CF ") ,ColorTranslator.FromHtml("#E4EfE9"), 45F))
+            {
+                e.Graphics.FillRectangle(brush, this.ClientRectangle);
             }
         }
     }

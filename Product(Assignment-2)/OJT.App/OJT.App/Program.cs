@@ -14,7 +14,7 @@ namespace OJT.App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ProductList());
+            Application.Run(new ProductCreate());
         }
     }
 }
