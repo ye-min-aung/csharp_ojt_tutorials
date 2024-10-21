@@ -34,10 +34,17 @@ namespace OJT.DAO.Product
         /// </summary>
         public DataTable GetAll()
         {
-            string strSql = "SELECT P.product_id, P.product_name, P.product_price, U.unit_name " +
-                "FROM ProductTable P JOIN ProductUnit PU ON P.product_id = PU.product_id " +
-                "JOIN Unit U ON PU.unit_id = U.unit_id";
+            string strSql = "SELECT P.product_id, P.product_name, P.product_price, U.unit_name, U.unit_id " +
+                "FROM ProductTable P LEFT JOIN ProductUnit PU ON P.product_id = PU.product_id " +
+                "LEFT JOIN Unit U ON PU.unit_id = U.unit_id";
             return connection.ExecuteDataTable(CommandType.Text, strSql);
+        }
+
+        public DataTable GetAllUnit()
+        {
+            strSql = "SELECT * FROM Unit";
+
+            return connection.ExecuteDataTable (CommandType.Text, strSql);
         }
 
         /// <summary>
@@ -57,15 +64,15 @@ namespace OJT.DAO.Product
         /// Create Employee
         /// </summary>
         /// <param name="employeeEntity">.</param>
-        public bool Insert(ProductEntity product, UnitEntity unit)
+        public bool Insert(ProductEntity product, string unit)
         {
             string id = generateId();
             string insertProductSql = "INSERT INTO ProductTable (product_id, product_name, product_price) " +
                                        "VALUES (@ProductId, @ProductName, @ProductPrice);";
 
-            string insertUnitSql = "INSERT INTO Unit (unit_name) " +
-                                    "OUTPUT INSERTED.unit_id " +
-                                    "VALUES (@UnitName);";
+            //string insertUnitSql = "INSERT INTO Unit (unit_name) " +
+            //                        "OUTPUT INSERTED.unit_id " +
+            //                        "VALUES (@UnitName);";
 
             string insertProductUnitSql = "INSERT INTO ProductUnit (product_id, unit_id) " +
                                            "VALUES (@ProductId, @UnitID);";
@@ -77,15 +84,15 @@ namespace OJT.DAO.Product
             };
              bool productSuccess = connection.ExecuteNonQuery(CommandType.Text, insertProductSql, productParams);
 
-            int unitId;
-            SqlParameter[] unitParams = {
-                new SqlParameter("@UnitName", unit.unitName)
-            };
-            unitId = (int)connection.ExecuteScalar(CommandType.Text, insertUnitSql, unitParams); // Get the inserted UnitID
+            //int unitId;
+            //SqlParameter[] unitParams = {
+            //    new SqlParameter("@UnitName", unit.unitName)
+            //};
+            //unitId = (int)connection.ExecuteScalar(CommandType.Text, insertUnitSql, unitParams); // Get the inserted UnitID
 
             SqlParameter[] productUnitParams = {
                 new SqlParameter("@ProductId", id),
-                new SqlParameter("@UnitID", unitId)
+                new SqlParameter("@UnitID", unit)
             };
             bool productUnitSuccess = connection.ExecuteNonQuery(CommandType.Text, insertProductUnitSql, productUnitParams);
 
@@ -98,15 +105,21 @@ namespace OJT.DAO.Product
         /// Create Employee
         /// </summary>
         /// <param name="employeeEntity">.</param>
-        public bool Update(ProductEntity product, UnitEntity unit)
+        public bool Update(ProductEntity product, string unit)
         {
             string updateProductSql = "UPDATE ProductTable " +
                                         "SET product_name = @ProductName, product_price = @ProductPrice " +
                                         "WHERE product_id = @ProductId;";
 
-            string updateUnitSql = "UPDATE Unit " +
-                                    "SET unit_name = @UnitName " +
-                                    "WHERE unit_id = (SELECT unit_id FROM ProductUnit WHERE product_id = @ProductId);";
+            string updateProductUnitSql = "UPDATE ProductUnit " +
+                                            "SET unit_id = @UnitId " +
+                                            "WHERE product_id = @ProductId";
+
+            SqlParameter[] productunitParams =
+            {
+                new SqlParameter("@UnitId" , unit),
+                new SqlParameter("@ProductId" , product.Product_Id)
+            };
 
             SqlParameter[] productParams = {
             new SqlParameter("@ProductId", product.Product_Id), 
@@ -115,15 +128,18 @@ namespace OJT.DAO.Product
             };
 
             bool productSuccess = connection.ExecuteNonQuery(CommandType.Text, updateProductSql, productParams);
+            bool productunitSuccess = connection.ExecuteNonQuery(CommandType.Text, updateProductUnitSql, productunitParams);
 
-            SqlParameter[] unitParams = {
-            new SqlParameter("@UnitName", unit.unitName), 
-            new SqlParameter("@ProductId", product.Product_Id)
-            };
+            //SqlParameter[] unitParams = {
+            //new SqlParameter("@UnitName", unit.unitName), 
+            //new SqlParameter("@ProductId", product.Product_Id)
+            //};
 
-            bool unitSuccess = connection.ExecuteNonQuery(CommandType.Text, updateUnitSql, unitParams);
+            //bool unitSuccess = connection.ExecuteNonQuery(CommandType.Text, updateUnitSql, unitParams);
 
-            return productSuccess && unitSuccess; 
+            //return productSuccess && unitSuccess;
+            return productSuccess && productunitSuccess;
+
         }
 
         /// <summary>
@@ -164,6 +180,47 @@ namespace OJT.DAO.Product
                 }
             }
             return cid;
+        }
+
+        public bool AddUnit(UnitEntity unit)
+        {
+            string insertUnitSql = "INSERT INTO Unit (unit_name) " +
+                                    "VALUES (@UnitName);";
+
+            SqlParameter[] unitParams = {
+                new SqlParameter("@UnitName", unit.unitName)
+            };
+
+            bool unitSuccess = connection.ExecuteNonQuery(CommandType.Text, insertUnitSql, unitParams);
+
+            return unitSuccess;
+        }
+
+        public bool UnitDelete(string id)
+        {
+            string unitSql = "DELETE FROM Unit  WHERE unit_id = @UnitId;";
+
+            SqlParameter[] unitIdParam = {
+                                        new SqlParameter("@UnitId", id)
+                                      };
+
+            bool unitSuccess = connection.ExecuteNonQuery(CommandType.Text, unitSql, unitIdParam);
+            return unitSuccess;
+        }
+
+        public bool UpdateUnit(UnitEntity unit)
+        {
+            string updateUnitSql = "UPDATE Unit " +
+                                    "SET unit_name = @UnitName " +
+                                    "WHERE unit_id = @UnitId;";
+
+            SqlParameter[] unitUpdateParam = {
+                                        new SqlParameter("@UnitName", unit.unitName),
+                                        new SqlParameter("@UnitId", unit.unitId)
+                                      };
+
+            bool unitSuccess = connection.ExecuteNonQuery(CommandType.Text, updateUnitSql, unitUpdateParam);
+            return unitSuccess;
         }
     }
 }

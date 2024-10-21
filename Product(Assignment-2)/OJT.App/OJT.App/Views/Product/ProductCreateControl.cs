@@ -1,28 +1,34 @@
 ﻿using OJT.Entities.Product;
 using OJT.Services.Product;
 using System;
-using System.Drawing.Drawing2D;
+using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace OJT.App.Views.Product
 {
-    public partial class ProductCreate : Form
+    public partial class ProductCreateControl : UserControl
     {
-
-        public ProductEntity Product { get; set; }
-        public UnitEntity Unit { get; set; }
-        
-        public ProductCreate()
+        public ProductCreateControl()
         {
             InitializeComponent();
         }
         ProductService service = new ProductService();
         public string ID { set { txtProductId.Text = value; } }
 
-        private void ProductCreate_Load(object sender, EventArgs e)
+        public ProductEntity Product { get; set; }
+        public UnitEntity Unit { get; set; }
+
+        private void btnSave_Click(object sender, EventArgs e)
         {
-            if(Product != null)
+            AddorUpdate();
+        }
+
+        private void ProductCreateControl_Load(object sender, EventArgs e)
+        {
+            LoadUnit();
+            if (Product != null)
             {
                 txtProductId.Text = Product.Product_Id.ToString();
                 txtName.Text = Product.Product_Name.ToString();
@@ -31,7 +37,7 @@ namespace OJT.App.Views.Product
 
             if (Unit != null)
             {
-                txtUnit.Text = Unit.unitName.ToString();
+                cboUnit.SelectedValue = Unit.unitId.ToString();
             }
 
             if (!string.IsNullOrEmpty(txtProductId.Text))
@@ -40,43 +46,47 @@ namespace OJT.App.Views.Product
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void LoadUnit()
         {
-            AddorUpdate();
-            
+            DataTable dataTable = service.GetAllUnit();
+            cboUnit.DataSource = dataTable;
+            cboUnit.DisplayMember = "unit_name";
+            cboUnit.ValueMember = "unit_id";
         }
 
         private void AddorUpdate()
         {
             ProductEntity product = CreateProduct();
-            UnitEntity unit = CreateUnit();
+            //UnitEntity unit = CreateUnit();
 
-            if(product == null || unit == null)
+            //if (product == null || unit == null)
+            if (product == null)
             {
                 return;
             }
+            string unitId = cboUnit.SelectedValue.ToString();
             bool success = false;
-            
-            if(string.IsNullOrEmpty(txtProductId.Text))
+
+            if (string.IsNullOrEmpty(txtProductId.Text))
             {
-                success = service.Insert(product, unit);
+                success = service.Insert(product, unitId);
                 if (success)
                 {
                     MessageBox.Show("Save Success.", "Success", MessageBoxButtons.OK);
-                    ProductList p = new ProductList();
-                    this.Hide();
-                    p.Show();
+                    ProductListControl p = new ProductListControl();
+                    this.Controls.Clear();
+                    this.Controls.Add(p);
                 }
             }
             else
             {
-                success = service.Update(product, unit);
+                success = service.Update(product, unitId);
                 if (success)
                 {
                     MessageBox.Show("Update Success.", "Success", MessageBoxButtons.OK);
-                    ProductList p = new ProductList();
-                    this.Hide();
-                    p.Show();
+                    ProductListControl p = new ProductListControl();
+                    this.Controls.Clear();
+                    this.Controls.Add(p);
                 }
             }
         }
@@ -95,6 +105,15 @@ namespace OJT.App.Views.Product
                 MessageBox.Show("Enter Price.", "Fail", MessageBoxButtons.OK);
                 return null;
             }
+            foreach (char c in txtPrice.Text)
+            {
+                if (!Char.IsDigit(c))
+                {
+                    MessageBox.Show("Enter Valid Price (number only).", "Fail", MessageBoxButtons.OK);
+                    return null;
+                }
+            }
+
             if (!String.IsNullOrEmpty(txtProductId.Text))
             {
                 productEntity.Product_Id = txtProductId.Text;
@@ -108,21 +127,14 @@ namespace OJT.App.Views.Product
         private UnitEntity CreateUnit()
         {
             UnitEntity unitEntity = new UnitEntity(); ;
-            if (String.IsNullOrEmpty(txtUnit.Text))
+            if (String.IsNullOrEmpty(cboUnit.Text))
             {
                 MessageBox.Show("Enter Unit.", "Fail", MessageBoxButtons.OK);
                 return null;
             }
-            unitEntity.unitName = txtUnit.Text;
+            unitEntity.unitName = cboUnit.Text;
 
             return unitEntity;
-        }
-
-        private void btnList_Click(object sender, EventArgs e)
-        {
-            ProductList list = new ProductList();
-            this.Hide();
-            list.Show();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -131,14 +143,15 @@ namespace OJT.App.Views.Product
             if (!String.IsNullOrEmpty(txtProductId.Text))
             {
                 success = service.Delete(txtProductId.Text.ToString());
-                if(success)
+                if (success)
                 {
                     MessageBox.Show("Delete Success.", "Success", MessageBoxButtons.OK);
-                    ProductList p = new ProductList();
-                    this.Hide();
-                    p.Show();
+                    ProductListControl p = new ProductListControl();
+                    this.Controls.Clear();
+                    this.Controls.Add(p);
                 }
-            }else
+            }
+            else
             {
                 MessageBox.Show("No Data Selected.", "Warning", MessageBoxButtons.OK);
             }
@@ -149,12 +162,12 @@ namespace OJT.App.Views.Product
             txtProductId.Text = string.Empty;
             txtName.Text = string.Empty;
             txtPrice.Text = string.Empty;
-            txtUnit.Text = string.Empty;
+            cboUnit.Text = string.Empty;
         }
 
         private void ProductCreate_Paint(object sender, PaintEventArgs e)
         {
-            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle,ColorTranslator.FromHtml("#93A5CF ") ,ColorTranslator.FromHtml("#E4EfE9"), 45F))
+            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle, ColorTranslator.FromHtml("#93A5CF "), ColorTranslator.FromHtml("#E4EfE9"), 45F))
             {
                 e.Graphics.FillRectangle(brush, this.ClientRectangle);
             }

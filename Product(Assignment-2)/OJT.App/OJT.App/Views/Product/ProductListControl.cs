@@ -2,46 +2,19 @@
 using OJT.Services.Product;
 using System;
 using System.Data;
-using System.Drawing.Drawing2D;
-using System.Drawing;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 
 namespace OJT.App.Views.Product
 {
-    public partial class ProductList : Form
+    public partial class ProductListControl : UserControl
     {
-        public ProductList()
+        public ProductListControl()
         {
             InitializeComponent();
         }
-
         ProductService service = new ProductService();
 
-        private void ProductList_Load(object sender, EventArgs e)
-        {
-            LoadData();
-        }
-
-        private void LoadData()
-        {
-            DataTable dt = service.getAllData();
-
-            guna2DataGridView1.DataSource = dt;
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnNew_Click(object sender, EventArgs e)
-        {
-            ProductCreate p = new ProductCreate();
-            p.Show();
-            this.Hide();
-        }
-
-      
 
         private void guna2DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -59,27 +32,31 @@ namespace OJT.App.Views.Product
 
                     var unit = new UnitEntity
                     {
-                        unitName = selectedRow.Cells["unit_name"].Value.ToString()
+                        unitName = selectedRow.Cells["unit_name"].Value.ToString(),
+                        unitId = selectedRow.Cells["unit_id"].Value.ToString()
                     };
 
-                    ProductCreate p = new ProductCreate()
+                    ProductCreateControl p = new ProductCreateControl()
                     {
                         Product = product,
                         Unit = unit
                     };
-                    this.Hide();
-                    p.Show();
+                    this.Controls.Clear();
+                    this.Controls.Add(p);
                 }
             }
-
         }
 
-        private void ProductList_Paint(object sender, PaintEventArgs e)
+        private void ProductListControl_Load(object sender, EventArgs e)
         {
-            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle, ColorTranslator.FromHtml("#93A5CF "), ColorTranslator.FromHtml("#E4EfE9"), 45F))
-            {
-                e.Graphics.FillRectangle(brush, this.ClientRectangle);
-            }
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            DataTable dt = service.getAllData();
+
+            guna2DataGridView1.DataSource = dt;
         }
     }
 }

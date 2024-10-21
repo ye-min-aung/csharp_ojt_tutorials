@@ -1,4 +1,4 @@
-﻿using OJT.App.Views.Product;
+﻿using OJT.App.Views.Frame;
 using System;
 using System.Windows.Forms;
 
@@ -14,7 +14,7 @@ namespace OJT.App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ProductCreate());
+            Application.Run(new Frame());
         }
     }
 }

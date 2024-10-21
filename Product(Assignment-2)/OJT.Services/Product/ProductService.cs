@@ -9,7 +9,7 @@ namespace OJT.Services.Product
         private ProductDao productDao = new ProductDao();
 
 
-        public bool Insert(ProductEntity product, UnitEntity unit)
+        public bool Insert(ProductEntity product, string unit)
         {
             return productDao.Insert(product, unit);
         }
@@ -22,7 +22,7 @@ namespace OJT.Services.Product
             return dataTable;
         }
 
-        public bool Update(ProductEntity product, UnitEntity unit)
+        public bool Update(ProductEntity product, string unit)
         {
             return productDao.Update(product, unit);
         }
@@ -30,6 +30,25 @@ namespace OJT.Services.Product
         public bool Delete(string productId)
         {
             return productDao.Delete(productId);
+        }
+
+        public bool AddUnit(UnitEntity unit)
+        {
+            return productDao.AddUnit(unit);
+        }
+
+        public DataTable GetAllUnit()
+        {
+            return productDao.GetAllUnit();
+        }
+
+        public bool DeleteUnit(string unitId)
+        {
+            return productDao.UnitDelete(unitId);
+        }
+        public bool UpdateUnit(UnitEntity unit)
+        {
+            return productDao.UpdateUnit(unit);
         }
 
     }
