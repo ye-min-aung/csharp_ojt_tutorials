@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DbConnection.cs" />
-    <Compile Include="Employee\EmployeeDao.cs" />
     <Compile Include="Expense\ExpenseDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

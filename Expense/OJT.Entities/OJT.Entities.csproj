@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Employee\EmployeeEntity.cs" />
     <Compile Include="Expense\CategoryEntity.cs" />
     <Compile Include="Expense\ExpenseEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -13,5 +13,6 @@ namespace OJT.Entities.Expense
         public string category {  get; set; }
         public string date { get; set; }
         public string person { get; set; }
+        public int Amount { get; set; } 
     }
 }

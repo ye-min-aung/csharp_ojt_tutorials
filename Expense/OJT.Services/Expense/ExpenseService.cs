@@ -1,5 +1,4 @@
-﻿using Entities.Employee;
-using OJT.DAO.Expense;
+﻿using OJT.DAO.Expense;
 using OJT.Entities.Expense;
 using System;
 using System.Data;

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using System.Xml.Linq;
 
 namespace OJT.App.Views.Expense
 {
@@ -22,11 +23,27 @@ namespace OJT.App.Views.Expense
         }
 
         public string ExpenseId { set { txtExpenseId.Text = value; } }
+        public ExpenseEntity expense { get; set; }
         ExpenseService service = new ExpenseService();
 
         private void UCExpenseCreate_Load(object sender, EventArgs e)
         {
             LoadCategory();
+            ExpenseDate.Value = DateTime.Now;
+            if (expense != null)
+            {
+                txtExpenseId.Text = expense.expenseId.ToString();
+                txtExpenseName.Text = expense.expenseName.ToString();
+                cboCategory.SelectedValue = expense.category;
+                ExpenseDate.Text = expense.date;
+                txtPerson.Text = expense.person.ToString();
+                txtAmount.Text = expense.Amount.ToString();
+            }
+
+            if (!string.IsNullOrEmpty(txtExpenseId.Text))
+            {
+                btnSave.Text = "Update";
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -97,15 +114,22 @@ namespace OJT.App.Views.Expense
                 MessageBox.Show("Enter Person Name.", "Fail", MessageBoxButtons.OK);
                 return null;
             }
+            if (String.IsNullOrEmpty(txtAmount.Text))
+            {
+                MessageBox.Show("Enter Amount.", "Fail", MessageBoxButtons.OK);
+                return null;
+            }
             if (!String.IsNullOrEmpty(txtExpenseId.Text))
             {
                 expenseEntity.expenseId = Convert.ToInt32(txtExpenseId.Text);
             }
+            
 
             expenseEntity.expenseName = txtExpenseName.Text;
             expenseEntity.category = cboCategory.SelectedValue.ToString();
             expenseEntity.date = ExpenseDate.Text;
             expenseEntity.person = txtPerson.Text;
+            expenseEntity.Amount = Convert.ToInt32(txtAmount.Text);
 
             return expenseEntity;
 

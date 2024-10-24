@@ -1,5 +1,4 @@
 ﻿using DAO.Common;
-using Entities.Employee;
 using OJT.Entities.Expense;
 using System;
 using System.Data;
@@ -37,33 +36,28 @@ namespace OJT.DAO.Expense
             return success;
         }
 
-        public DataTable Get(int id)
-        {
-            strSql = "SELECT * FROM Employees " +
-                      "WHERE  EmployeeId= " + id;
-
-            return connection.ExecuteDataTable(CommandType.Text, strSql);
-        }
-
         public bool Insert(ExpenseEntity expenseEntity)
         {
-            strSql = "INSERT INTO Expense(expense_name,category,date,person)" +
-                     "VALUES(@Name, @Category, @Date, @Person)";
+            strSql = "INSERT INTO Expense(expense_name, category, date, person, amount) " +
+                     "VALUES(@Name, @Category, @Date, @Person, @Amount)";
 
             SqlParameter[] sqlParam = {
-                                        new SqlParameter("@Name", expenseEntity.expenseName),
-                                        new SqlParameter("@Category", expenseEntity.category),
-                                        new SqlParameter("@Date", expenseEntity.date),
-                                        new SqlParameter("@Person", expenseEntity.person)
-                                      };
+                                new SqlParameter("@Name", expenseEntity.expenseName),
+                                new SqlParameter("@Category", expenseEntity.category),
+                                new SqlParameter("@Date", expenseEntity.date),
+                                new SqlParameter("@Person", expenseEntity.person),
+                                new SqlParameter("@Amount", expenseEntity.Amount)
+                              };
+
             bool success = connection.ExecuteNonQuery(CommandType.Text, strSql, sqlParam);
 
             return success;
         }
 
+
         public DataTable GetAllExpenseNOFit()
         {
-            strSql = "select E.expense_id, E.expense_name, C.category_name, C.category_id, e.date, e.person " +
+            strSql = "select E.expense_id, E.expense_name, C.category_name, C.category_id, e.date, e.person ,e.Amount " +
                                     "from Expense E left Join Category C on E.category = C.category_id";
 
             return connection.ExecuteDataTable(CommandType.Text, strSql);
@@ -77,8 +71,11 @@ namespace OJT.DAO.Expense
                 try
                 {
                     sqlConn.Open();
-                    strSql = "select E.expense_id, E.expense_name, C.category_name, C.category_id, e.date, e.person " +
-                                   "from Expense E left Join Category C on E.category = C.category_id where 1=1";
+                    //strSql = "select E.expense_id, E.expense_name, C.category_name, C.category_id, e.date, e.person,e.Amount " +
+                    //               "from Expense E left Join Category C on E.category = C.category_id where 1=1";
+
+                    strSql = "select E.expense_id, E.expense_name, C.category_name, C.category_id, E.date, E.person, E.Amount " +
+                           "from Expense E left Join Category C on E.category = C.category_id where 1=1";
 
                     if (fromDate.HasValue)
                         strSql += " AND E.date >= @FromDate";
@@ -133,22 +130,22 @@ namespace OJT.DAO.Expense
 
 
 
-        public bool Update(EmployeeEntity employeeEntity)
-        {
-            strSql = "UPDATE Employees SET Name=@Name,Address=@Address,Designation=@Designation,Salary=@Salary,JoiningDate=@JoiningDate WHERE EmployeeId = @EmployeeId";
+        //public bool Update(EmployeeEntity employeeEntity)
+        //{
+        //    strSql = "UPDATE Employees SET Name=@Name,Address=@Address,Designation=@Designation,Salary=@Salary,JoiningDate=@JoiningDate WHERE EmployeeId = @EmployeeId";
 
-            SqlParameter[] sqlParam = {
-                                        new SqlParameter("@EmployeeId", employeeEntity.employeeId),
-                                        new SqlParameter("@Name", employeeEntity.name),
-                                        new SqlParameter("@Address", employeeEntity.address),
-                                        new SqlParameter("@Designation", employeeEntity.designation),
-                                        new SqlParameter("@Salary", employeeEntity.salary),
-                                        new SqlParameter("@JoiningDate", employeeEntity.joiningDate)
-                                      };
-            bool success = connection.ExecuteNonQuery(CommandType.Text, strSql, sqlParam);
+        //    SqlParameter[] sqlParam = {
+        //                                new SqlParameter("@EmployeeId", employeeEntity.employeeId),
+        //                                new SqlParameter("@Name", employeeEntity.name),
+        //                                new SqlParameter("@Address", employeeEntity.address),
+        //                                new SqlParameter("@Designation", employeeEntity.designation),
+        //                                new SqlParameter("@Salary", employeeEntity.salary),
+        //                                new SqlParameter("@JoiningDate", employeeEntity.joiningDate)
+        //                              };
+        //    bool success = connection.ExecuteNonQuery(CommandType.Text, strSql, sqlParam);
 
-            return success;
-        }
+        //    return success;
+        //}
 
         public bool Delete(int id)
         {

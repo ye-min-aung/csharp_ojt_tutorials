@@ -40,6 +40,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cboCategory = new Guna.UI2.WinForms.Guna2ComboBox();
             this.txtExpenseId = new Guna.UI2.WinForms.Guna2TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtAmount = new Guna.UI2.WinForms.Guna2TextBox();
             this.SuspendLayout();
             // 
             // txtExpenseName
@@ -55,8 +57,9 @@
             this.txtExpenseName.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtExpenseName.ForeColor = System.Drawing.Color.Black;
             this.txtExpenseName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtExpenseName.Location = new System.Drawing.Point(414, 58);
+            this.txtExpenseName.Location = new System.Drawing.Point(414, 67);
             this.txtExpenseName.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+            this.txtExpenseName.MaxLength = 50;
             this.txtExpenseName.Name = "txtExpenseName";
             this.txtExpenseName.PasswordChar = '\0';
             this.txtExpenseName.PlaceholderText = "";
@@ -67,15 +70,15 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(298, 65);
+            this.label1.Location = new System.Drawing.Point(288, 74);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 23);
+            this.label1.Size = new System.Drawing.Size(123, 23);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Name";
+            this.label1.Text = "Expense Name";
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(414, 458);
+            this.btnSave.Location = new System.Drawing.Point(414, 524);
             this.btnSave.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(120, 40);
@@ -86,7 +89,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(590, 458);
+            this.btnCancel.Location = new System.Drawing.Point(590, 524);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(120, 40);
@@ -99,7 +102,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label2.Location = new System.Drawing.Point(479, -4);
+            this.label2.Location = new System.Drawing.Point(479, 5);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(141, 25);
             this.label2.TabIndex = 4;
@@ -108,7 +111,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(298, 165);
+            this.label3.Location = new System.Drawing.Point(288, 159);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(79, 23);
             this.label3.TabIndex = 6;
@@ -117,7 +120,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(298, 265);
+            this.label4.Location = new System.Drawing.Point(288, 254);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(46, 23);
             this.label4.TabIndex = 8;
@@ -136,8 +139,9 @@
             this.txtPerson.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtPerson.ForeColor = System.Drawing.Color.Black;
             this.txtPerson.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtPerson.Location = new System.Drawing.Point(414, 358);
+            this.txtPerson.Location = new System.Drawing.Point(414, 340);
             this.txtPerson.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+            this.txtPerson.MaxLength = 50;
             this.txtPerson.Name = "txtPerson";
             this.txtPerson.PasswordChar = '\0';
             this.txtPerson.PlaceholderText = "";
@@ -152,7 +156,7 @@
             this.ExpenseDate.FillColor = System.Drawing.Color.White;
             this.ExpenseDate.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExpenseDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.ExpenseDate.Location = new System.Drawing.Point(414, 258);
+            this.ExpenseDate.Location = new System.Drawing.Point(414, 247);
             this.ExpenseDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             this.ExpenseDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
             this.ExpenseDate.Name = "ExpenseDate";
@@ -163,7 +167,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(298, 365);
+            this.label5.Location = new System.Drawing.Point(288, 347);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 23);
             this.label5.TabIndex = 10;
@@ -180,7 +184,8 @@
             this.cboCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboCategory.ForeColor = System.Drawing.Color.Black;
             this.cboCategory.ItemHeight = 30;
-            this.cboCategory.Location = new System.Drawing.Point(414, 158);
+            this.cboCategory.Location = new System.Drawing.Point(414, 152);
+            this.cboCategory.MaxLength = 50;
             this.cboCategory.Name = "cboCategory";
             this.cboCategory.Size = new System.Drawing.Size(296, 36);
             this.cboCategory.TabIndex = 11;
@@ -197,7 +202,7 @@
             this.txtExpenseId.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtExpenseId.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtExpenseId.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtExpenseId.Location = new System.Drawing.Point(727, 58);
+            this.txtExpenseId.Location = new System.Drawing.Point(727, 67);
             this.txtExpenseId.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.txtExpenseId.Name = "txtExpenseId";
             this.txtExpenseId.PasswordChar = '\0';
@@ -207,10 +212,44 @@
             this.txtExpenseId.TabIndex = 12;
             this.txtExpenseId.Visible = false;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(288, 447);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(72, 23);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Amount";
+            // 
+            // txtAmount
+            // 
+            this.txtAmount.BorderRadius = 10;
+            this.txtAmount.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtAmount.DefaultText = "";
+            this.txtAmount.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtAmount.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtAmount.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtAmount.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtAmount.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtAmount.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtAmount.ForeColor = System.Drawing.Color.Black;
+            this.txtAmount.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtAmount.Location = new System.Drawing.Point(414, 440);
+            this.txtAmount.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+            this.txtAmount.MaxLength = 10;
+            this.txtAmount.Name = "txtAmount";
+            this.txtAmount.PasswordChar = '\0';
+            this.txtAmount.PlaceholderText = "";
+            this.txtAmount.SelectedText = "";
+            this.txtAmount.Size = new System.Drawing.Size(296, 40);
+            this.txtAmount.TabIndex = 13;
+            // 
             // UCExpenseCreate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txtAmount);
             this.Controls.Add(this.txtExpenseId);
             this.Controls.Add(this.cboCategory);
             this.Controls.Add(this.label5);
@@ -226,7 +265,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "UCExpenseCreate";
-            this.Size = new System.Drawing.Size(1110, 569);
+            this.Size = new System.Drawing.Size(1167, 589);
             this.Load += new System.EventHandler(this.UCExpenseCreate_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -247,5 +286,7 @@
         private System.Windows.Forms.Label label5;
         private Guna.UI2.WinForms.Guna2ComboBox cboCategory;
         private Guna.UI2.WinForms.Guna2TextBox txtExpenseId;
+        private System.Windows.Forms.Label label6;
+        private Guna.UI2.WinForms.Guna2TextBox txtAmount;
     }
 }

@@ -111,6 +111,7 @@
             this.category_id.HeaderText = "Category Id";
             this.category_id.MinimumWidth = 6;
             this.category_id.Name = "category_id";
+            this.category_id.ReadOnly = true;
             this.category_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // category_name
@@ -119,6 +120,7 @@
             this.category_name.HeaderText = "Name";
             this.category_name.MinimumWidth = 6;
             this.category_name.Name = "category_name";
+            this.category_name.ReadOnly = true;
             this.category_name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // UCCategotyList
