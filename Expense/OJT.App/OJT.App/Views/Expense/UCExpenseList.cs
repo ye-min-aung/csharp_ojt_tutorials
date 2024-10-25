@@ -21,6 +21,7 @@ namespace OJT.App.Views.Expense
 
         private void UCExpenseList_Load(object sender, EventArgs e)
         {
+            cboCagtegory.DropDownStyle = ComboBoxStyle.DropDown;
             cboItems.Text = "10";
             dtpFromDate.Value = DateTime.Now;
             dtpToDate.Value = DateTime.Now;
@@ -108,7 +109,7 @@ namespace OJT.App.Views.Expense
                 pdfDoc.Add(pdfTable);
                 pdfDoc.Close();
 
-                MessageBox.Show("PDF file created successfully!");
+                MessageBox.Show("PDF file saved!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

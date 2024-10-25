@@ -42,7 +42,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label1.Location = new System.Drawing.Point(485, 11);
+            this.label1.Location = new System.Drawing.Point(537, 11);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(133, 23);
@@ -77,7 +77,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvCategory.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCategory.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            this.dgvCategory.Location = new System.Drawing.Point(29, 82);
+            this.dgvCategory.Location = new System.Drawing.Point(81, 82);
             this.dgvCategory.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dgvCategory.Name = "dgvCategory";
             this.dgvCategory.RowHeadersVisible = false;

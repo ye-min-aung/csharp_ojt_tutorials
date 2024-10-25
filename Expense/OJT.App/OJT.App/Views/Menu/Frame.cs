@@ -22,6 +22,7 @@ namespace OJT.App.Views.Menu
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UCExpenseCreate uCExpenseCreate = new UCExpenseCreate();
+            uCExpenseCreate.Dock = DockStyle.Fill;
             Panal.Controls.Clear();
             Panal.Controls.Add(uCExpenseCreate);
         }

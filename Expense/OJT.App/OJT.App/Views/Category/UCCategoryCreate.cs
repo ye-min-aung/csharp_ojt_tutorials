@@ -83,6 +83,7 @@ namespace OJT.App.Views.Category
         {
             txtCategoryName.Text = string.Empty;
             txtCategoryId.Text = null;
+            txtCategoryName.Focus();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

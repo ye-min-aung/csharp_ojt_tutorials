@@ -41,7 +41,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label2.Location = new System.Drawing.Point(469, 0);
+            this.label2.Location = new System.Drawing.Point(507, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(148, 25);
             this.label2.TabIndex = 7;
@@ -51,7 +51,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label1.Location = new System.Drawing.Point(265, 72);
+            this.label1.Location = new System.Drawing.Point(303, 72);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 23);
             this.label1.TabIndex = 6;
@@ -70,7 +70,7 @@
             this.txtCategoryName.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtCategoryName.ForeColor = System.Drawing.Color.Black;
             this.txtCategoryName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtCategoryName.Location = new System.Drawing.Point(396, 62);
+            this.txtCategoryName.Location = new System.Drawing.Point(434, 62);
             this.txtCategoryName.Margin = new System.Windows.Forms.Padding(3, 9, 3, 9);
             this.txtCategoryName.MaxLength = 50;
             this.txtCategoryName.Name = "txtCategoryName";
@@ -92,7 +92,7 @@
             this.txtCategoryId.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtCategoryId.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtCategoryId.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtCategoryId.Location = new System.Drawing.Point(698, 62);
+            this.txtCategoryId.Location = new System.Drawing.Point(736, 62);
             this.txtCategoryId.Margin = new System.Windows.Forms.Padding(3, 9, 3, 9);
             this.txtCategoryId.Name = "txtCategoryId";
             this.txtCategoryId.PasswordChar = '\0';
@@ -104,7 +104,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(307, 151);
+            this.btnSave.Location = new System.Drawing.Point(345, 151);
             this.btnSave.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(120, 40);
@@ -115,7 +115,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(467, 151);
+            this.btnCancel.Location = new System.Drawing.Point(505, 151);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(120, 40);
@@ -126,7 +126,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(627, 151);
+            this.btnDelete.Location = new System.Drawing.Point(665, 151);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(120, 40);

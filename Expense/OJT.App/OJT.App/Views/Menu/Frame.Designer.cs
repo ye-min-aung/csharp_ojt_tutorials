@@ -49,7 +49,7 @@
             this.categoryToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1403, 31);
+            this.menuStrip1.Size = new System.Drawing.Size(1516, 31);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -65,14 +65,14 @@
             // createToolStripMenuItem
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(211, 28);
             this.createToolStripMenuItem.Text = "Create Expense";
             this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
             // allExpenseToolStripMenuItem
             // 
             this.allExpenseToolStripMenuItem.Name = "allExpenseToolStripMenuItem";
-            this.allExpenseToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.allExpenseToolStripMenuItem.Size = new System.Drawing.Size(211, 28);
             this.allExpenseToolStripMenuItem.Text = "All Expense";
             this.allExpenseToolStripMenuItem.Click += new System.EventHandler(this.allExpenseToolStripMenuItem_Click);
             // 
@@ -101,20 +101,20 @@
             // 
             // Panal
             // 
-            this.Panal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Panal.Location = new System.Drawing.Point(0, 31);
+            this.Panal.Location = new System.Drawing.Point(0, 34);
             this.Panal.Name = "Panal";
-            this.Panal.Size = new System.Drawing.Size(1403, 730);
+            this.Panal.Size = new System.Drawing.Size(1516, 774);
             this.Panal.TabIndex = 1;
             // 
             // Frame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1403, 761);
+            this.ClientSize = new System.Drawing.Size(1516, 820);
             this.Controls.Add(this.Panal);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(1278, 788);
             this.Name = "Frame";
             this.Text = "Expense";
             this.menuStrip1.ResumeLayout(false);

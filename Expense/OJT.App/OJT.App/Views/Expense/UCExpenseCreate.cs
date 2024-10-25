@@ -20,6 +20,7 @@ namespace OJT.App.Views.Expense
 
         private void UCExpenseCreate_Load(object sender, EventArgs e)
         {
+            cboCategory.DropDownStyle = ComboBoxStyle.DropDown;
             LoadCategory();
             ExpenseDate.Value = DateTime.Now;
             if (expense != null)
