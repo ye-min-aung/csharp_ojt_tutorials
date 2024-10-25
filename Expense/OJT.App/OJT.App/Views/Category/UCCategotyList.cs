@@ -1,12 +1,7 @@
-﻿using OJT.Services.Expense;
+﻿using OJT.Entities.Expense;
+using OJT.Services.Expense;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OJT.App.Views.Category
@@ -24,6 +19,26 @@ namespace OJT.App.Views.Category
         {
             DataTable dt = service.GetAllCategory();
             dgvCategory.DataSource = dt;
+        }
+
+        private void dgvCategory_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.ColumnIndex == 0)
+            {
+                if(e.RowIndex >= 0 && e.RowIndex < dgvCategory.Rows.Count-1)
+                {
+                    var selectedRow = dgvCategory.Rows[e.RowIndex];
+                    CategoryEntity categoryEntity = new CategoryEntity();
+                    categoryEntity.categoryId = Convert.ToInt32(selectedRow.Cells["category_id"].Value);
+                    categoryEntity.categoryName = selectedRow.Cells["category_name"].Value.ToString();
+                    UCCategoryCreate uCCategoryCreate = new UCCategoryCreate()
+                    {
+                        category = categoryEntity
+                    };
+                    this.Controls.Clear();
+                    this.Controls.Add(uCCategoryCreate);
+                }
+            }
         }
     }
 }

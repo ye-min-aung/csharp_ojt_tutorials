@@ -51,6 +51,8 @@
             // 
             // dgvCategory
             // 
+            this.dgvCategory.AllowUserToResizeColumns = false;
+            this.dgvCategory.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
             this.dgvCategory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -104,6 +106,7 @@
             this.dgvCategory.ThemeStyle.RowsStyle.Height = 24;
             this.dgvCategory.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvCategory.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            this.dgvCategory.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategory_CellClick);
             // 
             // category_id
             // 
@@ -112,6 +115,7 @@
             this.category_id.MinimumWidth = 6;
             this.category_id.Name = "category_id";
             this.category_id.ReadOnly = true;
+            this.category_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.category_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // category_name
@@ -121,6 +125,7 @@
             this.category_name.MinimumWidth = 6;
             this.category_name.Name = "category_name";
             this.category_name.ReadOnly = true;
+            this.category_name.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.category_name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // UCCategotyList

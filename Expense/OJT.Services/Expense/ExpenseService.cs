@@ -20,12 +20,18 @@ namespace OJT.Services.Expense
             return expenseDAO.InsertCategory(categoryName);
         }
 
-        //public DataTable Get(int id)
-        //{
-        //    DataTable dt = employeeDao.Get(id);
-        //    return dt;
-        //}
+        public bool UpdateCategory(CategoryEntity categoryEntity)
+        {
+            return expenseDAO.UpdateCategory(categoryEntity);
+        }
 
+        public bool DeleteCategory(int id)
+        {
+            return expenseDAO.DeleteCategory(id);
+        }
+
+
+        //Expense
         public bool Insert(ExpenseEntity ExpenseEntity)
         {
             return expenseDAO.Insert(ExpenseEntity);
@@ -41,15 +47,15 @@ namespace OJT.Services.Expense
             return expenseDAO.GetAllExpenseNOFit();
         }
 
-        //public bool Update(EmployeeEntity employeeEntity)
-        //{
-        //    return employeeDao.Update(employeeEntity);
-        //}
+        public bool Update(ExpenseEntity expenseEntity)
+        {
+            return expenseDAO.Update(expenseEntity);
+        }
 
-        //public bool Delete(int id)
-        //{
-        //    return employeeDao.Delete(id);
-        //}
+        public bool Delete(int id)
+        {
+            return expenseDAO.Delete(id);
+        }
 
     }
 }

@@ -42,6 +42,7 @@
             this.txtExpenseId = new Guna.UI2.WinForms.Guna2TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtAmount = new Guna.UI2.WinForms.Guna2TextBox();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtExpenseName
@@ -78,7 +79,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(414, 524);
+            this.btnSave.Location = new System.Drawing.Point(347, 524);
             this.btnSave.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(120, 40);
@@ -89,7 +90,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(590, 524);
+            this.btnCancel.Location = new System.Drawing.Point(667, 524);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(120, 40);
@@ -244,10 +245,22 @@
             this.txtAmount.Size = new System.Drawing.Size(296, 40);
             this.txtAmount.TabIndex = 13;
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(507, 524);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(120, 40);
+            this.btnDelete.TabIndex = 15;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // UCExpenseCreate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtAmount);
             this.Controls.Add(this.txtExpenseId);
@@ -288,5 +301,6 @@
         private Guna.UI2.WinForms.Guna2TextBox txtExpenseId;
         private System.Windows.Forms.Label label6;
         private Guna.UI2.WinForms.Guna2TextBox txtAmount;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

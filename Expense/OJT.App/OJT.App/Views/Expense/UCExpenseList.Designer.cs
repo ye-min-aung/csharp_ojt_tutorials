@@ -32,6 +32,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvExpense = new Guna.UI2.WinForms.Guna2DataGridView();
+            this.expense_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.expense_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.category_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.person = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.category_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dtpFromDate = new Guna.UI2.WinForms.Guna2DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.btnDownload = new System.Windows.Forms.Button();
@@ -46,18 +53,13 @@
             this.cboItems = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.expense_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.expense_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.category_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.person = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.category_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExpense)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvExpense
             // 
+            this.dgvExpense.AllowUserToResizeColumns = false;
+            this.dgvExpense.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
             this.dgvExpense.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -117,6 +119,70 @@
             this.dgvExpense.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvExpense.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             this.dgvExpense.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpense_CellClick);
+            // 
+            // expense_id
+            // 
+            this.expense_id.DataPropertyName = "expense_id";
+            this.expense_id.HeaderText = "ExpenseId";
+            this.expense_id.MinimumWidth = 6;
+            this.expense_id.Name = "expense_id";
+            this.expense_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.expense_id.Visible = false;
+            // 
+            // expense_name
+            // 
+            this.expense_name.DataPropertyName = "expense_name";
+            this.expense_name.HeaderText = "Expense Name";
+            this.expense_name.MinimumWidth = 6;
+            this.expense_name.Name = "expense_name";
+            this.expense_name.ReadOnly = true;
+            this.expense_name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // category_name
+            // 
+            this.category_name.DataPropertyName = "category_name";
+            this.category_name.HeaderText = "Category";
+            this.category_name.MinimumWidth = 6;
+            this.category_name.Name = "category_name";
+            this.category_name.ReadOnly = true;
+            this.category_name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // date
+            // 
+            this.date.DataPropertyName = "date";
+            this.date.HeaderText = "Date";
+            this.date.MinimumWidth = 6;
+            this.date.Name = "date";
+            this.date.ReadOnly = true;
+            this.date.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // person
+            // 
+            this.person.DataPropertyName = "person";
+            this.person.HeaderText = "Person";
+            this.person.MinimumWidth = 6;
+            this.person.Name = "person";
+            this.person.ReadOnly = true;
+            this.person.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Amount
+            // 
+            this.Amount.DataPropertyName = "Amount";
+            this.Amount.HeaderText = "Amount";
+            this.Amount.MinimumWidth = 6;
+            this.Amount.Name = "Amount";
+            this.Amount.ReadOnly = true;
+            this.Amount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // category_id
+            // 
+            this.category_id.DataPropertyName = "category_id";
+            this.category_id.HeaderText = "category_id";
+            this.category_id.MinimumWidth = 6;
+            this.category_id.Name = "category_id";
+            this.category_id.ReadOnly = true;
+            this.category_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.category_id.Visible = false;
             // 
             // dtpFromDate
             // 
@@ -276,70 +342,6 @@
             this.saveFileDialog1.FileName = "ExpenseList";
             this.saveFileDialog1.Filter = "PDF Files (*.pdf)|*.pdf";
             this.saveFileDialog1.Title = "Save as PDF";
-            // 
-            // expense_id
-            // 
-            this.expense_id.DataPropertyName = "expense_id";
-            this.expense_id.HeaderText = "ExpenseId";
-            this.expense_id.MinimumWidth = 6;
-            this.expense_id.Name = "expense_id";
-            this.expense_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.expense_id.Visible = false;
-            // 
-            // expense_name
-            // 
-            this.expense_name.DataPropertyName = "expense_name";
-            this.expense_name.HeaderText = "Expense Name";
-            this.expense_name.MinimumWidth = 6;
-            this.expense_name.Name = "expense_name";
-            this.expense_name.ReadOnly = true;
-            this.expense_name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // category_name
-            // 
-            this.category_name.DataPropertyName = "category_name";
-            this.category_name.HeaderText = "Category";
-            this.category_name.MinimumWidth = 6;
-            this.category_name.Name = "category_name";
-            this.category_name.ReadOnly = true;
-            this.category_name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // date
-            // 
-            this.date.DataPropertyName = "date";
-            this.date.HeaderText = "Date";
-            this.date.MinimumWidth = 6;
-            this.date.Name = "date";
-            this.date.ReadOnly = true;
-            this.date.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // person
-            // 
-            this.person.DataPropertyName = "person";
-            this.person.HeaderText = "Person";
-            this.person.MinimumWidth = 6;
-            this.person.Name = "person";
-            this.person.ReadOnly = true;
-            this.person.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Amount
-            // 
-            this.Amount.DataPropertyName = "Amount";
-            this.Amount.HeaderText = "Amount";
-            this.Amount.MinimumWidth = 6;
-            this.Amount.Name = "Amount";
-            this.Amount.ReadOnly = true;
-            this.Amount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // category_id
-            // 
-            this.category_id.DataPropertyName = "category_id";
-            this.category_id.HeaderText = "category_id";
-            this.category_id.MinimumWidth = 6;
-            this.category_id.Name = "category_id";
-            this.category_id.ReadOnly = true;
-            this.category_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.category_id.Visible = false;
             // 
             // UCExpenseList
             // 

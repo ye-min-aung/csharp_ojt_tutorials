@@ -65,14 +65,14 @@
             // createToolStripMenuItem
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 28);
-            this.createToolStripMenuItem.Text = "Create";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.createToolStripMenuItem.Text = "Create Expense";
             this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
             // allExpenseToolStripMenuItem
             // 
             this.allExpenseToolStripMenuItem.Name = "allExpenseToolStripMenuItem";
-            this.allExpenseToolStripMenuItem.Size = new System.Drawing.Size(180, 28);
+            this.allExpenseToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
             this.allExpenseToolStripMenuItem.Text = "All Expense";
             this.allExpenseToolStripMenuItem.Click += new System.EventHandler(this.allExpenseToolStripMenuItem_Click);
             // 

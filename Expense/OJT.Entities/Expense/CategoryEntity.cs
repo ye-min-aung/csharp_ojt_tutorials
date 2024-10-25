@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OJT.Entities.Expense
 {
-    internal class CategoryEntity
+    public class CategoryEntity
     {
         public int categoryId {  get; set; }
         public string categoryName { get; set; }
