@@ -216,6 +216,7 @@ namespace DAO.Common
                 catch (Exception ex)
                 {
                     string msg = ex.Message.ToString();
+                    Console.WriteLine( msg );
                 }
                 finally
                 {

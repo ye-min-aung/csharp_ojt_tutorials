@@ -2,6 +2,7 @@
 using OJT.Services.Expense;
 using System;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -22,13 +23,14 @@ namespace OJT.App.Views.Expense
         {
             cboCategory.DropDownStyle = ComboBoxStyle.DropDown;
             LoadCategory();
+            cboCategory.SelectedIndex = -1;
             ExpenseDate.Value = DateTime.Now;
             if (expense != null)
             {
                 txtExpenseId.Text = expense.expenseId.ToString();
                 txtExpenseName.Text = expense.expenseName.ToString();
                 cboCategory.SelectedValue = expense.category;
-                ExpenseDate.Text = expense.date;
+                ExpenseDate.Text = expense.date.ToString();
                 txtPerson.Text = expense.person.ToString();
                 txtAmount.Text = expense.Amount.ToString();
             }
@@ -85,9 +87,15 @@ namespace OJT.App.Views.Expense
                 if (success)
                 {
                     MessageBox.Show("Update Success.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    UCExpenseList list = new UCExpenseList();
-                    this.Controls.Clear();
-                    this.Controls.Add(list);
+                    //UCExpenseList list = new UCExpenseList();
+                    //this.Controls.Clear();
+                    //this.Controls.Add(list);
+                    var parent = this.Parent; 
+                    if (parent != null)
+                    {
+                        parent.Controls.Clear();
+                        parent.Controls.Add(new UCExpenseList());
+                    }
                 }
             }
 
@@ -96,7 +104,7 @@ namespace OJT.App.Views.Expense
         private ExpenseEntity createExpenseEntity()
         {
             ExpenseEntity expenseEntity = new ExpenseEntity();
-            if(String.IsNullOrEmpty(txtExpenseName.Text))
+            if (String.IsNullOrEmpty(txtExpenseName.Text))
             {
                 MessageBox.Show("Enter Expense.", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
@@ -125,7 +133,7 @@ namespace OJT.App.Views.Expense
             //{
             //    if(Char.is)
             //}
-            if(!txtAmount.Text.All(char.IsDigit))
+            if (!txtAmount.Text.All(char.IsDigit))
             {
                 MessageBox.Show("Enter Number only in Amount.", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
@@ -134,13 +142,18 @@ namespace OJT.App.Views.Expense
             {
                 expenseEntity.expenseId = Convert.ToInt32(txtExpenseId.Text);
             }
-            
 
+            if (!DateTime.TryParseExact(ExpenseDate.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+            {
+                MessageBox.Show("Enter a valid date in dd/MM/yyyy format.", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+            expenseEntity.date = parsedDate;
             expenseEntity.expenseName = txtExpenseName.Text;
             expenseEntity.category = cboCategory.SelectedValue.ToString();
-            expenseEntity.date = ExpenseDate.Text;
             expenseEntity.person = txtPerson.Text;
-            expenseEntity.Amount = Convert.ToInt32(txtAmount.Text);
+            expenseEntity.Amount = Convert.ToInt64(txtAmount.Text);
+
 
             return expenseEntity;
 

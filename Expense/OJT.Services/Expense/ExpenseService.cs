@@ -42,6 +42,11 @@ namespace OJT.Services.Expense
             return expenseDAO.GetAllExpense(fromDate, toDate, person, categoryId, pageSize, pageNumber);
         }
 
+        public int GetTotalExpensesCount(DateTime? fromDate, DateTime? toDate, string person, int? categoryId)
+        {
+            return expenseDAO.GetTotalExpensesCount(fromDate, toDate, person, categoryId);
+        }
+
         public DataTable GetAllExpenseNOFit()
         {
             return expenseDAO.GetAllExpenseNOFit();

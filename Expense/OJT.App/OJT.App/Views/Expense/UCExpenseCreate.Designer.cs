@@ -154,9 +154,10 @@
             // 
             this.ExpenseDate.BorderRadius = 10;
             this.ExpenseDate.Checked = true;
+            this.ExpenseDate.CustomFormat = "dd/MM/yyyy";
             this.ExpenseDate.FillColor = System.Drawing.Color.White;
             this.ExpenseDate.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExpenseDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.ExpenseDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.ExpenseDate.Location = new System.Drawing.Point(437, 247);
             this.ExpenseDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             this.ExpenseDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);

@@ -103,14 +103,14 @@
             // 
             this.Panal.Location = new System.Drawing.Point(0, 34);
             this.Panal.Name = "Panal";
-            this.Panal.Size = new System.Drawing.Size(1516, 774);
+            this.Panal.Size = new System.Drawing.Size(1516, 975);
             this.Panal.TabIndex = 1;
             // 
             // Frame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1516, 820);
+            this.ClientSize = new System.Drawing.Size(1516, 1021);
             this.Controls.Add(this.Panal);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
